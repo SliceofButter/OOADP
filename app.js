@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require('path');
-const exphbs = require('express-handlebars');
 const mongo = require('mongodb');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
@@ -13,8 +12,6 @@ const app = express();
 
 app.use(express.static('public'))
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({defaultLayout:'layout'}));
-app.set('view engine', 'handlebars');
 
 // body parser middleware
 app.use(bodyParser.urlencoded({extended:false}));
