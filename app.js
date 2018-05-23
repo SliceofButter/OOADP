@@ -3,6 +3,9 @@ const path = require('path');
 const mongo = require('mongodb');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
+const expressValidator = require('express-validator');
+const session = require('express-session');
+
 
 // mongoose.connect('mongodb://localhost/27017');
 // init app
@@ -12,6 +15,7 @@ const app = express();
 
 app.use(express.static('public'))
 app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug')
 
 // body parser middleware
 app.use(bodyParser.urlencoded({extended:false}));
@@ -21,11 +25,11 @@ app.use(bodyParser.json())
 
 
 app.get('/', function(req,res){
-    res.sendFile(__dirname+"/views/index.html");
+    res.render('index');
 })
 
 app.get('/login', function(req,res){
-    res.sendFile(__dirname+"/views/login.html");
+    res.render('login');
 })
 
 var port = 3000;
