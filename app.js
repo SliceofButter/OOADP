@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require('path');
+const exphbs = require('express-handlebars');
 const mongo = require('mongodb');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
@@ -11,8 +12,9 @@ const app = express();
 //load view engine
 
 app.use(express.static('public'))
-app.use('/views', express.static(__dirname + '/views'));
-
+app.set('views', path.join(__dirname, 'views'));
+app.engine('handlebars', exphbs({defaultLayout:'layout'}));
+app.set('view engine', 'handlebars');
 
 // body parser middleware
 app.use(bodyParser.urlencoded({extended:false}));
@@ -23,6 +25,10 @@ app.use(bodyParser.json())
 
 app.get('/', function(req,res){
     res.sendFile(__dirname+"/views/index.html");
+})
+
+app.get('/login', function(req,res){
+    res.sendFile(__dirname+"/views/login.html");
 })
 
 var port = 3000;
