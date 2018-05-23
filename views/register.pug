@@ -1,0 +1,106 @@
+doctype html
+html(lang='en')
+  head
+    title Register
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='icon', type='image/png', href='images/icons/favicon.png')
+    link(rel='stylesheet', type='text/css', href='vendor/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', type='text/css', href='fonts/themify/themify-icons.css')
+    link(rel='stylesheet', type='text/css', href='fonts/Linearicons-Free-v1.0.0/icon-font.min.css')
+    link(rel='stylesheet', type='text/css', href='fonts/elegant-font/html-css/style.css')
+    link(rel='stylesheet', type='text/css', href='vendor/animate/animate.css')
+    link(rel='stylesheet', type='text/css', href='vendor/css-hamburgers/hamburgers.min.css')
+    link(rel='stylesheet', type='text/css', href='vendor/animsition/css/animsition.min.css')
+    link(rel='stylesheet', type='text/css', href='vendor/select2/select2.min.css')
+    link(rel='stylesheet', type='text/css', href='vendor/daterangepicker/daterangepicker.css')
+    link(rel='stylesheet', type='text/css', href='vendor/slick/slick.css')
+    link(rel='stylesheet', type='text/css', href='vendor/lightbox2/css/lightbox.min.css')
+    link(rel='stylesheet', type='text/css', href='css/util.css')
+    link(rel='stylesheet', type='text/css', href='css/main.css')
+    
+  body.animsition
+    // Header
+    header.header1
+      // Header desktop
+      .container-menu-header
+        .wrap_header
+          // Logo
+          a.logo(href='index.html')
+            img(src='images/icons/logo.png', alt='IMG-LOGO')
+          // Menu
+          .wrap_menu
+            nav.menu
+              ul.main_menu
+                li
+                  a(href='index.html') Home
+                li
+                  a(href='product.html') Shop
+                li
+                  a(href='about.html') About
+                li
+                  a(href='contact.html') Contact
+              ul.nav.navbar-nav.flex-row.justify-content-between.ml-auto
+          // Header Icon
+          .header-icons
+            a.header-wrapicon1.dis-block(style='color:black;', href='/login') Login
+            span.linedivide1
+            .header-icon
+              a.header-wrapicon1.dis-block(style='color:black;', href='#') Register
+      // Header Mobile
+      .wrap_header_mobile
+        // Logo moblie
+        a.logo-mobile(href='index.html')
+          img(src='images/icons/logo.png', alt='IMG-LOGO')
+        .btn-show-menu-mobile.hamburger.hamburger--squeeze
+          span.hamburger-box
+            span.hamburger-inner
+      // Menu Mobile
+      .wrap-side-menu
+        nav.side-menu
+          ul.main-menu
+            li.item-menu-mobile
+              a(href='index.html') Home
+            li.item-menu-mobile
+              a(href='product.html') Shop
+            li.item-menu-mobile
+              a(href='product.html') Sale
+            li.item-menu-mobile
+              a(href='cart.html') Features
+            li.item-menu-mobile
+              a(href='blog.html') Blog
+            li.item-menu-mobile
+              a(href='about.html') About
+            li.item-menu-mobile
+              a(href='contact.html') Contact
+    .container
+    form(method='POST', action='/users/register')
+    #form-group
+      label Name:
+      input.form-control(name='name', type='text')
+    #form-group
+      label Email:
+      input.form-control(name='email', type='text')
+    #form-group
+      label Username:
+      input.form-control(name='username',type='text')
+    #form-group
+      label Password:
+      input.form-control(name='password',type='password')
+    #form-group
+      label Confirm:
+      input.form-control(name='password2',type='password')
+    br
+    input.btn.btn-primary(type='submit',value='Submit')
+    script(type='text/javascript', src='vendor/jquery/jquery-3.2.1.min.js')
+    script(type='text/javascript', src='vendor/animsition/js/animsition.min.js')
+    script(type='text/javascript', src='vendor/bootstrap/js/popper.js')
+    script(type='text/javascript', src='vendor/bootstrap/js/bootstrap.min.js')
+    script(type='text/javascript', src='vendor/select2/select2.min.js')
+    script(type='text/javascript', src='vendor/slick/slick.min.js')
+    script(type='text/javascript', src='js/slick-custom.js')
+    script(type='text/javascript', src='vendor/countdowntime/countdowntime.js')
+    script(type='text/javascript', src='vendor/lightbox2/js/lightbox.min.js')
+    script(type='text/javascript', src='vendor/sweetalert/sweetalert.min.js')
+    script(src='js/main.js')
