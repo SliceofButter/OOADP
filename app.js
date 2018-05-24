@@ -7,7 +7,7 @@ const expressValidator = require('express-validator');
 const session = require('express-session');
 
 
-mongoose.connect('mongodb://localhost/27017');
+//mongoose.connect('mongodb://localhost/27017');
 // init app
 const app = express();
 
@@ -32,6 +32,13 @@ app.get('/', function(req,res){
 app.get('/login', function(req,res){
     res.render('login');
 })
+
+let User = require('./models/user');
+
+// Register Form
+// app.get('/register',function(req,res){
+//     res.render('register')
+// });
 
 // Route Files
 let users = require('./routes/users');

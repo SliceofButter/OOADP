@@ -19,7 +19,6 @@ html(lang='en')
     link(rel='stylesheet', type='text/css', href='vendor/lightbox2/css/lightbox.min.css')
     link(rel='stylesheet', type='text/css', href='css/util.css')
     link(rel='stylesheet', type='text/css', href='css/main.css')
-    
   body.animsition
     // Header
     header.header1
@@ -75,24 +74,24 @@ html(lang='en')
             li.item-menu-mobile
               a(href='contact.html') Contact
     .container
-    form(method='POST', action='/users/register')
-    #form-group
-      label Name:
-      input.form-control(name='name', type='text')
-    #form-group
-      label Email:
-      input.form-control(name='email', type='text')
-    #form-group
-      label Username:
-      input.form-control(name='username',type='text')
-    #form-group
-      label Password:
-      input.form-control(name='password',type='password')
-    #form-group
-      label Confirm:
-      input.form-control(name='password2',type='password')
-    br
-    input.btn.btn-primary(type='submit',value='Submit')
+      form(method='POST', action='/register')
+      #form-group
+        label Name:
+        input.form-control(name='name', type='text')
+      #form-group
+        label Email:
+        input.form-control(name='email', type='text')
+      #form-group
+        label Username:
+        input.form-control(name='username', type='text')
+      #form-group
+        label Password:
+        input.form-control(name='password', type='password')
+      #form-group
+        label Confirm:
+        input.form-control(name='password2', type='password')
+      br
+      input.btn.btn-primary(type='submit', value='Submit')
     script(type='text/javascript', src='vendor/jquery/jquery-3.2.1.min.js')
     script(type='text/javascript', src='vendor/animsition/js/animsition.min.js')
     script(type='text/javascript', src='vendor/bootstrap/js/popper.js')
