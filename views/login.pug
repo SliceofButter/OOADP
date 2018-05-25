@@ -74,6 +74,7 @@ html(lang='en')
             li.item-menu-mobile
               a(href='contact.html') Contact
     .container
+      form(method='POST', action='/login')
       .form-group
         label(for='email') Email address:
         input#email.form-control(type='email')

@@ -1,14 +1,26 @@
 const express = require("express");
 const path = require('path');
-const mongo = require('mongodb');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const expressValidator = require('express-validator');
 const session = require('express-session');
+const config = require('./config/database');
+const passport = require('passport');
 
+mongoose.connect(config.database);
+let db = mongoose.connection;
 
-mongoose.connect('mongodb://localhost/27017');
-// init app
+// Check connection
+db.once('open', function(){
+    console.log('Connected to MongoDB');
+  });
+
+  // Check for DB errors
+  db.on('error', function(err){
+    console.log(err);
+  });
+
+//init app
 const app = express();
 
 //load view engine
