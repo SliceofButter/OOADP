@@ -1,28 +1,26 @@
 {
-  "name": "fashe-colorlib",
+  "name": "nodekb",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Simple knowledgebase app",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "start": "node app",
+    "dev" :"nodemon server app.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Brad Traversy",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
-    "express": "^4.16.3",    
+    "body-parser": "^1.17.2",
     "connect-flash": "^0.1.1",
-    "express-handlebars": "^3.0.0",
-    "express-session": "^1.15.6",
-    "express-validator": "^5.2.0",
-    "mongodb": "^3.1.0-be1.2",
-    "passport": "^0.4.0",
+    "express": "^4.15.3",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.15.3",
+    "express-validator": "^3.2.0",
+    "mongoose": "^4.10.2",
+    "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "path": "^0.12.7",
-    "pug": "^2.0.3"
+    "pug": "^2.0.0-rc.1"
   },
   "devDependencies": {
     "nodemon": "^1.17.5"
