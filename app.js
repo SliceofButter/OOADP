@@ -79,10 +79,18 @@ app.get('*', function(req, res, next){
   next();
 });
 
-// Home Route
+// Index Route
 app.get('/', function(req, res){
   res.render('index');
 })
+// Home route
+app.get('/home', function(req, res){
+  res.render('home');
+})
+app.get('/test', function(req, res){
+  res.render('test');
+})
+
 // Route Files
 
 let users = require('./routes/users');

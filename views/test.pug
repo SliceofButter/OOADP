@@ -1,0 +1,404 @@
+doctype html
+html(lang='en')
+  head
+    title Login
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='icon', type='image/png', href='images/icons/favicon.png')
+    link(rel='stylesheet', type='text/css', href='vendor/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', type='text/css', href='fonts/themify/themify-icons.css')
+    link(rel='stylesheet', type='text/css', href='fonts/Linearicons-Free-v1.0.0/icon-font.min.css')
+    link(rel='stylesheet', type='text/css', href='fonts/elegant-font/html-css/style.css')
+    link(rel='stylesheet', type='text/css', href='vendor/animate/animate.css')
+    link(rel='stylesheet', type='text/css', href='vendor/css-hamburgers/hamburgers.min.css')
+    link(rel='stylesheet', type='text/css', href='vendor/animsition/css/animsition.min.css')
+    link(rel='stylesheet', type='text/css', href='vendor/select2/select2.min.css')
+    link(rel='stylesheet', type='text/css', href='vendor/daterangepicker/daterangepicker.css')
+    link(rel='stylesheet', type='text/css', href='vendor/slick/slick.css')
+    link(rel='stylesheet', type='text/css', href='vendor/lightbox2/css/lightbox.min.css')
+    link(rel='stylesheet', type='text/css', href='css/util.css')
+    link(rel='stylesheet', type='text/css', href='css/main.css')
+
+    // Header
+    header.header1
+      // Header desktop
+      .container-menu-header
+        .wrap_header
+          // Logo
+          a.logo(href='index.html')
+            img(src='images/icons/logo.png', alt='IMG-LOGO')
+          // Menu
+          .wrap_menu
+            nav.menu
+              ul.main_menu
+                li
+                  a(href='index.html') Home
+                li
+                  a(href='product.html') Shop
+                li
+                  a(href='about.html') About
+                li
+                  a(href='contact.html') Contact
+              ul.nav.navbar-nav.flex-row.justify-content-between.ml-auto
+          // Header Icon
+          .header-icons
+            li.nav-item.dropdown
+              a#navbardrop.nav-link.dropdown-toggle(href='#', data-toggle='dropdown')
+                | Profile
+              .dropdown-menu
+                a.dropdown-item(href='#') User Profile
+                a.dropdown-item(href='#') Edit profile
+                a.dropdown-item(href='/logout') Logout
+      // Header Mobile
+      .wrap_header_mobile
+        // Logo moblie
+        a.logo-mobile(href='index.html')
+          img(src='images/icons/logo.png', alt='IMG-LOGO')
+        .btn-show-menu-mobile.hamburger.hamburger--squeeze
+          span.hamburger-box
+            span.hamburger-inner
+      // Menu Mobile
+      .wrap-side-menu
+        nav.side-menu
+          ul.main-menu
+            li.item-menu-mobile
+              a(href='/login') Home
+            li.item-menu-mobile
+              a(href='product.html') Shop
+            li.item-menu-mobile
+              a(href='product.html') Sale
+            li.item-menu-mobile
+              a(href='blog.html') Blog
+            li.item-menu-mobile
+              a(href='about.html') About
+            li.item-menu-mobile
+              a(href='contact.html') Contact
+    // Slide1
+    section.slide1
+      .wrap-slick1
+        .slick1
+          .item-slick1.item1-slick1(style='background-image: url(images/master-slide-02.jpg);')
+            .wrap-content-slide1.sizefull.flex-col-c-m.p-l-15.p-r-15.p-t-150.p-b-170
+              span.caption1-slide1.m-text1.t-center.animated.visible-false.m-b-15(data-appear='fadeInDown') Women Collection 2018
+              h2.caption2-slide1.xl-text1.t-center.animated.visible-false.m-b-37(data-appear='fadeInUp') New arrivals
+              .wrap-btn-slide1.w-size1.animated.visible-false(data-appear='zoomIn')
+                // Button
+                a.flex-c-m.size2.bo-rad-23.s-text2.bgwhite.hov1.trans-0-4(href='product.html') Shop Now
+          .item-slick1.item2-slick1(style='background-image: url(images/master-slide-03.jpg);')
+            .wrap-content-slide1.sizefull.flex-col-c-m.p-l-15.p-r-15.p-t-150.p-b-170
+              span.caption1-slide1.m-text1.t-center.animated.visible-false.m-b-15(data-appear='rollIn') Women Collection 2018
+              h2.caption2-slide1.xl-text1.t-center.animated.visible-false.m-b-37(data-appear='lightSpeedIn') New arrivals
+              .wrap-btn-slide1.w-size1.animated.visible-false(data-appear='slideInUp')
+                // Button
+                a.flex-c-m.size2.bo-rad-23.s-text2.bgwhite.hov1.trans-0-4(href='product.html') Shop Now
+          .item-slick1.item3-slick1(style='background-image: url(images/master-slide-04.jpg);')
+            .wrap-content-slide1.sizefull.flex-col-c-m.p-l-15.p-r-15.p-t-150.p-b-170
+              span.caption1-slide1.m-text1.t-center.animated.visible-false.m-b-15(data-appear='rotateInDownLeft') Women Collection 2018
+              h2.caption2-slide1.xl-text1.t-center.animated.visible-false.m-b-37(data-appear='rotateInUpRight') New arrivals
+              .wrap-btn-slide1.w-size1.animated.visible-false(data-appear='rotateIn')
+                // Button
+                a.flex-c-m.size2.bo-rad-23.s-text2.bgwhite.hov1.trans-0-4(href='product.html') Shop Now
+    // Banner
+    section.banner.bgwhite.p-t-40.p-b-40
+      .container
+        .row
+          .col-sm-10.col-md-8.col-lg-4.m-l-r-auto
+            // block1
+            .block1.hov-img-zoom.pos-relative.m-b-30
+              img(src='images/banner-02.jpg', alt='IMG-BENNER')
+              .block1-wrapbtn.w-size2
+                // Button
+                a.flex-c-m.size2.m-text2.bg3.hov1.trans-0-4(href='#') Dresses
+            // block1
+            .block1.hov-img-zoom.pos-relative.m-b-30
+              img(src='images/banner-05.jpg', alt='IMG-BENNER')
+              .block1-wrapbtn.w-size2
+                // Button
+                a.flex-c-m.size2.m-text2.bg3.hov1.trans-0-4(href='#') Sunglasses
+          .col-sm-10.col-md-8.col-lg-4.m-l-r-auto
+            // block1
+            .block1.hov-img-zoom.pos-relative.m-b-30
+              img(src='images/banner-03.jpg', alt='IMG-BENNER')
+              .block1-wrapbtn.w-size2
+                // Button
+                a.flex-c-m.size2.m-text2.bg3.hov1.trans-0-4(href='#') Watches
+            // block1
+            .block1.hov-img-zoom.pos-relative.m-b-30
+              img(src='images/banner-07.jpg', alt='IMG-BENNER')
+              .block1-wrapbtn.w-size2
+                // Button
+                a.flex-c-m.size2.m-text2.bg3.hov1.trans-0-4(href='#') Footerwear
+          .col-sm-10.col-md-8.col-lg-4.m-l-r-auto
+            // block1
+            .block1.hov-img-zoom.pos-relative.m-b-30
+              img(src='images/banner-04.jpg', alt='IMG-BENNER')
+              .block1-wrapbtn.w-size2
+                // Button
+                a.flex-c-m.size2.m-text2.bg3.hov1.trans-0-4(href='#') Bags
+            // block2
+            .block2.wrap-pic-w.pos-relative.m-b-30
+              img(src='images/icons/bg-01.jpg', alt='IMG')
+              .block2-content.sizefull.ab-t-l.flex-col-c-m
+                h4.m-text4.t-center.w-size3.p-b-8 Sign up & get 20% off
+                p.t-center.w-size4 Be the frist to know about the latest fashion news and get exclu-sive offers
+                .w-size2.p-t-25
+                  // Button
+                  a.flex-c-m.size2.bg4.bo-rad-23.hov1.m-text3.trans-0-4(href='#') Sign Up
+    // New Product
+    section.newproduct.bgwhite.p-t-45.p-b-105
+      .container
+        .sec-title.p-b-60
+          h3.m-text5.t-center Featured Products
+        // Slide2
+        .wrap-slick2
+          .slick2
+            .item-slick2.p-l-15.p-r-15
+              // Block2
+              .block2
+                .block2-img.wrap-pic-w.of-hidden.pos-relative.block2-labelnew
+                  img(src='images/item-02.jpg', alt='IMG-PRODUCT')
+                  .block2-overlay.trans-0-4
+                    a.block2-btn-addwishlist.hov-pointer.trans-0-4(href='#')
+                      i.icon-wishlist.icon_heart_alt(aria-hidden='true')
+                      i.icon-wishlist.icon_heart.dis-none(aria-hidden='true')
+                    .block2-btn-addcart.w-size1.trans-0-4
+                      // Button
+                      button.flex-c-m.size1.bg4.bo-rad-23.hov1.s-text1.trans-0-4 Add to Cart
+                .block2-txt.p-t-20
+                  a.block2-name.dis-block.s-text3.p-b-5(href='product-detail.html') Herschel supply co 25l
+                  span.block2-price.m-text6.p-r-5 $75.00
+            .item-slick2.p-l-15.p-r-15
+              // Block2
+              .block2
+                .block2-img.wrap-pic-w.of-hidden.pos-relative
+                  img(src='images/item-03.jpg', alt='IMG-PRODUCT')
+                  .block2-overlay.trans-0-4
+                    a.block2-btn-addwishlist.hov-pointer.trans-0-4(href='#')
+                      i.icon-wishlist.icon_heart_alt(aria-hidden='true')
+                      i.icon-wishlist.icon_heart.dis-none(aria-hidden='true')
+                    .block2-btn-addcart.w-size1.trans-0-4
+                      // Button
+                      button.flex-c-m.size1.bg4.bo-rad-23.hov1.s-text1.trans-0-4 Add to Cart
+                .block2-txt.p-t-20
+                  a.block2-name.dis-block.s-text3.p-b-5(href='product-detail.html') Denim jacket blue
+                  span.block2-price.m-text6.p-r-5 $92.50
+            .item-slick2.p-l-15.p-r-15
+              // Block2
+              .block2
+                .block2-img.wrap-pic-w.of-hidden.pos-relative
+                  img(src='images/item-05.jpg', alt='IMG-PRODUCT')
+                  .block2-overlay.trans-0-4
+                    a.block2-btn-addwishlist.hov-pointer.trans-0-4(href='#')
+                      i.icon-wishlist.icon_heart_alt(aria-hidden='true')
+                      i.icon-wishlist.icon_heart.dis-none(aria-hidden='true')
+                    .block2-btn-addcart.w-size1.trans-0-4
+                      // Button
+                      button.flex-c-m.size1.bg4.bo-rad-23.hov1.s-text1.trans-0-4 Add to Cart
+                .block2-txt.p-t-20
+                  a.block2-name.dis-block.s-text3.p-b-5(href='product-detail.html') Coach slim easton black
+                  span.block2-price.m-text6.p-r-5 $165.90
+            .item-slick2.p-l-15.p-r-15
+              // Block2
+              .block2
+                .block2-img.wrap-pic-w.of-hidden.pos-relative.block2-labelsale
+                  img(src='images/item-07.jpg', alt='IMG-PRODUCT')
+                  .block2-overlay.trans-0-4
+                    a.block2-btn-addwishlist.hov-pointer.trans-0-4(href='#')
+                      i.icon-wishlist.icon_heart_alt(aria-hidden='true')
+                      i.icon-wishlist.icon_heart.dis-none(aria-hidden='true')
+                    .block2-btn-addcart.w-size1.trans-0-4
+                      // Button
+                      button.flex-c-m.size1.bg4.bo-rad-23.hov1.s-text1.trans-0-4 Add to Cart
+                .block2-txt.p-t-20
+                  a.block2-name.dis-block.s-text3.p-b-5(href='product-detail.html') Frayed denim shorts
+                  span.block2-oldprice.m-text7.p-r-5 $29.50
+                  span.block2-newprice.m-text8.p-r-5 $15.90
+            .item-slick2.p-l-15.p-r-15
+              // Block2
+              .block2
+                .block2-img.wrap-pic-w.of-hidden.pos-relative.block2-labelnew
+                  img(src='images/item-02.jpg', alt='IMG-PRODUCT')
+                  .block2-overlay.trans-0-4
+                    a.block2-btn-addwishlist.hov-pointer.trans-0-4(href='#')
+                      i.icon-wishlist.icon_heart_alt(aria-hidden='true')
+                      i.icon-wishlist.icon_heart.dis-none(aria-hidden='true')
+                    .block2-btn-addcart.w-size1.trans-0-4
+                      // Button
+                      button.flex-c-m.size1.bg4.bo-rad-23.hov1.s-text1.trans-0-4 Add to Cart
+                .block2-txt.p-t-20
+                  a.block2-name.dis-block.s-text3.p-b-5(href='product-detail.html') Herschel supply co 25l
+                  span.block2-price.m-text6.p-r-5 $75.00
+            .item-slick2.p-l-15.p-r-15
+              // Block2
+              .block2
+                .block2-img.wrap-pic-w.of-hidden.pos-relative
+                  img(src='images/item-03.jpg', alt='IMG-PRODUCT')
+                  .block2-overlay.trans-0-4
+                    a.block2-btn-addwishlist.hov-pointer.trans-0-4(href='#')
+                      i.icon-wishlist.icon_heart_alt(aria-hidden='true')
+                      i.icon-wishlist.icon_heart.dis-none(aria-hidden='true')
+                    .block2-btn-addcart.w-size1.trans-0-4
+                      // Button
+                      button.flex-c-m.size1.bg4.bo-rad-23.hov1.s-text1.trans-0-4 Add to Cart
+                .block2-txt.p-t-20
+                  a.block2-name.dis-block.s-text3.p-b-5(href='product-detail.html') Denim jacket blue
+                  span.block2-price.m-text6.p-r-5 $92.50
+            .item-slick2.p-l-15.p-r-15
+              // Block2
+              .block2
+                .block2-img.wrap-pic-w.of-hidden.pos-relative
+                  img(src='images/item-05.jpg', alt='IMG-PRODUCT')
+                  .block2-overlay.trans-0-4
+                    a.block2-btn-addwishlist.hov-pointer.trans-0-4(href='#')
+                      i.icon-wishlist.icon_heart_alt(aria-hidden='true')
+                      i.icon-wishlist.icon_heart.dis-none(aria-hidden='true')
+                    .block2-btn-addcart.w-size1.trans-0-4
+                      // Button
+                      button.flex-c-m.size1.bg4.bo-rad-23.hov1.s-text1.trans-0-4 Add to Cart
+                .block2-txt.p-t-20
+                  a.block2-name.dis-block.s-text3.p-b-5(href='product-detail.html') Coach slim easton black
+                  span.block2-price.m-text6.p-r-5 $165.90
+            .item-slick2.p-l-15.p-r-15
+              // Block2
+              .block2
+                .block2-img.wrap-pic-w.of-hidden.pos-relative.block2-labelsale
+                  img(src='images/item-07.jpg', alt='IMG-PRODUCT')
+                  .block2-overlay.trans-0-4
+                    a.block2-btn-addwishlist.hov-pointer.trans-0-4(href='#')
+                      i.icon-wishlist.icon_heart_alt(aria-hidden='true')
+                      i.icon-wishlist.icon_heart.dis-none(aria-hidden='true')
+                    .block2-btn-addcart.w-size1.trans-0-4
+                      // Button
+                      button.flex-c-m.size1.bg4.bo-rad-23.hov1.s-text1.trans-0-4 Add to Cart
+                .block2-txt.p-t-20
+                  a.block2-name.dis-block.s-text3.p-b-5(href='product-detail.html') Frayed denim shorts
+                  span.block2-oldprice.m-text7.p-r-5 $29.50
+                  span.block2-newprice.m-text8.p-r-5 $15.90
+    // Banner2
+    section.banner2.bg5.p-t-55.p-b-55
+      .container
+        .row
+          .col-sm-10.col-md-8.col-lg-6.m-l-r-auto.p-t-15.p-b-15
+            .hov-img-zoom.pos-relative
+              img(src='images/banner-08.jpg', alt='IMG-BANNER')
+              .ab-t-l.sizefull.flex-col-c-m.p-l-15.p-r-15
+                span.m-text9.p-t-45.fs-20-sm The Beauty
+                h3.l-text1.fs-35-sm Lookbook
+                a.s-text4.hov2.p-t-20(href='#') View Collection
+          .col-sm-10.col-md-8.col-lg-6.m-l-r-auto.p-t-15.p-b-15
+            .bgwhite.hov-img-zoom.pos-relative.p-b-20per-ssm
+              img(src='images/shop-item-09.jpg', alt='IMG-BANNER')
+              .ab-t-l.sizefull.flex-col-c-b.p-l-15.p-r-15.p-b-20
+                .t-center
+                  a.dis-block.s-text3.p-b-5(href='product-detail.html') Gafas sol Hawkers one
+                  span.block2-oldprice.m-text7.p-r-5 $29.50
+                  span.block2-newprice.m-text8 $15.90
+                .flex-c-m.p-t-44.p-t-30-xl
+                  .flex-col-c-m.size3.bo1.m-l-5.m-r-5
+                    span.m-text10.p-b-1.days 69
+                    span.s-text5 days
+                  .flex-col-c-m.size3.bo1.m-l-5.m-r-5
+                    span.m-text10.p-b-1.hours 04
+                    span.s-text5 hrs
+                  .flex-col-c-m.size3.bo1.m-l-5.m-r-5
+                    span.m-text10.p-b-1.minutes 32
+                    span.s-text5 mins
+                  .flex-col-c-m.size3.bo1.m-l-5.m-r-5
+                    span.m-text10.p-b-1.seconds 05
+                    span.s-text5 secs
+    // Shipping
+    section.shipping.bgwhite.p-t-62.p-b-46
+      .flex-w.p-l-15.p-r-15
+        .flex-col-c.w-size5.p-l-15.p-r-15.p-t-16.p-b-15.respon1
+          h4.m-text12.t-center Free Delivery Worldwide
+          a.s-text11.t-center(href='#') Click here for more info
+        .flex-col-c.w-size5.p-l-15.p-r-15.p-t-16.p-b-15.bo2.respon2
+          h4.m-text12.t-center 30 Days Return
+          span.s-text11.t-center Simply return it within 30 days for an exchange.
+        .flex-col-c.w-size5.p-l-15.p-r-15.p-t-16.p-b-15.respon1
+          h4.m-text12.t-center Store Opening
+          span.s-text11.t-center Shop open from Monday to Sunday
+    // Footer
+    footer.bg6.p-t-45.p-b-43.p-l-45.p-r-45
+      .flex-w.p-b-90
+        .w-size6.p-t-30.p-l-15.p-r-15.respon3
+          h4.s-text12.p-b-30 GET IN TOUCH
+          div
+            p.s-text7.w-size27
+              | Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+            .flex-m.p-t-30
+              a.fs-18.color1.p-r-20.fa.fa-facebook(href='#')
+              a.fs-18.color1.p-r-20.fa.fa-instagram(href='#')
+              a.fs-18.color1.p-r-20.fa.fa-pinterest-p(href='#')
+              a.fs-18.color1.p-r-20.fa.fa-snapchat-ghost(href='#')
+              a.fs-18.color1.p-r-20.fa.fa-youtube-play(href='#')
+        .w-size7.p-t-30.p-l-15.p-r-15.respon4
+          h4.s-text12.p-b-30 Categories
+          ul
+            li.p-b-9
+              a.s-text7(href='#') Men
+            li.p-b-9
+              a.s-text7(href='#') Women
+            li.p-b-9
+              a.s-text7(href='#') Dresses
+            li.p-b-9
+              a.s-text7(href='#') Sunglasses
+        .w-size7.p-t-30.p-l-15.p-r-15.respon4
+          h4.s-text12.p-b-30 Links
+          ul
+            li.p-b-9
+              a.s-text7(href='#') Search
+            li.p-b-9
+              a.s-text7(href='#') About Us
+            li.p-b-9
+              a.s-text7(href='#') Contact Us
+            li.p-b-9
+              a.s-text7(href='#') Returns
+        .w-size7.p-t-30.p-l-15.p-r-15.respon4
+          h4.s-text12.p-b-30 Help
+          ul
+            li.p-b-9
+              a.s-text7(href='#') Track Order
+            li.p-b-9
+              a.s-text7(href='#') Returns
+            li.p-b-9
+              a.s-text7(href='#') Shipping
+            li.p-b-9
+              a.s-text7(href='#') FAQs
+        .w-size8.p-t-30.p-l-15.p-r-15.respon3
+          h4.s-text12.p-b-30 Newsletter
+          form
+            .effect1.w-size9
+              input.s-text7.bg6.w-full.p-b-5(type='text', name='email', placeholder='email@example.com')
+              span.effect1-line
+            .w-size2.p-t-20
+              // Button
+              button.flex-c-m.size2.bg4.bo-rad-23.hov1.m-text3.trans-0-4 Subscribe
+      .t-center.p-l-15.p-r-15
+        a(href='#')
+          img.h-size2(src='images/icons/paypal.png', alt='IMG-PAYPAL')
+        a(href='#')
+          img.h-size2(src='images/icons/visa.png', alt='IMG-VISA')
+        a(href='#')
+          img.h-size2(src='images/icons/mastercard.png', alt='IMG-MASTERCARD')
+        a(href='#')
+          img.h-size2(src='images/icons/express.png', alt='IMG-EXPRESS')
+        a(href='#')
+          img.h-size2(src='images/icons/discover.png', alt='IMG-DISCOVER')
+        .t-center.s-text8.p-t-20
+          | Copyright © 2018 All rights reserved. | This template is made with 
+          i.fa.fa-heart-o(aria-hidden='true')
+          |  by 
+          a(href='https://colorlib.com', target='_blank') Colorlib
+    script(type='text/javascript', src='vendor/jquery/jquery-3.2.1.min.js')
+    script(type='text/javascript', src='vendor/animsition/js/animsition.min.js')
+    script(type='text/javascript', src='vendor/bootstrap/js/popper.js')
+    script(type='text/javascript', src='vendor/bootstrap/js/bootstrap.min.js')
+    script(type='text/javascript', src='vendor/select2/select2.min.js')
+    script(type='text/javascript', src='vendor/slick/slick.min.js')
+    script(type='text/javascript', src='js/slick-custom.js')
+    script(type='text/javascript', src='vendor/countdowntime/countdowntime.js')
+    script(type='text/javascript', src='vendor/lightbox2/js/lightbox.min.js')
+    script(type='text/javascript', src='vendor/sweetalert/sweetalert.min.js')
+    script(src='js/main.js')
