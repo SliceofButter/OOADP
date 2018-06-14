@@ -21,12 +21,15 @@ db.on('error', function(err){
   console.log(err);
 });
 
+let User = require('./models/user');
+
 // Init App
 const app = express();
 
 // Load View Engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+// app.set('view engine', 'ejs');
 
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -79,14 +82,19 @@ app.get('*', function(req, res, next){
   next();
 });
 
-// Index Route
-app.get('/', function(req, res){
-  res.render('index');
-})
+app.use(function (req, res, next) {
+  res.locals.login = req.isAuthenticated();
+  next();
+});
 // Home route
-app.get('/home', function(req, res){
-  res.render('home');
-})
+
+app.get('/', function(req, res, next){
+  User.findById(req.user, function(err, user){
+    res.render('home', { title: 'home', user: user })
+    console.log(user)
+  });
+});
+
 app.get('/test', function(req, res){
   res.render('test');
 })

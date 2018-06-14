@@ -44,11 +44,19 @@ html(lang='en')
                   a(href='contact.html') Contact
               ul.nav.navbar-nav.flex-row.justify-content-between.ml-auto
           // Header Icon
-          .header-icons
-            a.header-wrapicon1.dis-block(style='color:black;', href='/login') Login
-            span.linedivide1
-            .header-icon
-              a.header-wrapicon1.dis-block(style='color:black;', href='/register') Register
+          if login
+            li.nav-item.dropdown
+              a#navbardrop.nav-link.dropdown-toggle(href='#', data-toggle='dropdown') #{user.username}
+              .dropdown-menu
+                a.dropdown-item(href='/profile') User Profile
+                a.dropdown-item(href='/settings') Edit profile
+                a.dropdown-item(href='/logout') Logout
+          else
+             .header-icons
+             a.header-wrapicon1.dis-block(style='color:black;', href='/login') Login
+                span.linedivide1
+                .header-icon
+                a.header-wrapicon1.dis-block(style='color:black;', href='/register') Register
       // Header Mobile
       .wrap_header_mobile
         // Logo moblie

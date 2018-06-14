@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app",
-    "dev" :"nodemon server app.js"
+    "dev": "nodemon server app.js"
   },
   "author": "Brad Traversy",
   "license": "ISC",
@@ -13,6 +13,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
     "connect-flash": "^0.1.1",
+    "ejs": "^2.6.1",
     "express": "^4.15.3",
     "express-messages": "^1.0.1",
     "express-session": "^1.15.3",

@@ -68,7 +68,7 @@ router.post('/register', function(req, res){
   // Login Process
   router.post('/login', function(req, res, next){
     passport.authenticate('local', {
-      successRedirect:'/home',
+      successRedirect:'/',
       failureRedirect:'/login',
       failureFlash: true
     })(req, res, next);
@@ -80,5 +80,33 @@ router.post('/register', function(req, res){
     req.flash('success', 'You are logged out');
     res.redirect('/login');
   });
+
+//Get profile
+  // router.get('/profile', function(req, res, next){
+  //       res.render('profile', { title: 'profile', user: req.user });
+  //     });
+  router.get('/profile', function(req, res, next){
+    User.findById(req.user, function(err, user){
+      res.render('profile', { title: 'profile', user: user })
+      console.log(user)
+    });
+  });
+
+  router.get('/settings', function(req, res, next){
+    User.findById(req.user, function(err, user){
+      res.render('editProfile', { title: 'settings', user: user })
+      console.log(user)
+    });
+  });
+    
+      
+  // function ensureAuthenticated(req, res, next){
+  //   if(req.isAuthenticated()){
+  //     return next();
+  //   } else {
+  //     req.flash('danger', 'Please login');
+  //     res.redirect('/login');
+  //   }
+  // }
 
 module.exports = router;

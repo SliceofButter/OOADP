@@ -1,0 +1,189 @@
+doctype html
+html(lang='en')
+  head
+    title Login
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='icon', type='image/png', href='images/icons/favicon.png')
+    link(rel='stylesheet', type='text/css', href='vendor/bootstrap/css/bootstrap.min.css')
+    link(href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet")
+    link(rel='stylesheet', type='text/css', href='fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', type='text/css', href='fonts/themify/themify-icons.css')
+    link(rel='stylesheet', type='text/css', href='fonts/Linearicons-Free-v1.0.0/icon-font.min.css')
+    link(rel='stylesheet', type='text/css', href='fonts/elegant-font/html-css/style.css')
+    link(rel='stylesheet', type='text/css', href='vendor/animate/animate.css')
+    link(rel='stylesheet', type='text/css', href='vendor/css-hamburgers/hamburgers.min.css')
+    link(rel='stylesheet', type='text/css', href='vendor/animsition/css/animsition.min.css')
+    link(rel='stylesheet', type='text/css', href='vendor/select2/select2.min.css')
+    link(rel='stylesheet', type='text/css', href='vendor/daterangepicker/daterangepicker.css')
+    link(rel='stylesheet', type='text/css', href='vendor/slick/slick.css')
+    link(rel='stylesheet', type='text/css', href='vendor/lightbox2/css/lightbox.min.css')
+    link(rel='stylesheet', type='text/css', href='css/util.css')
+    link(rel='stylesheet', type='text/css', href='css/main.css')
+    // Header
+    header.header1
+      // Header desktop
+      .container-menu-header
+        .wrap_header
+          // Logo
+          a.logo(href='index.html')
+            img(src='images/icons/logo.png', alt='IMG-LOGO')
+          // Menu
+          .wrap_menu
+            nav.menu
+              ul.main_menu
+                li
+                  a(href='index.html') Home
+                li
+                  a(href='product.html') Shop
+                li
+                  a(href='about.html') About
+                li
+                  a(href='contact.html') Contact
+              ul.nav.navbar-nav.flex-row.justify-content-between.ml-auto
+          // Header Icon
+          .header-icons
+            li.nav-item.dropdown
+              a#navbardrop.nav-link.dropdown-toggle(href='#', data-toggle='dropdown')  #{user.username}
+              .dropdown-menu
+                a.dropdown-item(href='/profile') User Profile
+                a.dropdown-item(href='#') Edit profile
+                a.dropdown-item(href='/logout') Logout
+      // Header Mobile
+      .wrap_header_mobile
+        // Logo moblie
+        a.logo-mobile(href='index.html')
+          img(src='images/icons/logo.png', alt='IMG-LOGO')
+        .btn-show-menu-mobile.hamburger.hamburger--squeeze
+          span.hamburger-box
+            span.hamburger-inner
+      // Menu Mobile
+      .wrap-side-menu
+        nav.side-menu
+          ul.main-menu
+            li.item-menu-mobile
+              a(href='/login') Home
+            li.item-menu-mobile
+              a(href='product.html') Shop
+            li.item-menu-mobile
+              a(href='product.html') Sale
+            li.item-menu-mobile
+              a(href='blog.html') Blog
+            li.item-menu-mobile
+              a(href='about.html') About
+            li.item-menu-mobile
+              a(href='contact.html') Contact
+h1(style='text-align: center;') Account Info
+.container
+  .row.profile
+    .col-md-3
+      .profile-sidebar
+        // SIDEBAR USERPIC
+        .profile-userpic
+        // END SIDEBAR USERPIC
+        // SIDEBAR USER TITLE
+        .profile-usertitle
+          .profile-usertitle-name #{user.username}
+        .profile-usermenu
+          ul.nav
+            li.active
+              a(href='#')
+                i.glyphicon.glyphicon-home
+                | 							Account Settings
+            li
+              a(href='#')
+                i.glyphicon.glyphicon-user
+                | 							Password Settings
+            li
+              a(href='#')
+                i.glyphicon.glyphicon-user
+                | 							Profile Picture Settings
+    .col-md-9
+      .profile-content
+        .container-fluid
+          b Email: 
+          p
+          form(action='#', method='POST')
+            .form-group
+footer.bg6.p-t-45.p-b-43.p-l-45.p-r-45
+  .flex-w.p-b-90
+    .w-size6.p-t-30.p-l-15.p-r-15.respon3
+      h4.s-text12.p-b-30 GET IN TOUCH
+      div
+        p.s-text7.w-size27
+          | Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+        .flex-m.p-t-30
+          a.fs-18.color1.p-r-20.fa.fa-facebook(href='#')
+          a.fs-18.color1.p-r-20.fa.fa-instagram(href='#')
+          a.fs-18.color1.p-r-20.fa.fa-pinterest-p(href='#')
+          a.fs-18.color1.p-r-20.fa.fa-snapchat-ghost(href='#')
+          a.fs-18.color1.p-r-20.fa.fa-youtube-play(href='#')
+    .w-size7.p-t-30.p-l-15.p-r-15.respon4
+      h4.s-text12.p-b-30 Categories
+      ul
+        li.p-b-9
+          a.s-text7(href='#') Men
+        li.p-b-9
+          a.s-text7(href='#') Women
+        li.p-b-9
+          a.s-text7(href='#') Dresses
+        li.p-b-9
+          a.s-text7(href='#') Sunglasses
+    .w-size7.p-t-30.p-l-15.p-r-15.respon4
+      h4.s-text12.p-b-30 Links
+      ul
+        li.p-b-9
+          a.s-text7(href='#') Search
+        li.p-b-9
+          a.s-text7(href='#') About Us
+        li.p-b-9
+          a.s-text7(href='#') Contact Us
+        li.p-b-9
+          a.s-text7(href='#') Returns
+    .w-size7.p-t-30.p-l-15.p-r-15.respon4
+      h4.s-text12.p-b-30 Help
+      ul
+        li.p-b-9
+          a.s-text7(href='#') Track Order
+        li.p-b-9
+          a.s-text7(href='#') Returns
+        li.p-b-9
+          a.s-text7(href='#') Shipping
+        li.p-b-9
+          a.s-text7(href='#') FAQs
+    .w-size8.p-t-30.p-l-15.p-r-15.respon3
+      h4.s-text12.p-b-30 Newsletter
+      form
+        .effect1.w-size9
+          input.s-text7.bg6.w-full.p-b-5(type='text', name='email', placeholder='email@example.com')
+          span.effect1-line
+        .w-size2.p-t-20
+          // Button
+          button.flex-c-m.size2.bg4.bo-rad-23.hov1.m-text3.trans-0-4 Subscribe
+  .t-center.p-l-15.p-r-15
+    a(href='#')
+      img.h-size2(src='images/icons/paypal.png', alt='IMG-PAYPAL')
+    a(href='#')
+      img.h-size2(src='images/icons/visa.png', alt='IMG-VISA')
+    a(href='#')
+      img.h-size2(src='images/icons/mastercard.png', alt='IMG-MASTERCARD')
+    a(href='#')
+      img.h-size2(src='images/icons/express.png', alt='IMG-EXPRESS')
+    a(href='#')
+      img.h-size2(src='images/icons/discover.png', alt='IMG-DISCOVER')
+    .t-center.s-text8.p-t-20
+      | Copyright © 2018 All rights reserved. | This template is made with 
+      i.fa.fa-heart-o(aria-hidden='true')
+      |  by 
+      a(href='https://colorlib.com', target='_blank') Colorlib
+script(type='text/javascript', src='vendor/jquery/jquery-3.2.1.min.js')
+script(type='text/javascript', src='vendor/animsition/js/animsition.min.js')
+script(type='text/javascript', src='vendor/bootstrap/js/popper.js')
+script(type='text/javascript', src='vendor/bootstrap/js/bootstrap.min.js')
+script(type='text/javascript', src='vendor/select2/select2.min.js')
+script(type='text/javascript', src='vendor/slick/slick.min.js')
+script(type='text/javascript', src='js/slick-custom.js')
+script(type='text/javascript', src='vendor/countdowntime/countdowntime.js')
+script(type='text/javascript', src='vendor/lightbox2/js/lightbox.min.js')
+script(type='text/javascript', src='vendor/sweetalert/sweetalert.min.js')
+script(src='js/main.js')
