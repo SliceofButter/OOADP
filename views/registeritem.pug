@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h3(id="meow" style="text-align:center;font-weight:bold;") Register Item
+  form(method='POST', action='/registeritem')
+    #form-group
+      label Item Name:
+      input.form-control(name='itemname',type='text')
+    #form-group
+      label Item Price:
+      input.form-control(name='itemprice',type='number')
+    #form-group
+      label Description:
+      input.form-control(name='description',type='text')
+    br
+    input.btn.btn-primary(type='submit',value='Submit')
