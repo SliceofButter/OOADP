@@ -3,7 +3,7 @@ const router = express.Router();
 const userfinder = require('./users.js');
 
 let Items = require('../models/items');
-//let User = require('../models/user');
+let User = require('../models/user');
 
 
 //Product page
@@ -37,19 +37,31 @@ router.post('/registeritem',function(req,res){
     });
   }
   else{
-    let newUser = new Items({
-      itemname:itemname,
-      itemprice:itemprice,
-      owner: username,
-      description:description
+    let newItem = new Items({
+        itemname:itemname,
+        itemprice:itemprice,
+        owner: username,
+        description:description
     });
-  }
 
+    newItem.save(function(err){
+      if(err){
+        console.log(err);
+        return;
+      } 
+      else {
+        req.flash('success','Item registered');
+        res.redirect('/login');
+      }
+    })
+  }
+  
+  
   /*User.findById(req.user, function(err, user){
     res.render('registeritem', { title: 'product', user: user })
     console.log(user)
   })*/
-  res.render('registeritem');
+  //res.render('registeritem');
 });
 
   
