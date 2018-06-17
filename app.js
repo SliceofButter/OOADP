@@ -101,6 +101,8 @@ let users = require('./routes/users');
 app.use('/', users);
 let productusers = require('./routes/productusers');
 app.use('/', productusers);
+let transactions = require('./routes/transaction');
+app.use('/',transactions);
 
 // Start Server
 app.listen(3000, function(){
