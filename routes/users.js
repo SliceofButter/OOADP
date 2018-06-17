@@ -2,10 +2,30 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const multer = require('multer');
+const fs = require('fs');
+var IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
+
+// img path
+var storage = multer.diskStorage({
+  destination: './public/profilepic/',
+  filename: function (req, file, cb) {
+      cb(null, file.originalname)
+}
+})
+
+var upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10000000
+  },
+  
+});
 
 // Bring in user model
 
 let User = require('../models/user');
+let Pic = require('../models/profilePic');
 
 // Register Form
 router.get('/register',function(req,res){
@@ -87,18 +107,76 @@ router.post('/register', function(req, res){
   //     });
   router.get('/profile', function(req, res, next){
     User.findById(req.user, function(err, user){
-      res.render('profile', { title: 'profile', user: user })
-      console.log(user)
-    });
+      Pic.findById(user._id, function(err, pic){
+        res.render('profile', {
+          pic: pic.dp
+        });
+      })
   });
+});
 
   router.get('/settings', function(req, res, next){
-    User.findById(req.user, function(err, user){
-      res.render('editProfile', { title: 'settings', user: user })
-      console.log(user)
+      res.render('editProfile', { title: 'settings'})
+  });
+
+  router.post('/settings', upload.single('imageupload'),(req, res) => {
+    console.log(req.file)
+    let imageData = new Pic({
+      _id: req.user._id,
+      username: req.user.username,
+      dp: req.file.originalname
+    })
+    imageData.save(function(err){
+      if(err){
+        console.log(err);
+        return;
+      } else {
+        req.flash('success','pic uploaded');
+        res.redirect('/profile');
+      }
     });
   });
-    
+  // router.post('/settings', upload.single('imageupload'),(req, res) => {
+  //   var tmp_path = req.file.path;
+  //   var target_path = 'public/profilepic/' + req.file.originalname;
+  //   var src = fs.createReadStream(tmp_path);
+  //   var dest = fs.createWriteStream(target_path);
+  //   src.pipe(dest);
+  //   src.on('end', function() { 
+  //     let imageData = Pic({
+  //       _id: req.user._id,
+  //       username: req.user.username,
+  //       dp: req.file.originalname
+  //     })
+  //     imageData.save(function(err){
+  //       if(err){
+  //         console.log(err);
+  //         return;
+  //       } else {
+  //         req.flash('success','pic uploaded');
+  //         res.redirect('/profile');
+  //       }
+  //     });
+  //     fs.unlink(tmp_path, function (err) {
+  //       if (err) {
+  //           return res.status(500).send('Something bad happened here');
+  //       }
+  //       //redirect to gallery's page
+  //       res.redirect('/profile');
+  //     });
+  //   });
+
+  //   src.on('error', function (err){
+  //     if (err) {
+  //         return res.status(500).send({
+  //             message: error
+  //         });
+  //     }
+  //   });
+  
+  // });
+
+
       
   // function ensureAuthenticated(req, res, next){
   //   if(req.isAuthenticated()){

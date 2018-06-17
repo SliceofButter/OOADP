@@ -1,14 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const multer = require('multer');
 const userfinder = require('./users.js');
 
 let Items = require('../models/items');
 let User = require('../models/user');
-
 
 
 //Product page
@@ -40,8 +35,7 @@ router.post('/registeritem',function(req,res){
     newItem.itemname = req.body.itemname,
     newItem.itemprice = req.body.itemprice,
     newItem.username =  req.user._id,
-    newItem.description = req.body.description,
-    newItem.img = req.body.img
+    newItem.description = req.body.description
     
     
 

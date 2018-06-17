@@ -103,8 +103,9 @@ h1(style='text-align: center;') Account Info
         .container-fluid
           b Email: 
           p
-          form(action='#', method='POST')
-            .form-group
+          form(action='/settings', method='POST', enctype='multipart/form-data')
+            input(type='file', name='imageupload')
+            input(type='submit', name='uploadimage', value='Upload Image')
 footer.bg6.p-t-45.p-b-43.p-l-45.p-r-45
   .flex-w.p-b-90
     .w-size6.p-t-30.p-l-15.p-r-15.respon3
