@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const  uuid = require('uuid');
+const uuidV4 = require('uuid/v4');
 
 router.get('/transaction',function(req,res){
     res.render('transaction')
 });
 router.post('/transaction',function(req,res){
-    var testID =uuid.v4();
+    var testID =uuidV4()
     console.log(testID)
+    res.render('transaction')
 })
 
 
