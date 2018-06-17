@@ -44,7 +44,7 @@ html(lang='en')
                   a(href='contact.html') Contact
               ul.nav.navbar-nav.flex-row.justify-content-between.ml-auto
           // Header Icon
-          if login
+          if user
             li.nav-item.dropdown
               a#navbardrop.nav-link.dropdown-toggle(href='#', data-toggle='dropdown') #{user.username}
               .dropdown-menu
@@ -92,8 +92,8 @@ html(lang='en')
         br
     
         // Footer
-        footer.bg6.p-t-45.p-b-43.p-l-45.p-r-45
-            .flex-w.p-b-90
+    footer.bg6.p-t-45.p-b-43.p-l-45.p-r-45
+        .flex-w.p-b-90
             .w-size6.p-t-30.p-l-15.p-r-15.respon3
                 h4.s-text12.p-b-30 GET IN TOUCH
                 div

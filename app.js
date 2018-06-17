@@ -32,7 +32,7 @@ app.set('view engine', 'pug');
 // app.set('view engine', 'ejs');
 
 // Body Parser Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 
@@ -82,10 +82,6 @@ app.get('*', function(req, res, next){
   next();
 });
 
-app.use(function (req, res, next) {
-  res.locals.login = req.isAuthenticated();
-  next();
-});
 // Home route
 
 app.get('/', function(req, res, next){

@@ -18,13 +18,7 @@ router.get('/registeritem',function(req,res){
 });
   
 router.post('/registeritem',function(req,res){
-  const itemname = req.body.itemname;
-  const itemprice = req.body.itemprice;
-  const description = req.body.description;
-  const username = req.body.user;
 
-  
-  
   req.checkBody('itemname', 'Item Name is required').notEmpty();
   req.checkBody('itemprice', 'Item Price is required').notEmpty();
   req.checkBody('description', 'Description is required').notEmpty();
@@ -37,12 +31,13 @@ router.post('/registeritem',function(req,res){
     });
   }
   else{
-    let newItem = new Items({
-        itemname:itemname,
-        itemprice:itemprice,
-        owner: username,
-        description:description
-    });
+    let newItem = new Items();
+    newItem.itemname = req.body.itemname,
+    newItem.itemprice = req.body.itemprice,
+    newItem.username =  req.user._id,
+    newItem.description = req.body.description
+    
+    
 
     newItem.save(function(err){
       if(err){
@@ -51,7 +46,7 @@ router.post('/registeritem',function(req,res){
       } 
       else {
         req.flash('success','Item registered');
-        res.redirect('/login');
+        res.redirect('/');
       }
     })
   }
