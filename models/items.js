@@ -19,6 +19,9 @@ const itemSchema = mongoose.Schema({
         type: String,
         require :true,
     },
+    img:{ 
+        data: Buffer, contentType: String 
+    },  
 })
 
 const ItemStore = module.exports = mongoose.model('Items', itemSchema);
