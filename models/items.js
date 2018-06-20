@@ -20,9 +20,16 @@ const itemSchema = mongoose.Schema({
         require :true,
     },
     itemimageupload:{ 
-        //data: Buffer, contentType: String 
         type: String,
+        //data: Buffer,
+        //contentType: String,
         require :true,
+    },
+    _id: {
+        ObjectID:{
+            type: String,
+            require : true,
+        },
     },
 })
 

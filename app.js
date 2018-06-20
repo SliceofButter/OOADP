@@ -82,7 +82,13 @@ app.get('*', function(req, res, next){
   res.locals.user = req.user || null;
   next();
 });
-
+/*//Image Config
+app.use(multer({ 
+  dest: './public/itempic',
+  rename: function (req,res,fieldname, filename) {
+    return filename;
+  },
+ }));*/
 // Home route
 
 app.get('/', function(req, res, next){
