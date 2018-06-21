@@ -43,12 +43,12 @@ router.get('/product',function(req,res){
         });
       }
       else{
-        itemimageupload = itemlist[i][0],
-        description= itemlist[i][1],
-        username = itemlist[i][2],
-        itemprice = itemlist[i][3],
-        itemname = itemlist[i][4],
-        _id = itemlist[i][6]
+        itemimageupload = itemlist[i][1],
+        description= itemlist[i][2],
+        username = itemlist[i][3],
+        itemprice = itemlist[i][4],
+        itemname = itemlist[i][5],
+        _id = itemlist[i][0]
         };
     })
   );
@@ -66,13 +66,11 @@ router.get('/registeritem',function(req,res){
 });
   
 
-router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
-
-                                                  
+router.post('/registeritem',upload.single('itemimageupload'),function(req,res){                                                                              
   req.checkBody('itemname', 'Item Name is required').notEmpty();
   req.checkBody('itemprice', 'Item Price is required').notEmpty();
   req.checkBody('description', 'Description is required').notEmpty();
-  req.checkBody('itemimageupload', 'Image is required').notEmpty();
+  //req.checkBody('itemimageupload', 'Image is required').notEmpty();
 
   let errors = req.validationErrors();
 
@@ -85,11 +83,10 @@ router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
     let newItem = new Items();
     newItem.itemname = req.body.itemname,
     newItem.itemprice = req.body.itemprice,
-    newItem.username =  req.user._id,
+    newItem.username =  req.user.username,
+    //newItem.username =  req.user._id,
     newItem.description = req.body.description,
-    newItem.itemimageupload = req.body.itemimageupload,
-    //newItem.img.data = fsfs.readFileSync(req.files.userPhoto.path);
-    //newItem.img.contentType = 'image/png';
+    newItem.itemimageupload = req.file.originalname,
     //newItem.save();
     
     
