@@ -1,15 +1,11 @@
 extends layout
 block content
     //Content
-    h3( id="meow" style='text-align:center;font-weight:bold;') Transactions
-    #containerover
-        #container1
-            p test
-        #container2
-            p test 2
-        #container3
-            p test 3 
-    form(method='POST', action='/transaction')
-        #form-group        
-        input.btn.btn-primary(type='submit',value='Submit')        
+    h3#meow(style='text-align:center;font-weight:bold;') Transactions
+    a(href='#cats') Cats
+    #cats.modal
+        .modal-container
+            p I love cats
+            a(href='#') Close
+      
     // Footer
