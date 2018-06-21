@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    form(method='POST', action='/products')
+    each datas, i in data
+        img(src="#{datas.itemimageupload}" alt="IMG")
+        <p>#{datas.itemname}</p>
+        <p>#{datas.itemprice}</p>

@@ -20,6 +20,7 @@ const userSchema = mongoose.Schema({
         require :true,
     },
     bio: String
-})
+})    
+
 
 const User = module.exports = mongoose.model('User', userSchema);
