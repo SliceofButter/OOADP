@@ -2,7 +2,7 @@ extends layout
 
 block content
   h3(id="meow" style="text-align:center;font-weight:bold;") Register Item
-  form(method='POST', action='/registeritem')
+  form(method='POST', action='/registeritem', enctype='multipart/form-data')
     #form-group
       label Item Name:
       input.form-control(name='itemname',type='text')
@@ -15,6 +15,6 @@ block content
     #form-group
       label Image of Item:
       br
-      input(name='itemimageupload',enctype="multipart/form-data",type='file',method="post")
+      input(name='itemimageupload',type='file')
     br
-    input.btn.btn-primary(type='submit',value='Submit',method="post")
+    input.btn.btn-primary(type='submit',value='Submit')
