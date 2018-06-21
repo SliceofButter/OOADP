@@ -16,10 +16,9 @@ let User = require('../models/user');
 var storage = multer.diskStorage({
   destination: './public/itempic/',
   filename: function (req, file, cb) {
-      cb(null, file.originalname + '-' + Date.now())
+      cb(null, file.originalname)
 }
-});
-
+  });
 var upload = multer({
   storage: storage,
   limits: {
@@ -56,7 +55,7 @@ router.get('/product',function(req,res){
   var itemlist = Items.find({},function(err, data) {
     res.render('product',{
       username : req.user,
-      data:data
+      data:data 
     })
     }); 
 }); 
@@ -67,49 +66,45 @@ router.get('/registeritem',function(req,res){
 });
   
 
-router.post('/registeritem',upload.single('itemimageupload'),(req,res) => {
-  console.log(req.file)
-  // req.checkBody('itemname', 'Item Name is required').notEmpty();
-  // req.checkBody('itemprice', 'Item Price is required').notEmpty();
-  // req.checkBody('description', 'Description is required').notEmpty();
-  // req.checkBody('itemimageupload', 'Image is required').notEmpty();
+router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
 
-  // let errors = req.validationErrors();
+                                                  
+  req.checkBody('itemname', 'Item Name is required').notEmpty();
+  req.checkBody('itemprice', 'Item Price is required').notEmpty();
+  req.checkBody('description', 'Description is required').notEmpty();
+  req.checkBody('itemimageupload', 'Image is required').notEmpty();
 
-  // if(errors){
-  //   res.render('registeritem', {
-  //     errors:errors
-  //   });
-  // }
-  // else{
-  //   let newItem = new Items();
-  //   newItem.itemname = req.body.itemname,
-  //   newItem.itemprice = req.body.itemprice,
-  //   newItem.username =  req.user._id,
-  //   newItem.description = req.body.description,
-  //   newItem.itemimageupload = req.body.itemimageupload,
+  let errors = req.validationErrors();
+
+  if(errors){
+    res.render('registeritem', {
+      errors:errors
+    });
+  }
+  else{
+    let newItem = new Items();
+    newItem.itemname = req.body.itemname,
+    newItem.itemprice = req.body.itemprice,
+    newItem.username =  req.user._id,
+    newItem.description = req.body.description,
+    newItem.itemimageupload = req.body.itemimageupload,
+    //newItem.img.data = fsfs.readFileSync(req.files.userPhoto.path);
+    //newItem.img.contentType = 'image/png';
+    //newItem.save();
     
     
 
-  //   newItem.save(function(err){
-  //     if(err){
-  //       console.log(err);
-  //       return;
-  //     } 
-  //     else {
-  //       req.flash('success','Item registered');
-  //       res.redirect('/');
-  //     }
-  //   })
-  // }
-  
-  
-  /*User.findById(req.user, function(err, user){
-    res.render('registeritem', { title: 'product', user: user })
-    console.log(user)
-  })*/
-  res.redirect('/');
-});
+    newItem.save(function(err){
+      if(err){
+        console.log(err);
+        return;
+      } 
+      else {
+        req.flash('success','Item registered');
+        res.redirect('/');
+      }
+    })
+  }
   
   
   /*User.findById(req.user, function(err, user){
@@ -117,7 +112,7 @@ router.post('/registeritem',upload.single('itemimageupload'),(req,res) => {
     console.log(user)
   })*/
   //res.render('registeritem');
-
+});
 
   
 module.exports = router;

@@ -19,11 +19,17 @@ const itemSchema = mongoose.Schema({
         type: String,
         require :true,
     },
+    //this will throw the image into project files
     itemimageupload:{ 
         type: String,
         //data: Buffer,
         //contentType: String,
         require :true,
+    },
+    //this will upload to mongodb
+    img:{
+        data: Buffer,
+        contentType: String,
     },
     /*_id: {
         ObjectID:{
