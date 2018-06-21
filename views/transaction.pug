@@ -2,6 +2,11 @@ extends layout
 block content
     //Content
     h3#meow(style='text-align:center;font-weight:bold;') Transactions
-    a(href='/') Cats
+    each datas, i in data
+        p Transaction ID: #{testID}
+        p #{datas.itemname}
+        p #{datas.itemprice}
+        p Seller: #{datas.username}
+        p Date Purchased:#{currDate}
     
     // Footer
