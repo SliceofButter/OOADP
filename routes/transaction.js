@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const uuidV4 = require('uuid/v4');
+const userfinder = require('./users.js');
 
+let Items = require('../models/items');
 
 router.get('/transaction',function(req,res){
     res.render('transaction')
