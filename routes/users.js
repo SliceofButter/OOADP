@@ -108,9 +108,14 @@ router.post('/register', function(req, res){
   router.get('/profile', function(req, res, next){
     User.findById(req.user, function(err, user){
       Pic.findById(user._id, function(err, pic){
-        res.render('profile', {
+        if (pic != null || user.bio !=null){
+          res.render('profile', {
+          bio : user.bio,    
           pic: pic.dp
         });
+        } else {
+          res.render('profile')
+        }
       })
   });
 });
@@ -136,6 +141,27 @@ router.post('/register', function(req, res){
       }
     });
   });
+  router.get('/bio', function(req, res, next){
+    res.render('bio', { title: 'bio'})
+});
+
+router.post('/bio',(req, res) => {
+  query = {_id : req.user._id};
+
+  let about = {}
+  about.bio = req.body.Bio;
+
+  User.findByIdAndUpdate(query,about,function(err){
+    if(err){
+      console.log(err);
+      return;
+    } else {
+      req.flash('success','bio update');
+      res.redirect('/profile');
+    }
+  });
+});
+
   // router.post('/settings', upload.single('imageupload'),(req, res) => {
   //   var tmp_path = req.file.path;
   //   var target_path = 'public/profilepic/' + req.file.originalname;

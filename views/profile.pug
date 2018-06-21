@@ -2,4 +2,7 @@ if user
   p Hello, #{user.username}, good to see you!
   p
   | Profile Pic, 
-  img(src="/profilepic/" + pic)
+  if pic != null
+    img(title='profile image', style='border-radius: 50%', width='150', height='150', src="/profilepic/" + pic)
+  if bio != null  
+    p #{bio}
