@@ -55,7 +55,7 @@ router.get('/product',function(req,res){
   var itemlist = Items.find({},function(err, data) {
     res.render('product',{
       username : req.user,
-      data:data 
+      data:data
     })
     }); 
 }); 
@@ -88,7 +88,6 @@ router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
     newItem.description = req.body.description,
     newItem.itemimageupload = req.file.originalname,
     //newItem.save();
-    
     
 
     newItem.save(function(err){
