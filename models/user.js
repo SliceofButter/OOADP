@@ -19,7 +19,8 @@ const userSchema = mongoose.Schema({
         type:String,
         require :true,
     },
-    bio: String
+    bio: String,
+    dp:String,
 })    
 
 

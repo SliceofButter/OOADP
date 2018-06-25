@@ -6,6 +6,15 @@ const multer = require('multer');
 const fs = require('fs');
 var IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
+function ensureAuthenticated(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  } else {
+    req.flash('danger', 'Please login');
+    res.redirect('/login');
+  }
+}
+
 // img path
 var storage = multer.diskStorage({
   destination: './public/profilepic/',
@@ -19,13 +28,11 @@ var upload = multer({
   limits: {
     fileSize: 10000000
   },
-  
 });
 
 // Bring in user model
 
 let User = require('../models/user');
-let Pic = require('../models/profilePic');
 
 // Register Form
 router.get('/register',function(req,res){
@@ -105,43 +112,42 @@ router.post('/register', function(req, res){
   // router.get('/profile', function(req, res, next){
   //       res.render('profile', { title: 'profile', user: req.user });
   //     });
-  router.get('/profile', function(req, res, next){
+router.get('/profile',ensureAuthenticated, function(req, res, next){
     User.findById(req.user, function(err, user){
-      Pic.findById(user._id, function(err, pic){
-        if (pic != null || user.bio !=null){
+        if (user.dp != null || user.bio !=null){
           res.render('profile', {
           bio : user.bio,    
-          pic: pic.dp
+          pic: user.dp
         });
         } else {
           res.render('profile')
         }
       })
   });
-});
 
-  router.get('/settings', function(req, res, next){
+
+router.get('/settings', function(req, res, next){
       res.render('editProfile', { title: 'settings'})
   });
 
-  router.post('/settings', upload.single('imageupload'),(req, res) => {
+router.post('/settings', upload.single('imageupload'),(req, res) => {
     console.log(req.file)
-    let imageData = new Pic({
-      _id: req.user._id,
-      username: req.user.username,
-      dp: req.file.originalname
-    })
-    imageData.save(function(err){
-      if(err){
-        console.log(err);
-        return;
-      } else {
-        req.flash('success','pic uploaded');
-        res.redirect('/profile');
-      }
-    });
-  });
-  router.get('/bio', function(req, res, next){
+    User.findById(req.user, function(err, user){
+      query = {_id : req.user._id};
+      let photo = {}
+      photo.dp = req.file.originalname
+      User.findByIdAndUpdate(query,photo,function(err){
+        if(err){
+          console.log(err);
+          return;
+        } else {
+          req.flash('success','bio update');
+          res.redirect('/profile');
+        }
+    });   
+});
+
+router.get('/bio', function(req, res, next){
     res.render('bio', { title: 'bio'})
 });
 
@@ -159,6 +165,7 @@ router.post('/bio',(req, res) => {
       req.flash('success','bio update');
       res.redirect('/profile');
     }
+  });
   });
 });
 
@@ -203,14 +210,6 @@ router.post('/bio',(req, res) => {
   // });
 
 
-      
-  // function ensureAuthenticated(req, res, next){
-  //   if(req.isAuthenticated()){
-  //     return next();
-  //   } else {
-  //     req.flash('danger', 'Please login');
-  //     res.redirect('/login');
-  //   }
-  // }
+
 
 module.exports = router;
