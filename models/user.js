@@ -11,10 +11,16 @@ const userSchema = mongoose.Schema({
         type: String,
         require :true,
     },
+    isVerified: { 
+        type: Boolean, 
+        default: false
+    },
     password:{
         type: String,
         require :true,
     },
+    passwordResetToken: String,
+    passwordResetExpires: Date,
     username:{
         type:String,
         require :true,

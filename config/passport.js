@@ -2,6 +2,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');
 const config = require('../config/database');
 const bcrypt = require('bcryptjs');
+const express = require('express');
 
 module.exports = function(passport){
   // Local Strategy
@@ -13,10 +14,11 @@ module.exports = function(passport){
       if(!user){
         return done(null, false, {message: 'No user found'});
       }
-
+      
       // Match Password
-      bcrypt.compare(password, user.password, function(err, isMatch){
+      bcrypt.compare(password, user.password, function(err, isMatch, req, res){
         if(err) throw err;
+        if (!user.isVerified) return done(null, false, { type: 'not-verified', message: 'Your account has not been verified.' }); 
         if(isMatch){
           return done(null, user);
         } else {

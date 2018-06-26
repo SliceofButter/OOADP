@@ -3,7 +3,10 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const multer = require('multer');
-const fs = require('fs');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const config = require('../config/database');
 var IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
 function ensureAuthenticated(req, res, next){
@@ -33,6 +36,9 @@ var upload = multer({
 // Bring in user model
 
 let User = require('../models/user');
+let Token = require('../models/token');
+
+// router.set('superSecret', config.secret); 
 
 // Register Form
 router.get('/register',function(req,res){
@@ -55,12 +61,13 @@ router.post('/register', function(req, res){
   
     let errors = req.validationErrors();
   
-    if(errors){
-      res.render('register', {
-        errors:errors
-      });
-    } else {
-      let newUser = new User({
+    User.findOne({ email: req.body.email }, function (err, user) {
+ 
+      // Make sure user doesn't already exist
+      if (user) return res.status(400).send({ msg: 'The email address you have entered is already associated with another account.' });
+   
+      // Create and save the user
+      let newUser = new User({ 
         name:name,
         email:email,
         username:username,
@@ -73,20 +80,48 @@ router.post('/register', function(req, res){
             console.log(err);
           }
           newUser.password = hash;
-          newUser.save(function(err){
-            if(err){
-              console.log(err);
-              return;
-            } else {
-              req.flash('success','You are now registered and can log in');
-              res.redirect('/login');
-            }
+          newUser.save(function (err) {
+            if (err) { return res.status(500).send({ msg: err.message }); }
+      
+          // Create a verification token for this user
+            var token = new Token({ _userId: newUser._id, token: crypto.randomBytes(16).toString('hex') });
+    
+            // Save the verification token
+            token.save(function (err) {
+                if (err) { return res.status(500).send({ msg: err.message }); }
+    
+                // Send the email
+                var transporter = nodemailer.createTransport({ host: 'smtp.gmail.com', port:465, secure:true, auth: { user: 'sghawt@gmail.com', pass: 'NYPIT1704' } });
+                var mailOptions = { from: 'sghawt@gmail.com', to: newUser.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' };
+                transporter.sendMail(mailOptions, function (err) {
+                    if (err) { return res.status(500).send({ msg: err.message }); }
+                    res.status(200).send('A verification email has been sent to ' + newUser.email + '.');
+              });
+            });
+          });
           });
         });
       });
-    }
   });
   
+  router.get('/confirmation/:token',function(req,res){
+    Token.findOne({ token: req.params.token }, function (err, token) {
+      if (!token) return res.status(400).send({ type: 'not-verified', msg: 'We were unable to find a valid token. Your token my have expired.' });
+
+      // If we found a token, find a matching user
+      User.findOne({ _id: token._userId }, function (err, user) {
+          if (!user) return res.status(400).send({ msg: 'We were unable to find a user for this token.' });
+          if (user.isVerified) return res.status(400).send({ type: 'already-verified', msg: 'This user has already been verified.' });
+
+          // Verify and save the user
+          user.isVerified = true;
+          user.save(function (err) {
+              if (err) { return res.status(500).send({ msg: err.message }); }
+              res.status(200).send("The account has been verified. Please log in.");
+          });
+      });
+  });
+});
   // Login Form
   router.get('/login', function(req, res){
     res.render('login');
