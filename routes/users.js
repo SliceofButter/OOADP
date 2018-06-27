@@ -61,7 +61,12 @@ router.post('/register', function(req, res){
   
     let errors = req.validationErrors();
   
-    User.findOne({ email: req.body.email }, function (err, user) {
+    if(errors){
+      res.render('register', {
+        errors:errors
+      });
+    } else {
+      User.findOne({ email: req.body.email }, function (err, user) {
  
       // Make sure user doesn't already exist
       if (user) return res.status(400).send({ msg: 'The email address you have entered is already associated with another account.' });
@@ -102,6 +107,7 @@ router.post('/register', function(req, res){
           });
         });
       });
+    }
   });
   
   router.get('/confirmation/:token',function(req,res){
