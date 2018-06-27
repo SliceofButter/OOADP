@@ -4,9 +4,9 @@ block content
     h3#meow(style='text-align:center;font-weight:bold;') Transactions
     each datas, i in data
         p Transaction ID: #{testID}
-        p #{datas.itemname}
-        p #{datas.itemprice}
+        p Item Name: #{datas.itemname}
+        p Item Price: $#{datas.itemprice}
         p Seller: #{datas.username}
-        p Date Purchased:#{currDate}
+        p Status:
     
     // Footer
