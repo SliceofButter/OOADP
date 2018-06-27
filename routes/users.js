@@ -165,7 +165,9 @@ router.get('/profile',ensureAuthenticated, function(req, res, next){
         }
       })
   });
-
+router.get('/password', function(req, res, next){
+    res.render('password', { title: 'password'})
+})
 
 router.get('/settings', function(req, res, next){
       res.render('editProfile', { title: 'settings'})
