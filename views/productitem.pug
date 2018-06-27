@@ -19,6 +19,7 @@ block content
     h4(style="text-align:center;font-weight:bold;") Item Name: #{data.itemname}
     h4(style="text-align:center;font-weight:bold;") Item Price: $#{data.itemprice}
     h5(style="text-align:center;font-weight:bold;") Seller: #{data.username}
+    h5(style="text-align:center;font-weight:bold;") Item's Current Condition: #{data.itemcondition}
     h6(style="text-align:center;font-weight:bold;width:50%;margin-left:25%") Description: #{data.description} 
     if user
       form(method='POST',  action='/productitem/' + data._id)

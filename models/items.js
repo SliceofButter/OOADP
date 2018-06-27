@@ -31,6 +31,10 @@ const itemSchema = mongoose.Schema({
         data: Buffer,
         contentType: String,
     },
+    itemcondition:{
+        type:String,
+        require:true,
+    },
     /*_id: {
         ObjectID:{
             type: String,

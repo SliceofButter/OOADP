@@ -32,11 +32,12 @@ var upload = multer({
 router.get('/productitem/:id', function(req,res){
   var item = Items.findById(req.params.id,function(err,data){
     _id = item[0],
-    itemimageupload = item[1],
-    description= item[2],
-    username = item[3],
-    itemprice = item[4],
-    itemname = item[5],
+    itemcondition = item[1]
+    itemimageupload = item[2],
+    description= item[3],
+    username = item[4],
+    itemprice = item[5],
+    itemname = item[6],
     res.render('productitem', {
       data:data
    });
@@ -71,11 +72,12 @@ router.get('/product',function(req,res){
         });
       }
       else{
-        itemimageupload = itemlist[i][1],
-        description= itemlist[i][2],
-        username = itemlist[i][3],
-        itemprice = itemlist[i][4],
-        itemname = itemlist[i][5],
+        itemcondition = itemlist[i][1]
+        itemimageupload = itemlist[i][2],
+        description= itemlist[i][3],
+        username = itemlist[i][4],
+        itemprice = itemlist[i][5],
+        itemname = itemlist[i][6],
         _id = itemlist[i][0]
         };
     })
@@ -98,6 +100,7 @@ router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
   req.checkBody('itemname', 'Item Name is required').notEmpty();
   req.checkBody('itemprice', 'Item Price is required').notEmpty();
   req.checkBody('description', 'Description is required').notEmpty();
+  //req.checkBody('itemcondition', 'Item Condition is required').notEmpty();
   //req.checkBody('itemimageupload', 'Image is required').notEmpty();
 
   let errors = req.validationErrors();
@@ -116,6 +119,7 @@ router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
     //newItem.username =  req.user._id,
     newItem.description = req.body.description,
     newItem.itemimageupload = req.file.originalname,
+    newItem.itemcondition = req.body.itemcondition,
 
     newTransac.itemname = req.body.itemname,
     newTransac.itemprice = req.body.itemprice,
