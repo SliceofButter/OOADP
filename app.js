@@ -9,7 +9,9 @@ const passport = require('passport');
 const config = require('./config/database');
 const multer = require('multer');
 
-mongoose.connect(config.database);
+mongoose.connect(config.database,{
+  useMongoClient: true,
+});
 let db = mongoose.connection;
 
 // Check connection
