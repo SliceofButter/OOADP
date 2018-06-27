@@ -9,5 +9,6 @@ block content
     h4(style="text-align:center;font-weight:bold;") Item Price: $#{data.itemprice}
     h5(style="text-align:center;font-weight:bold;") Seller: #{data.username}
     h6(style="text-align:center;font-weight:bold;width:50%;margin-left:25%") Description: #{data.description} 
-    input.btn.btn-primary(type='button',value='Accept offer',style="margin-left:39%;margin-top:20px;")
-    input.btn.btn-danger(type='button',value='Reject offer',style="margin-left:1%;margin-top:20px;")
+    if user
+      input.btn.btn-primary(type='button',value='Accept offer',style="margin-left:39%;margin-top:20px;", method='POST', action='/product/' + data._id)
+      input.btn.btn-danger(type='button',value='Reject offer',style="margin-left:1%;margin-top:20px;")

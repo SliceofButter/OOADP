@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+var uuidV4 = require('uuid/v4');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -12,6 +13,7 @@ var IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
 let Items = require('../models/items');
 let User = require('../models/user');
+let Transac = require('../models/transaction');
 
 var storage = multer.diskStorage({
   destination: './public/itempic/',
@@ -38,9 +40,19 @@ router.get('/productitem/:id', function(req,res){
     res.render('productitem', {
       data:data
    });
-   console.log(data)
+   //console.log(data)
   })
 })
+
+router.post('/productitem/:id',(req, res, id) => {
+      let photo = {}
+      photo.status = "Accepting"
+      photo.buyer = req.user
+      Transac.findByIdAndUpdate({_id : req.params.id},photo,function(err){
+        console.log(err)
+  });
+});
+
 
 
 //Product page
@@ -96,6 +108,7 @@ router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
     });
   }
   else{
+    let newTransac = new Transac();
     let newItem = new Items();
     newItem.itemname = req.body.itemname,
     newItem.itemprice = req.body.itemprice,
@@ -103,9 +116,18 @@ router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
     //newItem.username =  req.user._id,
     newItem.description = req.body.description,
     newItem.itemimageupload = req.file.originalname,
-    //newItem.save();
-    
 
+    newTransac.itemname = req.body.itemname,
+    newTransac.itemprice = req.body.itemprice,
+    newTransac.username =  req.user.username,
+    newTransac.description = req.body.description,
+    newTransac.uniqueID = uuidV4(),
+    newTransac.status = 'Pending'
+    
+    newTransac.save(function(err){
+      console.log(err);
+      return;
+    })
     newItem.save(function(err){
       if(err){
         console.log(err);

@@ -110,7 +110,7 @@ let users = require('./routes/users');
 app.use('/', users);
 let productusers = require('./routes/productusers');
 app.use('/', productusers);
-let transactions = require('./routes/transaction');
+let transactions = require('./routes/transactiondetails');
 app.use('/',transactions);
 
 // Start Server

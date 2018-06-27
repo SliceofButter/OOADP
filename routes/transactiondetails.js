@@ -3,17 +3,14 @@ const router = express.Router();
 const uuidV4 = require('uuid/v4');
 const userfinder = require('./users.js');
 
-var testID =uuidV4()
-
-let Items = require('../models/items');
 let User = require('../models/user');
+let Transac = require('../models/transaction');
 
 router.get('/transaction',function(req,res){
         User.findById(req.user, function(err, user){
         })
-        var itemlist = Items.find({},function(err, data) {
+        var translist = Transac.find({},function(err, data) {
             res.render('transaction',{
-            testID,
             username : req.user,
             data:data,
         })

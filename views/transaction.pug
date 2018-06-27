@@ -3,10 +3,12 @@ block content
     //Content
     h3#meow(style='text-align:center;font-weight:bold;') Transactions
     each datas, i in data
-        p Transaction ID: #{testID}
+        p Transaction ID: #{datas.uniqueID}
         p Item Name: #{datas.itemname}
         p Item Price: $#{datas.itemprice}
+        p Buyer: 
         p Seller: #{datas.username}
-        p Status:
+        p Status: #{datas.status}
+        br 
     
     // Footer
