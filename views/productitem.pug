@@ -2,4 +2,12 @@ extends layout
 
 block content
   h3(id="meow" style="text-align:center;font-weight:bold;") Item Page
-  form(method='POST', action='/product/:id')
+  form(method='POST', action='/product/' + _id)
+  container
+    img(style="height:50%;width:50%;text-align:center;display:block;margin-left: auto;margin-right: auto;" src= "/itempic/" + data.itemimageupload )
+    h4(style="text-align:center;font-weight:bold;") Item Name: #{data.itemname}
+    h4(style="text-align:center;font-weight:bold;") Item Price: $#{data.itemprice}
+    h5(style="text-align:center;font-weight:bold;") Seller: #{data.username}
+    h6(style="text-align:center;font-weight:bold;width:50%;margin-left:25%") Description: #{data.description} 
+    input.btn.btn-primary(type='button',value='Accept offer',style="margin-left:39%;margin-top:20px;")
+    input.btn.btn-danger(type='button',value='Reject offer',style="margin-left:1%;margin-top:20px;")

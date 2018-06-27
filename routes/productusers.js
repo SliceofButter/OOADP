@@ -27,8 +27,19 @@ var upload = multer({
   
 });
 //Get Product item page
-router.get('/product/:id', function(req,res){
-  res.render('productitem');
+router.get('/productitem/:id', function(req,res){
+  var item = Items.findById(req.params.id,function(err,data){
+    _id = item[0],
+    itemimageupload = item[1],
+    description= item[2],
+    username = item[3],
+    itemprice = item[4],
+    itemname = item[5],
+    res.render('productitem', {
+      data:data
+   });
+   console.log(data)
+  })
 })
 
 
