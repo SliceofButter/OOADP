@@ -110,7 +110,7 @@ router.post('/register', function(req, res){
     }
   });
   
-  router.get('/confirmation/:token',function(req,res){
+router.get('/confirmation/:token',function(req,res){
     Token.findOne({ token: req.params.token }, function (err, token) {
       if (!token) return res.status(400).send({ type: 'not-verified', msg: 'We were unable to find a valid token. Your token my have expired.' });
 
@@ -132,7 +132,7 @@ router.post('/register', function(req, res){
   router.get('/login', function(req, res){
     res.render('login');
   });
-  
+
   // Login Process
   router.post('/login', function(req, res, next){
     passport.authenticate('local', {
@@ -168,7 +168,38 @@ router.get('/profile',ensureAuthenticated, function(req, res, next){
 router.get('/password', function(req, res, next){
     res.render('password', { title: 'password'})
 })
-
+router.post('/password', function(req, res, next){
+  req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+  
+    let errors = req.validationErrors();
+  
+    if(errors){
+      res.render('password', {
+        errors:errors
+      });
+    } else {
+      query = {_id : req.user._id};
+      let ppl = {}
+      ppl.password = req.body.password
+      bcrypt.genSalt(10, function(err, salt){
+        bcrypt.hash(ppl.password, salt, function(err, hash){
+          if(err){
+            console.log(err);
+          }
+          ppl.password = hash;
+          User.findByIdAndUpdate(query,ppl,function(err){
+            if(err){
+              console.log(err);
+              return;
+            } else {
+              req.flash('success','password update');
+              res.redirect('/profile');
+            }
+        });   
+      });
+    });
+  }
+});
 router.get('/settings', function(req, res, next){
       res.render('editProfile', { title: 'settings'})
   });
