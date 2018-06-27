@@ -189,6 +189,7 @@ router.post('/settings', upload.single('imageupload'),(req, res) => {
         }
     });   
 });
+});
 
 router.get('/bio', function(req, res, next){
     res.render('bio', { title: 'bio'})
@@ -210,7 +211,7 @@ router.post('/bio',(req, res) => {
     }
   });
   });
-});
+
 
   // router.post('/settings', upload.single('imageupload'),(req, res) => {
   //   var tmp_path = req.file.path;
