@@ -26,6 +26,11 @@ var upload = multer({
   },
   
 });
+//Get Product item page
+router.get('/product/:id', function(req,res){
+  res.render('productitem');
+})
+
 
 //Product page
 router.get('/product',function(req,res){
