@@ -28,22 +28,66 @@ var upload = multer({
   },
   
 });
+// router.delete('/productitem/:id',function(req,res){
+//   if(!req.user._id){
+//     res.status(500).send();
+//   }
+//   let query = {_id:req.params.id}
+
+//   Items.findById(req.params.id, function(err, article){
+//     if(article.username != req.user._id){
+//       res.status(500).send();
+//     } else {
+//       Items.remove(query, function(err){
+//         if(err){
+//           console.log(err);
+//         }
+//         res.send('Success');
+//         res.redirect('/');
+//       });
+//     }
+//   });
+//   })
+
+router.delete('/productitem/:id',function(req,res){
+  Items.findById(req.params.id)
+    .exec(function(err, entries) {
+        // changed `if (err || !doc)` to `if (err || !entries)`
+        if (err || !entries) {
+            res.statusCode = 404;
+            res.send({});
+        } else {
+            entries.remove(function(err) {
+                if (err) {
+                    res.statusCode = 403;
+                    res.send(err);
+                } else {
+                    //res.send({});
+                    res.render('home', {});
+                }
+            });
+        }
+    });
+});
+
 //Get Product item page
 router.get('/productitem/:id', function(req,res){
-  var item = Items.findById(req.params.id,function(err,data){
-    _id = item[0],
-    itemcondition = item[1]
-    itemimageupload = item[2],
-    description= item[3],
-    username = item[4],
-    itemprice = item[5],
-    itemname = item[6],
-    res.render('productitem', {
-      data:data
-   });
+    var item = Items.findById(req.params.id,function(err,data){
+      _id = item[0],
+      itemcondition = item[1]
+      itemimageupload = item[2],
+      description= item[3],
+      username = item[4],
+      itemprice = item[5],
+      itemname = item[6],
+      res.render('productitem', {
+        data:data
+    });
    //console.log(data)
   })
-})
+  })
+
+
 
 router.post('/productitem/:id',(req, res, id) => {
       let photo = {}

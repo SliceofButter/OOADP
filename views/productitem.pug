@@ -2,17 +2,6 @@ extends layout
 
 block content
   h3(id="meow" style="text-align:center;font-weight:bold;") Item Page
-  script.
-    $('button').on('click', function() {
-    $.ajax({
-    type: 'POST',
-    url: '/productitem/' + data._id,
-    data: { status: 'Accepted' },
-    success: function(resultData) {
-    alert(resultData);
-    }
-    });
-    });
   //form(method='POST', action='/product/' + _id)
   container
     img(style="height:50%;width:50%;text-align:center;display:block;margin-left: auto;margin-right: auto;" src= "/itempic/" + data.itemimageupload )
@@ -22,7 +11,20 @@ block content
     h5(style="text-align:center;font-weight:bold;") Item's Current Condition: #{data.itemcondition}
     h6(style="text-align:center;font-weight:bold;width:50%;margin-left:25%") Description: #{data.description} 
     if user
-      form(method='POST',  action='/productitem/' + data._id)
-        input.btn.btn-primary(type='button',value='Accept offer',style="margin-left:39%;margin-top:20px;")
-        input.btn.btn-danger(type='button',value='Reject offer',style="margin-left:1%;margin-top:20px;")
-
+      //form(method='POST',  action='/productitem/' + data._id)
+        input.btn.btn-primary(type='button',value='Accept offer',style="margin-left:32%;margin-top:20px;")
+        input.btn.btn-danger(type='button',value='Reject offer',style="margin-left:2%;margin-top:20px;")
+      form(method='POST', action='/productitem/' + data._id +'?_method=DELETE' style="margin-left:2%;margin-top:20px;")
+        input.btn.btn-primary(type='submit' value='Delete this useless item') 
+    //- a.btn.btn-danger.delete-article(href='#',data-id=data.usernameid) Delete
+    //- script.
+    //-   $('button').on('click', function() {
+    //-   $.ajax({
+    //-   type: 'POST',
+    //-   url: '/productitem/' + data._id,
+    //-   data: { status: 'Accepted' },
+    //-   success: function(resultData) {
+    //-   alert(resultData);
+    //-   }
+    //-   });
+    //-   });

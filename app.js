@@ -8,6 +8,8 @@ const session = require('express-session');
 const passport = require('passport');
 const config = require('./config/database');
 const multer = require('multer');
+var methodOverride = require('method-override');
+
 
 mongoose.connect(config.database,{
   useMongoClient: true,
@@ -28,7 +30,7 @@ let User = require('./models/user');
 
 // Init App
 const app = express();
-
+app.use(methodOverride('_method'));
 // Load View Engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
