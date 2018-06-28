@@ -31,7 +31,11 @@ const TransSchema = mongoose.Schema({
     buyer:{
         type: String,
         require: true,
-    }
+    },
+    // itemimageupload:{
+    //     type:String,
+    //     require:true,
+    // },
 
 })
 

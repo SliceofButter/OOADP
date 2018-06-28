@@ -2,13 +2,15 @@ extends layout
 block content
     //Content
     h3#meow(style='text-align:center;font-weight:bold;') Transactions
-    each datas, i in data
-        p Transaction ID: #{datas.uniqueID}
-        p Item Name: #{datas.itemname}
-        p Item Price: $#{datas.itemprice}
-        p Buyer: 
-        p Seller: #{datas.username}
-        p Status: #{datas.status}
-        br 
+    if user
+        each datas, i in data
+            each datas2, i in data2
+                p Transaction ID: #{datas2.uniqueID}
+                a(href='/productitem/' + datas._id) Item Name: #{datas.itemname}
+                p Item Price: $#{datas.itemprice}
+                p Buyer: 
+                p Seller: #{datas.username}
+                p Status: #{datas2.status}
+                br 
     
     // Footer
