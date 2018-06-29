@@ -83,16 +83,15 @@ router.get('/productitem/:id', function(req,res){
       res.render('productitem', {
         data:data
     });
-   //console.log(data)
+  //  rs
   })
   })
 
 
 
-router.post('/productitem/:id',(req, res, id) => {
+router.post('/productitem/:id',(req, res) => {
       let photo = {}
       photo.status = "Accepting"
-      photo.buyer = req.user
       Transac.findByIdAndUpdate({_id : req.params.id},photo,function(err){
         console.log(err)
   });
@@ -104,7 +103,7 @@ router.post('/productitem/:id',(req, res, id) => {
 router.get('/product',function(req,res){
   var itemlist = Items.find({},function(err, docs) {
     if (!err){ 
-        console.log(docs);
+        // console.log(docs);
     } else {throw err;}
   });
   var i;

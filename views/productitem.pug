@@ -11,8 +11,7 @@ block content
     h5(style="text-align:center;font-weight:bold;") Item's Current Condition: #{data.itemcondition}
     h6(style="text-align:center;font-weight:bold;width:50%;margin-left:25%") Description: #{data.description} 
     if user
-      form(method='POST',  action='/productitem/' + data._id)
-        input.btn.btn-primary(type='button',value='Accept offer',style="margin-left:44%;margin-top:20px;")
+      input#accept-offer.btn.btn-primary(href='#',data-id=data._id,type='button',value='Accept offer',style="margin-left:44%;margin-top:20px;")
       form(method='POST',  action='/productitem/' + data._id)
         input.btn.btn-danger(type='button',value='Reject offer',style="margin-left:44%;margin-top:20px;")
       form(method='POST', action='/productitem/' + data._id +'?_method=DELETE' style="margin-left:2%;margin-top:20px;")
