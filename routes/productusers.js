@@ -66,7 +66,7 @@ router.delete('/productitem/:id',function(req,res){
                 } else {
                     //res.send({});
                     alert('Item has been successfully deleted');
-                    res.render('home', {});
+                    res.redirect('/')
                 }
             });
         }
