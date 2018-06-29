@@ -1,8 +1,8 @@
 extends layout
 block content
     //Content
-    h3#meow(style='text-align:center;font-weight:bold;') Transactions
-    h5 Transactions(Seller)
+    h3#meow(style='text-align:center;font-weight:bold;') Offers
+    h5 Offers(Seller)
         each datas, i in data
             if user.username == datas.username
                 p Transaction ID: #{datas.uniqueID}
@@ -12,7 +12,7 @@ block content
                 p Seller: #{datas.username}
                 p Status: #{datas.status}
                 br 
-    h5 Transactions(Buyer)
+    h5 Offers(Buyer)
         each datas, i in data
             if user.username == datas.buyer
                 p Transaction ID: #{datas.uniqueID}
