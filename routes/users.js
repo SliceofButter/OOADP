@@ -37,6 +37,7 @@ var upload = multer({
 
 let User = require('../models/user');
 let Token = require('../models/token');
+let Item = require('../models/items');
 
 // router.set('superSecret', config.secret); 
 
@@ -153,6 +154,9 @@ router.get('/confirmation/:token',function(req,res){
   // router.get('/profile', function(req, res, next){
   //       res.render('profile', { title: 'profile', user: req.user });
   //     });
+router.get('/profile', function(req, res, next){
+
+})
 router.get('/profile',ensureAuthenticated, function(req, res, next){
     User.findById(req.user, function(err, user){
         if (user.dp != null || user.bio !=null){
