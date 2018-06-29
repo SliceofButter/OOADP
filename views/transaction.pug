@@ -4,13 +4,12 @@ block content
     h3#meow(style='text-align:center;font-weight:bold;') Transactions
     if user
         each datas, i in data
-            each datas2, i in data2
-                p Transaction ID: #{datas2.uniqueID}
+                p Transaction ID: #{datas.uniqueID}
                 a(href='/productitem/' + datas._id) Item Name: #{datas.itemname}
                 p Item Price: $#{datas.itemprice}
-                p Buyer: 
+                p Customer: #{datas.buyer}
                 p Seller: #{datas.username}
-                p Status: #{datas2.status}
+                p Status: #{datas.status}
                 br 
     
     // Footer

@@ -35,6 +35,18 @@ const itemSchema = mongoose.Schema({
         type:String,
         require:true,
     },
+    uniqueID:{
+        type: String,
+        require: true,
+    },
+    status:{
+        type: String,
+        require: true,
+    },
+    buyer:{
+        type: String,
+        require: true,
+    }
     /*_id: {
         ObjectID:{
             type: String,

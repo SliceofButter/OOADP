@@ -93,11 +93,10 @@ router.get('/productitem/:id', function(req,res){
 
 
 router.post('/productitem/:id',(req, res) => {
-      let photo = {}
-      photo.status = "Accepting"
-      Transac.findByIdAndUpdate({_id : req.params.id},photo,function(err){
-        console.log(err)
-  });
+    Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Accepted', buyer: req.user.username}}, { new: true },function(err,transac){
+      if (err) return handleError(err);
+      res.send(transac);
+});
 });
 
 
