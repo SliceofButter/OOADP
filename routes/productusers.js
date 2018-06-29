@@ -8,6 +8,8 @@ const multer = require('multer');
 const userfinder = require('./users.js');
 const config = require('../config/database');
 const jinja = require('jinja-js');
+const alert = require('alert-node')
+
 var IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
 
@@ -63,6 +65,7 @@ router.delete('/productitem/:id',function(req,res){
                     res.send(err);
                 } else {
                     //res.send({});
+                    alert('Item has been successfully deleted');
                     res.render('home', {});
                 }
             });
@@ -182,8 +185,8 @@ router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
         return;
       } 
       else {
-        req.flash('success','Item registered');
         res.redirect('/');
+        alert('Item is successfully registered!')
       }
     })
   }
