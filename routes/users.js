@@ -37,7 +37,8 @@ var upload = multer({
 
 let User = require('../models/user');
 let Token = require('../models/token');
-let Item = require('../models/items');
+let Items = require('../models/items');
+
 
 // router.set('superSecret', config.secret); 
 
@@ -154,21 +155,29 @@ router.get('/confirmation/:token',function(req,res){
   // router.get('/profile', function(req, res, next){
   //       res.render('profile', { title: 'profile', user: req.user });
   //     });
-router.get('/profile', function(req, res, next){
 
-})
 router.get('/profile',ensureAuthenticated, function(req, res, next){
+  var item = Items.find(req.params.username,function(err,data){
+    _id = item[0],
+    itemcondition = item[1]
+    itemimageupload = item[2],
+    description= item[3],
+    username = item[4],
+    itemprice = item[5],
+    itemname = item[6]
     User.findById(req.user, function(err, user){
-        if (user.dp != null || user.bio !=null){
-          res.render('profile', {
-          bio : user.bio,    
-          pic: user.dp
-        });
-        } else {
-          res.render('profile')
-        }
-      })
-  });
+      if (user.dp != null || user.bio !=null){
+        res.render('profile', {
+        bio : user.bio,    
+        pic: user.dp,
+        data: data,
+      });
+      } else {
+        res.render('profile')
+      }
+    })
+  })
+});
 router.get('/password', function(req, res, next){
     res.render('password', { title: 'password'})
 })

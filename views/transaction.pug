@@ -12,7 +12,7 @@ block content
                 p Seller: #{datas.username}
                 p Status: #{datas.status}
                 br 
-    h5 Transactions(Buyer)
+     h5 Transactions(Buyer)
         each datas, i in data
             if user.username == datas.buyer
                 p Transaction ID: #{datas.uniqueID}
@@ -21,6 +21,6 @@ block content
                 p Customer: #{datas.buyer}
                 p Seller: #{datas.username}
                 p Status: #{datas.status}
-                br                 
+                br           
     
     // Footer
