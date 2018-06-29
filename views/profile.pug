@@ -17,15 +17,15 @@ block content
             .card-header
               | Bio
             .card-body #{bio}
-  h3(id="meow" style="text-align:center;font-weight:bold;") My Item Listing
-    // Block2
-    .container
-      .block2 
-      .row
-      each datas, i in data
-        .col-xs-4
-          img(alt="IMG-PRODUCT" style="width:125px;height:160px;" src= "/itempic/" + datas.itemimageupload )
-          .block2-txt.p-t-20
-            a.block2-name.dis-block.s-text3.p-b-5(href="productitem/" + datas._id)
-                p(style="font-weight:bold;") #{datas.itemname} 
-  .col-sm-12.col-md-6.col-lg-4.p-b-50         
+          br    
+        .col-sm-12        
+          .card
+              .card-header
+                 My Item Listing
+                    .row
+                        each datas, i in data
+                                img(alt="IMG-PRODUCT" style="width:125px;height:160px;" src= "/itempic/" + datas.itemimageupload )
+                                .col-sm-2
+                                    a.block2-name.dis-block.s-text3.p-b-5(href="productitem/" + datas._id)
+                                        p(style="font-weight:bold;") #{datas.itemname} 
+        .col-sm-12.col-md-6.col-lg-4.p-b-50         

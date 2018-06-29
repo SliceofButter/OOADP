@@ -156,7 +156,7 @@ router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
     });
   }
   else{
-    let newTransac = new Transac();
+   // let newTransac = new Transac();
     let newItem = new Items();
     newItem.itemname = req.body.itemname,
     newItem.itemprice = req.body.itemprice,
@@ -165,8 +165,9 @@ router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
     newItem.description = req.body.description,
     newItem.itemimageupload = req.file.originalname,
     newItem.itemcondition = req.body.itemcondition,
+    newItem.uniqueID = uuidV4(),
 
-    newTransac.itemname = req.body.itemname,
+    /*newTransac.itemname = req.body.itemname,
     newTransac.itemprice = req.body.itemprice,
     newTransac.username =  req.user.username,
     newTransac.description = req.body.description,
@@ -176,7 +177,7 @@ router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
     newTransac.save(function(err){
       console.log(err);
       return;
-    })
+    }) */
     newItem.save(function(err){
       if(err){
         console.log(err);
