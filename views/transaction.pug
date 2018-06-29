@@ -2,8 +2,9 @@ extends layout
 block content
     //Content
     h3#meow(style='text-align:center;font-weight:bold;') Transactions
-    if user
+    h5 Transactions(Seller)
         each datas, i in data
+            if user.username == datas.username
                 p Transaction ID: #{datas.uniqueID}
                 a(href='/productitem/' + datas._id) Item Name: #{datas.itemname}
                 p Item Price: $#{datas.itemprice}
@@ -11,5 +12,15 @@ block content
                 p Seller: #{datas.username}
                 p Status: #{datas.status}
                 br 
+    h5 Transactions(Buyer)
+        each datas, i in data
+            if user.username == datas.buyer
+                p Transaction ID: #{datas.uniqueID}
+                a(href='/productitem/' + datas._id) Item Name: #{datas.itemname}
+                p Item Price: $#{datas.itemprice}
+                p Customer: #{datas.buyer}
+                p Seller: #{datas.username}
+                p Status: #{datas.status}
+                br                 
     
     // Footer
