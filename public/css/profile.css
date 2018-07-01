@@ -1,11 +1,30 @@
-
-
-.details {
-    display: block;
-    display:table-cell;
-    margin-right:50px;
-    float: right;
-    position: relative;
-    top: 10px;
-}
-
+.profilecenter{
+    text-align:center;
+  
+  }
+  
+  
+  .information{
+    color:#b2b8bd;
+  }
+  
+  
+  .profilepic{
+  
+    width:70px;
+    border-style: solid black;
+  }
+  
+  .card-title{
+    font-weight: bold;
+    font-size: 1.2em;
+    padding:0;
+  }
+  
+  
+  .profilenav{
+    margin-right: 2.5em;
+    color:white;
+    cursor:pointer;
+  }
+  
