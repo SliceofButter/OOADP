@@ -1,0 +1,71 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    |   
+    title Payment card checkout
+    |   
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons", rel="stylesheet")
+    |   
+    |   
+    |       
+    link(rel="stylesheet", href="css/payment.css")
+  body
+    .tips
+      | Payment card number: (4) VISA, (51 -> 55) MasterCard, (36-38-39) DinersClub, (34-37) American Express, (65) Discover, (5019) dankort
+    .container
+      .col1
+        .card
+          .front
+            .type
+              img.bankid
+            |         
+            span.chip
+            |         
+            span.card_number ●●●● ●●●● ●●●● ●●●● 
+            |         
+            .date
+              span.date_value MM / YYYY
+            |         
+            span.fullname FULL NAME
+          |       
+          .back
+            .magnetic
+            |         
+            .bar
+            |         
+            span.seccode ●●●
+            |         
+            span.chip
+            span.disclaimer
+              | This card is property of Random Bank of Random corporation. 
+              br
+              |  If found please return to Random Bank of Random corporation - 21968 Paris, Verdi Street, 34
+      |   
+      .col2
+        label Card Number
+        |     
+        input.number(type="text", ng-model="ncard", maxlength="19", onkeypress="return event.charCode >= 48 && event.charCode <= 57")
+        |     
+        label Cardholder name
+        |     
+        input.inputname(type="text", placeholder="")
+        |     
+        label Expiry date
+        |     
+        input.expire(type="text", placeholder="MM / YYYY")
+        |     
+        label Security Number
+        |     
+        input.ccv(type="text", placeholder="CVC", maxlength="3", onkeypress="return event.charCode >= 48 && event.charCode <= 57")
+        |     
+        button.buy
+          i.material-icons lock
+          |  Pay --.-- €
+    |   
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js")
+    |   
+    |     
+    script(src="js/payment.js")
