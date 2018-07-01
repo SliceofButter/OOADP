@@ -106,6 +106,9 @@ app.get('/test', function(req, res){
   res.render('test');
 })
 
+app.get('/payment', function(req, res){
+  res.render('payment');
+})
 // Route Files
 
 let users = require('./routes/users');
