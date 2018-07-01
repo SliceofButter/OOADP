@@ -98,19 +98,18 @@ router.get('/productitem/:id', function(req,res){
 
 
 
-router.post('/productitem/:id',(req, res) => {
+router.post('/productitem/:id',(req, res, transac) => {
   if(accept){
-    Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Accepted', buyer: req.user.username}}, { new: true },function(err,transac){
+    Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Accepted', buyer: req.user.username}}, { new: true },function(err){
       if (err) return handleError(err);
-      res.send(transac);
 });
   }
-  else if(reject){
-    Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Rejected', buyer: req.user.username}}, { new: true },function(err,transac){
+  if(reject){
+    Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Rejected', buyer: req.user.username}}, { new: true },function(err){
       if (err) return handleError(err);
-      res.send(transac);
   });
-}
+  }
+  res.send(transac);
 });
 
 

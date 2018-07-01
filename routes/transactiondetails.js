@@ -23,10 +23,25 @@ router.get('/transaction',function(req,res){
         
 });
 router.post('/transaction',function(req,res){
-    
-    console.log(testID)
-    res.render('transaction')
-})
+    Items.findById(req.params.id)
+      .exec(function(err, entries) {
+          // changed `if (err || !doc)` to `if (err || !entries)`
+          if (err || !entries) {
+              res.statusCode = 404;
+              res.send({});
+          } else {
+              entries.remove(function(err) {
+                  if (err) {
+                      res.statusCode = 403;
+                      res.send(err);
+                  } else {
+                      //res.send({});
+                      res.redirect('/')
+                  }
+              });
+          }
+      });
+  });
 
 
 module.exports = router;
