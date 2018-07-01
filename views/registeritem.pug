@@ -16,6 +16,14 @@ block content
       label Item Condition:
       input.form-control(name='itemcondition',type='text', placeholder="Please state specifically about the item's condition.")
     #form-group
+      label Item Category:
+        <select name="category">
+          <option value="Shoes">Volvo</option>
+          <option value="Makeup">Saab</option>
+          <option value="Facial Products">Fiat</option>
+          <option value="Clothes">Audi</option>
+        </select>
+    #form-group
       label Image of Item:
       br
       input(name='itemimageupload',type='file')

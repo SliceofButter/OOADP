@@ -46,6 +46,10 @@ const itemSchema = mongoose.Schema({
     buyer:{
         type: String,
         require: true,
+    },
+    category:{
+        type: String,
+        require: true,
     }
     /*_id: {
         ObjectID:{

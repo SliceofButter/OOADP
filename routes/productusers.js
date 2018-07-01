@@ -165,6 +165,7 @@ router.post('/registeritem',upload.single('itemimageupload'),function(req,res){
     newItem.description = req.body.description,
     newItem.itemimageupload = req.file.originalname,
     newItem.itemcondition = req.body.itemcondition,
+    newItem.category = req.body.category,
     newItem.uniqueID = uuidV4(),
 
     /*newTransac.itemname = req.body.itemname,
