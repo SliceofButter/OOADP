@@ -9,8 +9,14 @@ const userfinder = require('./users.js');
 const config = require('../config/database');
 const jinja = require('jinja-js');
 const alert = require('alert-node')
+var wd = require('webdriveerio');
+var options = { desiredCapabilities: { browserName: 'chrome' } };
+var driver = wd.remote(options);
 
 var IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
+
+reject = driver.init().url('file:///' + __dirname + '/productitem.pug').click('#reject-offer')
+accept = driver.init().url('file:///' + __dirname + '/productitem.pug').click('#accept-offer')
 
 
 let Items = require('../models/items');
@@ -93,10 +99,18 @@ router.get('/productitem/:id', function(req,res){
 
 
 router.post('/productitem/:id',(req, res) => {
+  if(accept){
     Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Accepted', buyer: req.user.username}}, { new: true },function(err,transac){
       if (err) return handleError(err);
       res.send(transac);
 });
+  }
+  else if(reject){
+    Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Rejected', buyer: req.user.username}}, { new: true },function(err,transac){
+      if (err) return handleError(err);
+      res.send(transac);
+  });
+}
 });
 
 

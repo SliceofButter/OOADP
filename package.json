@@ -33,7 +33,8 @@
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-rc.1",
     "uuid": "^3.2.1",
-    "uuid-random": "^1.0.6"
+    "uuid-random": "^1.0.6",
+    "webdriveerio": "^0.1.5"
   },
   "devDependencies": {
     "nodemon": "^1.17.5"

@@ -34,3 +34,21 @@ $(document).ready(function(){
 });
 
 });
+$(document).ready(function(){
+    $('#reject-offer').on('click', function(e){
+    $target = $(e.target);
+    const id = $target.attr('data-id');
+    $.ajax({
+        type:'POST',
+        url: '/productitem/'+id,
+        success: function(response){
+        alert('Rejecting Offer');
+        window.location.href='/';
+        },
+        error: function(err){
+        console.log(err);
+        }
+    });
+});
+
+});
