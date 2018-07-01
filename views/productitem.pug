@@ -12,6 +12,7 @@ block content
     h6(style="text-align:center;font-weight:bold;width:50%;margin-left:25%") Description: #{data.description} 
     if user == null
       h3(id="meow" style="text-align:center;font-weight:bold;") Login to buy items!
+      break
     else if user.username == data.username
       form(method='POST', action='/productitem/' + data._id +'?_method=DELETE' style="margin-left:2%;margin-top:20px;")
         input.btn.btn-primary(type='submit' value='Delete item' style="margin-left:43%;margin-top:1px;") 
