@@ -2,29 +2,36 @@ extends layout
 
 block content
   if user
-    .container
-      .row
-        .col-md-4
-          .card
-            .card-header
-              img(style='border-radius: 50%', width='100', height='100', src="/profilepic/" + pic)
-              .details
-                h5.name  #{user.username}
-                  ul
-                    li
-        .col-md-8          
-          .card
-            .card-header
-              | Bio
-            .card-body #{bio}  
-      
-          .card
-              .card-header
-                 My Item Listing
-                    .row
-                      each datas, i in data
-                        if user.username == datas.username
-                            img(alt="IMG-PRODUCT" style="width:125px;height:160px;" src= "/itempic/" + datas.itemimageupload )
-                            .col-sm-2
-                              a.block2-name.dis-block.s-text3.p-b-5(href="productitem/" + datas._id)
-                                p(style="font-weight:bold;") #{datas.itemname} 
+    .row
+      .col-md-4
+        .profilecenter
+          img(style='border-radius: 50%', width='100', height='100', src="/profilepic/" + pic)
+          .details
+              h5.name  #{user.username}
+              ul
+                  li
+      .col-md-8
+        .card
+          .card-header Bio           
+          .card-body #{bio}         
+        br
+        br         
+        ul#myTab.nav.nav-tabs(role='tablist')
+          li.nav-item
+            a#home-tab.nav-link.active(href='#', data-toggle='tab', role='tab', aria-controls='home', aria-selected='true') Listing          
+          li.nav-item
+            a#profile-tab.nav-link(href='#', data-toggle='tab', role='tab', aria-controls='profile', aria-selected='false') Request          
+          li.nav-item
+            a#contact-tab.nav-link(href='#', data-toggle='tab', role='tab', aria-controls='contact', aria-selected='false') History        
+        #myTabContent.tab-content
+          #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
+            .row
+              if pic != null                         
+                each datas in data                        
+                  if user.username == datas.username
+                    .div.col-md-3
+                      .card 
+                        img.card-img-top(style='height:200px;width:auto', src='/itempic/' + datas.itemimageupload, alt='Item')                              
+                        .card-body
+                          a(href='productitem/' + datas._id)
+                            p.card-title.text-center(style='height:50px')=datas.itemname
