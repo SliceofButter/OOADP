@@ -245,19 +245,40 @@ block content
             .flex-sb-m.flex-w.p-b-35
               .flex-w
                 .rs2-select2.bo4.of-hidden.w-size12.m-t-5.m-b-5.m-r-10
-                  select.selection-2(name="sorting")
-                    option Default Sorting
-                    option Popularity
-                    option Price: low to high
-                    option Price: high to low
-                .rs2-select2.bo4.of-hidden.w-size12.m-t-5.m-b-5.m-r-10
-                  select.selection-2(name="sorting")
+                  select.selection-2(name="sortingPrice")
                     option Price
                     option $0.00 - $50.00
                     option $50.00 - $100.00
                     option $100.00 - $150.00
                     option $150.00 - $200.00
                     option $200.00+
+              div.form-group
+                <form action="/product" method="post" id="search">
+                  select.selection-2(name="sorting")
+                    option Default
+                    option(value="itemname") Title
+                    option(value="itemcondition") Condition
+                    option(value="itemprice") Price
+                  <input type="text" name="searchBar" placeholder="Search for...">
+                  <input type="submit" value="Search">
+                </form>
+
+                //- <script>
+                //-   jQuery(function($){
+                //-     $('#search').submit(function(){
+                //-       var filter = $('#search');
+                //-       $.ajax({
+                //-         url:filter.attr('action'),
+                //-         data:filter.serialize(), // form data
+                //-         type:filter.attr('method'), // POST
+                //-         success:function(data){
+                //-             console.log(data);
+                //-         }
+                //-       });
+                //-       return false;
+                //-     });
+                //-   });
+                //- </script>
               span.s-text8.p-t-5.p-b-5
                 | Showing 1–12 of 16 results
             // Product

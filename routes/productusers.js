@@ -12,6 +12,7 @@ const alert = require('alert-node')
 var wd = require('webdriveerio');
 var options = { desiredCapabilities: { browserName: 'chrome' } };
 var driver = wd.remote(options);
+var async = require('async');
 
 var IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
@@ -112,41 +113,66 @@ router.post('/productitem/:id',(req, res, transac) => {
   res.send(transac);
 });
 
-
+router.post('/product', (req, res) => {
+    var search = req.body.searchBar;
+    var sorting = req.body.sorting;
+    var sort = 1;
+    whereClause = {};
+    if (search != "") {
+        var filter = new RegExp(search, 'i');
+		whereClause = {
+			'itemname' : filter
+		}
+    }
+    var sort_query = {};
+    async.parallel([
+        function(callback){
+            sort_query[sorting] = sort;
+            var s = Items.find(whereClause, {}, 
+                function(err, docs) {
+                    if (err) throw err;
+                    res.render('product', {
+                        username: req.user,
+                        data: docs
+                    })
+                }).sort(sort_query);
+        }
+    ])
+})
 
 //Product page
 router.get('/product',function(req,res){
-  var itemlist = Items.find({},function(err, docs) {
-    if (!err){ 
-        // console.log(docs);
-    } else {throw err;}
-  });
-  var i;
-  for(i=0;i<itemlist.size; i++)(
-    itemid = itemlist.findById(_id, function (err, user) {
-      if(errors){
-        res.render('product', {
-          errors:errors
-        });
-      }
-      else{
-        itemcondition = itemlist[i][1]
-        itemimageupload = itemlist[i][2],
-        description= itemlist[i][3],
-        username = itemlist[i][4],
-        itemprice = itemlist[i][5],
-        itemname = itemlist[i][6],
-        _id = itemlist[i][0]
-        };
-    })
-  );
-  var itemlist = Items.find({},function(err, data) {
-    res.render('product',{
-      username : req.user,
-      data:data
-    })
-    }); 
-}); 
+    var itemlist = Items.find({},function(err, docs) {
+      if (!err){ 
+          // console.log(docs);
+      } else {throw err;}
+    });
+    var i;
+    for(i=0;i<itemlist.size; i++)(
+      itemid = itemlist.findById(_id, function (err, user) {
+        if(errors){
+          res.render('product', {
+            errors:errors
+          });
+        }
+        else{
+          itemcondition = itemlist[i][1]
+          itemimageupload = itemlist[i][2],
+          description= itemlist[i][3],
+          username = itemlist[i][4],
+          itemprice = itemlist[i][5],
+          itemname = itemlist[i][6],
+          _id = itemlist[i][0]
+          };
+      })
+    );
+    var itemlist = Items.find({},function(err, data) {
+      res.render('product',{
+        username : req.user,
+        data:data
+      })
+      }); 
+  }); 
 
 //Item register
 router.get('/registeritem',function(req,res){
