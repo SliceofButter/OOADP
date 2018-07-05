@@ -7,7 +7,9 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const config = require('../config/database');
+var CreditCard = require('credit-card');
 var IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
+const alert = require('alert-node')
 
 function ensureAuthenticated(req, res, next){
   if(req.isAuthenticated()){
@@ -38,7 +40,7 @@ var upload = multer({
 let User = require('../models/user');
 let Token = require('../models/token');
 let Items = require('../models/items');
-
+let bank = require('../models/bank');
 
 // router.set('superSecret', config.secret); 
 
@@ -178,10 +180,79 @@ router.get('/profile',ensureAuthenticated, function(req, res, next){
     })
   })
 });
-router.get('/password', function(req, res, next){
+
+router.get('/profile/wallet',ensureAuthenticated, function(req, res, next){
+  User.findById(req.user, function(err, user){
+    if (user.dp != null || user.bio !=null){
+      res.render('wallet', {
+      bio : user.bio,    
+      pic: user.dp,
+    });
+    } else {
+      res.render('wallet')
+    }
+  })
+});
+
+router.post('/profile/wallet', function(req, res, next){
+    var username = req.user.username
+    const type = req.body.type;
+    const number = req.body.number;
+    const date = req.body.date;
+    const year = req.body.year;
+    const cvv = req.body.cvv;
+    var amount = req.body.amount;
+    var card = {
+        cardType: type,
+        number: number,
+        expiryMonth: date,
+        expiryYear: year,
+        cvv: cvv
+    };
+    console.log(amount)
+    var validation = CreditCard.validate(card);
+    console.log(validation)
+    if (validation.validCardNumber == true && validation.isExpired == false){
+        bank.findOne({username:username}, function(err, user){
+            if (user){
+                newBalance = user.amount + parseInt(amount);
+                console.log(newBalance);
+                bank.findOneAndUpdate({username:'donhitme34'},{ $set: { amount: newBalance }},function(err){
+                  if(err){
+                    console.log(err);
+                    return;
+                  } else {
+                    alert('Sucessfully added money');
+                    res.redirect('/profile');
+                  }
+                })
+            }else{
+              newBalance = new bank({
+                username:username,
+                number:number,
+                date:date,
+                year:year,
+                amount:amount
+              })
+              newBalance.save(function(err){
+                if(err){
+                  console.log(err);
+                  return;
+                } 
+                else {
+                  res.redirect('/profile');
+                  alert('Check your email for confirmation')
+                }
+              })
+            }
+        });
+    }
+});
+
+router.get('/password',ensureAuthenticated, function(req, res, next){
     res.render('password', { title: 'password'})
 })
-router.post('/password', function(req, res, next){
+router.post('/password',ensureAuthenticated, function(req, res, next){
   req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
   
     let errors = req.validationErrors();
@@ -213,7 +284,7 @@ router.post('/password', function(req, res, next){
     });
   }
 });
-router.get('/settings', function(req, res, next){
+router.get('/settings',ensureAuthenticated, function(req, res, next){
       res.render('editProfile', { title: 'settings'})
   });
 
@@ -235,11 +306,11 @@ router.post('/settings', upload.single('imageupload'),(req, res) => {
 });
 });
 
-router.get('/bio', function(req, res, next){
+router.get('/bio',ensureAuthenticated, function(req, res, next){
     res.render('bio', { title: 'bio'})
 });
 
-router.post('/bio',(req, res) => {
+router.post('/bio',ensureAuthenticated,(req, res) => {
   query = {_id : req.user._id};
 
   let about = {}

@@ -18,11 +18,11 @@ block content
         br         
         ul#myTab.nav.nav-tabs(role='tablist')
           li.nav-item
-            a#home-tab.nav-link.active(href='#', data-toggle='tab', role='tab', aria-controls='home', aria-selected='true') Listing          
+            a#home-tab.nav-link.active(href='#') Listing          
           li.nav-item
-            a#profile-tab.nav-link(href='#', data-toggle='tab', role='tab', aria-controls='profile', aria-selected='false') Request          
+            a#profile-tab.nav-link(href='#') Request          
           li.nav-item
-            a#contact-tab.nav-link(href='#', data-toggle='tab', role='tab', aria-controls='contact', aria-selected='false') History        
+            a#contact-tab.nav-link(href='/profile/wallet') Wallet        
         #myTabContent.tab-content
           #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
             .row
