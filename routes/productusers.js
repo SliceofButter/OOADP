@@ -132,7 +132,7 @@ router.post('/product', (req, res) => {
                 function(err, docs) {
                     if (err) throw err;
                     res.render('product', {
-                        username: req.user,
+                        user: req.user,
                         data: docs
                     })
                 }).sort(sort_query);
