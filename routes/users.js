@@ -10,6 +10,7 @@ const config = require('../config/database');
 var CreditCard = require('credit-card');
 var IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 const alert = require('alert-node')
+var generator = require('generate-password');
 
 function ensureAuthenticated(req, res, next){
   if(req.isAuthenticated()){
@@ -113,6 +114,61 @@ router.post('/register', function(req, res){
       });
     }
   });
+
+router.get('/password_reset',(req,res) => { 
+  res.render('passwordReset', { title: 'passwordReset'})
+})
+  
+router.post('/password_reset',(req,res) => { 
+  const email = req.body.email;
+  User.findOne({ email: email }, function (err, user) {
+    jwt.sign({data: email}, 'secret', { expiresIn: '12h' },function(err,token){
+        console.log(token)
+        var transporter = nodemailer.createTransport({ host: 'smtp.gmail.com', port:465, secure:true, auth: { user: 'sghawt@gmail.com', pass: 'NYPIT1704' } });
+        var mailOptions = { from: 'sghawt@gmail.com', to: email, subject: 'Password Reset', text: 'Hello,\n\n' + 'You have requested to reset your password' + 'Click on the link if you need to reset your password \nhttp:\/\/' + req.headers.host + '\/confirm_reset\/' + token + '.\n' };
+        transporter.sendMail(mailOptions, function (err) {
+        if (err) { return res.status(500).send({ msg: err.message }); }
+        res.status(200).send('A verification email has been sent to ' + email + '.');
+        })
+      
+    });
+  })
+})
+
+var passwordgen = generator.generate({
+  length: 12,
+  numbers: true
+});
+
+router.get('/confirm_reset/:id',(req,res) => { 
+  token = req.params.id;
+  jwt.verify(token, 'secret', function (err, decoded){
+    console.log(decoded.data)
+    User.findOne({email:decoded.data}, function(err,user){
+      console.log(user.email)
+      bcrypt.genSalt(10, function(err, salt){
+        bcrypt.hash(passwordgen, salt, function(err, hash){
+          if(err){
+            console.log(err);
+          }
+          passwordgen = hash;
+          User.findOneAndUpdate({email:decoded.data}, { $set: { password: passwordgen }},function(err){
+            if(err){
+              console.log(err)
+            }
+          })
+          })
+          var transporter = nodemailer.createTransport({ host: 'smtp.gmail.com', port:465, secure:true, auth: { user: 'sghawt@gmail.com', pass: 'NYPIT1704' } });
+          var mailOptions = { from: 'sghawt@gmail.com', to: user.email, subject: 'Password Reseted', text: 'Hello,\n\n' + 'Here is your new password ' + passwordgen + req.headers.host};
+          transporter.sendMail(mailOptions, function (err) {
+          if (err) { return res.status(500).send({ msg: err.message }); }
+          res.render('login')
+        })
+      })
+    })
+  })
+  res.render('reset_with_token')
+})
   
 router.get('/confirmation/:token',function(req,res){
     Token.findOne({ token: req.params.token }, function (err, token) {
