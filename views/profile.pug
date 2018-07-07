@@ -7,9 +7,41 @@ block content
         .profilecenter
           img(style='border-radius: 50%', width='100', height='100', src="/profilepic/" + pic)
           .details
-              h5.name  #{user.username}
+              h5.name  #{current}
               ul
                   li
+        .card-body
+          .row
+            .col-md
+              .counterbox
+                p.text-center.countertext Feedback Score
+            button.btn.btn-primary(type='button', data-toggle='modal', data-target='.bd-example-modal-lg') View Reviews
+            .modal.fade.bd-example-modal-lg(tabindex='-1', role='dialog', aria-labelledby='myLargeModalLabel', aria-hidden='true')
+              .modal-dialog.modal-lg
+                .modal-content
+                  .modal-header
+                    h5#exampleModalLongTitle.modal-title Feedback
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') ×
+                  .modal-body
+                    // start
+                    .row
+                      .col-sm-5
+                        .card(style='width: 20rem;')
+                          .card-body
+                            h4.card-title  Excellent Trader
+                            h6.card-subtitle.mb-2.text-muted
+                              | By 
+                              a(href="http://127.0.0.1:5000/profile/{{ review['Reviewer'] }}") me
+                              span(tyle='color:grey;') date}
+                            i.ion-ios-star
+                            p.card-text comment
+                    // end
+                  .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                    button.btn.btn-primary(type='button') Save changes
+
+
       .col-md-8
         .card
           .card-header Bio           
@@ -22,16 +54,17 @@ block content
           li.nav-item
             a#profile-tab.nav-link(href='#') Request          
           li.nav-item
-            a#contact-tab.nav-link(href='/profile/wallet') Wallet        
+            if user.username == current
+              a#contact-tab.nav-link(href='/profile/'+current+'/wallet') Wallet        
         #myTabContent.tab-content
           #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
             .row
               if pic != null                         
                 each datas in data                        
-                  if user.username == datas.username
+                  if current == datas.username
                     .div.col-md-3
                       .card 
                         img.card-img-top(style='height:200px;width:auto', src='/itempic/' + datas.itemimageupload, alt='Item')                              
                         .card-body
-                          a(href='productitem/' + datas._id)
+                          a(href='/productitem/' + datas._id)
                             p.card-title.text-center(style='height:50px')=datas.itemname

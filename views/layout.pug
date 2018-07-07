@@ -6,7 +6,7 @@ html(lang='en')
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='icon', type='image/png', href='/images/icons/favicon.png')
-    link(rel='stylesheet', type='text/css', href='/vendor/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm', crossorigin='anonymous')
     link(rel='stylesheet', type='text/css', href='/fonts/font-awesome-4.7.0/css/font-awesome.min.css')
     link(rel='stylesheet', type='text/css', href='/fonts/themify/themify-icons.css')
     link(rel='stylesheet', type='text/css', href='/fonts/Linearicons-Free-v1.0.0/icon-font.min.css')
@@ -52,7 +52,7 @@ html(lang='en')
             li.nav-item.dropdown
               a#navbardrop.nav-link.dropdown-toggle(href='#', data-toggle='dropdown') #{user.username}
               .dropdown-menu
-                a.dropdown-item(href='/profile') User Profile
+                a.dropdown-item(href='/profile/'+user.username) User Profile
                 a.dropdown-item(href='/settings') Edit profile
                 a.dropdown-item(href='/registeritem') Register Item
                 a.dropdown-item(href='/transaction') Transactions
@@ -153,16 +153,6 @@ html(lang='en')
                   // Button
                   button.flex-c-m.size2.bg4.bo-rad-23.hov1.m-text3.trans-0-4 Subscribe
           .t-center.p-l-15.p-r-15
-          a(href='#')
-              img.h-size2(src='images/icons/paypal.png', alt='IMG-PAYPAL')
-          a(href='#')
-              img.h-size2(src='images/icons/visa.png', alt='IMG-VISA')
-          a(href='#')
-              img.h-size2(src='images/icons/mastercard.png', alt='IMG-MASTERCARD')
-          a(href='#')
-              img.h-size2(src='images/icons/express.png', alt='IMG-EXPRESS')
-          a(href='#')
-              img.h-size2(src='images/icons/discover.png', alt='IMG-DISCOVER')
           .t-center.s-text8.p-t-20
               | Copyright © 2018 All rights reserved. | This template is made with 
               i.fa.fa-heart-o(aria-hidden='true')

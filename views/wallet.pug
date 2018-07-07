@@ -7,7 +7,7 @@ block content
         .profilecenter
           img(style='border-radius: 50%', width='100', height='100', src="/profilepic/" + pic)
           .details
-              h5.name  #{user.username}
+              h5.name  #{current}
               ul
                   li
       .col-md-8
@@ -18,56 +18,54 @@ block content
         br         
         ul#myTab.nav.nav-tabs(role='tablist')
           li.nav-item
-            a#home-tab.nav-link(href='/profile') Listing          
+            a#home-tab.nav-link(href='/profile/'+current) Listing          
           li.nav-item
             a#profile-tab.nav-link(href='#') Request          
           li.nav-item
-            a#contact-tab.nav-link.active(href='#') Wallet        
+            if user.username == current
+              a#contact-tab.nav-link.active(href='#') Wallet        
         #myTabContent.tab-content
           #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
-            .row
-              button.btn.btn-primary(style='text-align: center;', type='button', data-toggle='modal', data-target='#exampleModal')
-                | WALLET
-              #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-                .modal-dialog(role='document')
-                    .modal-content
-                      .modal-header
-                        h5#exampleModalLabel.modal-title Modal title
-                        button.close(type='button', data-dismiss='modal', aria-label='Close')
-                        span(aria-hidden='true') ×
-                      .modal-body
-                        form(action='/profile/wallet', method='POST')
-                          .form-group
-                            label Card type:
-                            input.form-control(type='text', name='type')
-                          .form-group
-                            label Card number:
-                            input.form-control.number(type='text', name='number', ng-model='ncard', maxlength='19')
-                          .form-group
-                            label Expiry Date:
-                            .row
-                              .col-md-6
-                                input.form-control.expire(type='text', name='date', maxlength='2', placeholder='MM')
-                              .col-md-6
-                                input.form-control.expire(type='text', name='year', maxlength='4', placeholder='YYYY')
-                          .form-group
-                            .row
-                              .col-md-1
-                              .col-md-5
-                                label CVV:
-                                input.form-control.expire(type='text', name='cvv', maxlength='3')
-                              .col-md-5
-                                label Amount:
-                                <select name="amount" class="form-control">
-                                    <option value="6">$6.00</option>
-                                    <option value="12">$12.00</option>
-                                    <option value="30">$30.00</option>
-                                    <option value="60">$60.00</option>
-                                    <option value="120">$120.00</option>
-                                </select>
-                              .col-md-1
-                          button.btn.btn-primary(type='submit') Submit  
-        
-        
-
-                    
+            if user.username == current
+              .row
+                button.btn.btn-primary(style='text-align: center;', type='button', data-toggle='modal', data-target='#exampleModal')
+                  | WALLET
+                #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                  .modal-dialog(role='document')
+                      .modal-content
+                        .modal-header
+                          h5#exampleModalLabel.modal-title Modal title
+                          button.close(type='button', data-dismiss='modal', aria-label='Close')
+                          span(aria-hidden='true') ×
+                        .modal-body
+                          form(action='/profile/:username/wallet', method='POST')
+                            .form-group
+                              label Card type:
+                              input.form-control(type='text', name='type')
+                            .form-group
+                              label Card number:
+                              input.form-control.number(type='text', name='number', ng-model='ncard', maxlength='19')
+                            .form-group
+                              label Expiry Date:
+                              .row
+                                .col-md-6
+                                  input.form-control.expire(type='text', name='date', maxlength='2', placeholder='MM')
+                                .col-md-6
+                                  input.form-control.expire(type='text', name='year', maxlength='4', placeholder='YYYY')
+                            .form-group
+                              .row
+                                .col-md-1
+                                .col-md-5
+                                  label CVV:
+                                  input.form-control.expire(type='text', name='cvv', maxlength='3')
+                                .col-md-5
+                                  label Amount:
+                                  <select name="amount" class="form-control">
+                                      <option value="6">$6.00</option>
+                                      <option value="12">$12.00</option>
+                                      <option value="30">$30.00</option>
+                                      <option value="60">$60.00</option>
+                                      <option value="120">$120.00</option>
+                                  </select>
+                                .col-md-1
+                            button.btn.btn-primary(type='submit') Submit  
