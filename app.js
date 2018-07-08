@@ -120,7 +120,6 @@ app.use('/',transactions);
 var mongooseadmin = require('mongooseadmin');
 app.use('/admin',mongooseadmin())
 
-
 // Start Server
 app.listen(3000, function(){
   console.log('Server started on port 3000...');
