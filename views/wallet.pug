@@ -23,7 +23,9 @@ block content
             a#profile-tab.nav-link(href='#') Request          
           li.nav-item
             if user.username == current
-              a#contact-tab.nav-link.active(href='#') Wallet        
+              a#contact-tab.nav-link.active(href='#') Wallet  
+          li.nav-item
+            a#contact-tab.nav-link(href='/profile/'+current+ '/wishlist') Wishlist        
         #myTabContent.tab-content
           #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
             if user.username == current

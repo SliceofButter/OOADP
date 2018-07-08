@@ -19,7 +19,7 @@ router.get('/transaction',function(req,res){
         }); 
         
 });
-router.post('/transaction/:uniqueID',function(req,res){
+router.post('/transaction',function(req,res){
     Items.findById(req.params.id)
       .exec(function(err, entries) {
           // changed `if (err || !doc)` to `if (err || !entries)`

@@ -21,6 +21,8 @@ block content
     else if data.status == 'Accepted'
       h1(style="text-align:center;font-weight:bold;color:red") Item is no longer on sale. Sorry for the inconvenience. 
     else
+      form(method ='POST' action ='/productitem/' + data._id id= "wishlist")
+        input.btn.btn-success(type="submit" value="Add to wishlist!"  style="margin-left:44%;margin-top:20px;")    
       input#send-offer.btn.btn-primary(href='#',data-id=data._id,type='button',value='Send offer',style="margin-left:44%;margin-top:20px;")
     //- a.btn.btn-danger.delete-article(href='#',data-id=data.usernameid) Delete
     //- script.
@@ -34,3 +36,5 @@ block content
     //-   }
     //-   });
     //-   });
+
+

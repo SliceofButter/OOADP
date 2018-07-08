@@ -21,6 +21,7 @@ accept = driver.init().url('file:///' + __dirname + '/productitem.pug').click('#
 
 
 let Items = require('../models/items');
+let WishlistItem = require('../models/wishlist');
 let User = require('../models/user');
 let Transac = require('../models/transaction');
 
@@ -97,9 +98,53 @@ router.get('/productitem/:id', function(req,res){
   })
   })
 
+router.get('/profile/:username/wishlist', function(req,res){
+  User.findOne({username:req.params.username}, function(err, user){
+    console.log(user);
+    WishlistItem.findOne({wisher:user.username},function(err, docs){
+      Items.find({itemname: docs.itemname}, function(err,data){
+        User.findById(req.user, function(err, user){
+        if (user.dp != null || user.bio !=null){
+          res.render('wishlist', {
+          current: user.username,
+          bio : user.bio,    
+          pic: user.dp,
+          data: data,
+          docs:docs,
+        });
+      } else {
+        res.render('wishlist');
+    }
+  })
+  })
+    })
+  })
+})
 
 
 router.post('/productitem/:id',(req, res, transac) => {
+  var wistlistitem = Items.findById(req.params.id,function(err,data){
+    let newWishlistItem = new WishlistItem();
+    newWishlistItem.itemname = data.itemname,
+    newWishlistItem.itemprice = data.itemprice,
+    newWishlistItem.username =  data.username,
+    //newItem.username =  req.user._id,
+    newWishlistItem.description = data.description,
+    newWishlistItem.itemimageupload = data.originalname,
+    newWishlistItem.itemcondition = data.itemcondition,
+    newWishlistItem.category = data.category,
+    newWishlistItem.wisher = req.user.username
+    newWishlistItem.save(function(err){
+      if(err){
+        console.log(err);
+        return;
+      } 
+      else {
+        res.render('wishlist');
+        alert('Item is now added to your wishlist!')
+      }
+    })
+  })
   if(accept){
     Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Accepted', buyer: req.user.username}}, { new: true },function(err){
       if (err) return handleError(err);
@@ -110,6 +155,7 @@ router.post('/productitem/:id',(req, res, transac) => {
       if (err) return handleError(err);
   });
   }
+  
   res.send(transac);
 });
 

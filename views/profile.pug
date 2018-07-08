@@ -55,13 +55,15 @@ block content
             a#profile-tab.nav-link(href='#') Request          
           li.nav-item
             if user.username == current
-              a#contact-tab.nav-link(href='/profile/'+current+'/wallet') Wallet        
+              a#contact-tab.nav-link(href='/profile/'+current+'/wallet') Wallet     
+          li.nav-item
+            a#contact-tab.nav-link(href='/profile/'+current+ '/wishlist') Wishlist   
         #myTabContent.tab-content
           #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
             .row
               if pic != null                         
                 each datas in data                        
-                  if current == datas.username
+                  if current == data.username
                     .div.col-md-3
                       .card 
                         img.card-img-top(style='height:200px;width:auto', src='/itempic/' + datas.itemimageupload, alt='Item')                              

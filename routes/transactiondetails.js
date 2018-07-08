@@ -7,8 +7,6 @@ let User = require('../models/user');
 let Items = require('../models/items');
 let Transac = require('../models/transaction');
 
-
-
 router.get('/transaction',function(req,res){
         User.findById(req.user, function(err, user){
         })
@@ -24,6 +22,7 @@ router.get('/transaction',function(req,res){
         });
         
 });
+
 
 
 module.exports = router;
