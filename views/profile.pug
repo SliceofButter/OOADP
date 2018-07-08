@@ -63,7 +63,7 @@ block content
             .row
               if pic != null                         
                 each datas in data                        
-                  if current == data.username
+                  if current == datas.username
                     .div.col-md-3
                       .card 
                         img.card-img-top(style='height:200px;width:auto', src='/itempic/' + datas.itemimageupload, alt='Item')                              
