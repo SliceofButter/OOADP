@@ -50,5 +50,21 @@ $(document).ready(function(){
         }
     });
 });
-
+$(document).ready(function(){
+    $('#send-offer').on('click', function(e){
+    $target = $(e.target);
+    const id = $target.attr('data-id');
+    $.ajax({
+        type:'POST',
+        url: '/productitem/'+id,
+        success: function(response){
+        alert('Sent an Offer');
+        window.location.href='/';
+        },
+        error: function(err){
+        console.log(err);
+        }
+    });
+});
+});
 });

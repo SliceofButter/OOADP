@@ -3,27 +3,25 @@ block content
     //Content
     h3#meow(style='text-align:center;font-weight:bold;') Offers
     h5 Offers(Seller)
-        each datas2, i in data2
             each datas, i in data
                 if user.username == datas.username
-                    p Transaction ID: #{datas2.uniqueID}
-                    a(href='/productitem/' + datas._id) Item Name: #{datas2.itemname}
-                    p Item Price: $#{datas2.itemprice}
+                    p Transaction ID: #{datas.uniqueID}
+                    a(href='/productitem/' + datas._id) Item Name: #{datas.itemname}
+                    p Item Price: $#{datas.itemprice}
                     p Customer: #{datas.buyer}
-                    p Seller: #{datas2.username}
+                    p Seller: #{datas.username}
                     p Status: #{datas.status}
                     form(method='POST', action='/transaction' style="margin-left:2%;margin-top:20px;")
                         input.btn.btn-primary(type='submit' value='Delete item' style="margin-left:43%;margin-top:1px;") 
                     br 
     h5 Offers(Buyer)
-        each datas2, i in data2
             each datas, i in data
                 if user.username == datas.buyer
-                    p Transaction ID: #{datas2.uniqueID}
-                    a(href='/productitem/' + datas._id) Item Name: #{datas2.itemname}
-                    p Item Price: $#{datas2.itemprice}
+                    p Transaction ID: #{datas.uniqueID}
+                    a(href='/productitem/' + datas._id) Item Name: #{datas.itemname}
+                    p Item Price: $#{datas.itemprice}
                     p Customer: #{datas.buyer}
-                    p Seller: #{datas2.username}
+                    p Seller: #{datas.username}
                     p Status: #{datas.status}
                     br           
     
