@@ -211,12 +211,13 @@ router.get('/confirmation/:token',function(req,res){
 
 //Get profile
   // router.get('/profile', function(req, res, next){
-  //       res.render('profile', { title: 'profile', user: req.user });
+  //       res.recnder('profile', { title: 'profile', user: req.user });
   //     });
 
 router.get('/profile/:username',ensureAuthenticated, function(req, res, next){
     User.findOne({username:req.params.username}, function(err, user){
       Items.find({username:user.username},function(err, data){
+        // console.log(data)
         if (user.dp != null || user.bio !=null){
           res.render('profile', {
           current: user.username,

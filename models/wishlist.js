@@ -55,12 +55,10 @@ const wishlistSchema = mongoose.Schema({
         type: String,
         require: true,
     },
-    /*_id: {
-        ObjectID:{
-            type: String,
-            require : true,
-        },
-    },*/
+    id: {
+        type:String,
+        require:true
+    }
 })
 
 const wishlistholder = module.exports = mongoose.model('Wishlists', wishlistSchema);

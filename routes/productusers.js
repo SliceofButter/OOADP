@@ -122,7 +122,7 @@ router.get('/profile/:username/wishlist', function(req,res){
 })
 
 
-router.post('/productitem/:id',function(req, res,next){
+router.post('/productitem/:id',(req, res, transac) => {
   var wistlistitem = Items.findById(req.params.id,function(err,data){
     let newWishlistItem = new WishlistItem();
     newWishlistItem.itemname = data.itemname,
@@ -130,20 +130,36 @@ router.post('/productitem/:id',function(req, res,next){
     newWishlistItem.username =  data.username,
     //newItem.username =  req.user._id,
     newWishlistItem.description = data.description,
-    newWishlistItem.itemimageupload = data.originalname,
+    newWishlistItem.itemimageupload = data.itemimageupload,
     newWishlistItem.itemcondition = data.itemcondition,
     newWishlistItem.category = data.category,
-    newWishlistItem.wisher = req.user.username
+    newWishlistItem.wisher = req.user.username,
+    newWishlistItem.id = data._id
     newWishlistItem.save(function(err){
       if(err){
         console.log(err);
+        return;
       } 
       else {
-        alert('Item is now added to your wishlist!');
-        res.redirect('/');  
+        res.render('wishlist');
+        alert('Item is now added to your wishlist!')
       }
     })
   })
+  if(accept){
+    Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Accepted', buyer: req.user.username}}, { new: true },function(err){
+      if (err) return handleError(err);
+});
+  }
+  if(reject){
+    Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Rejected', buyer: req.user.username}}, { new: true },function(err){
+      if (err) return handleError(err);
+  });
+  }
+  
+  res.send(transac);
+});
+
   
 //   if(accept){
 //     Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Accepted', buyer: req.user.username}}, { new: true },function(err){
@@ -159,7 +175,7 @@ router.post('/productitem/:id',function(req, res,next){
 //   }
   
   
-});
+
 
 router.post('/product', (req, res) => {
     var search = req.body.searchBar;

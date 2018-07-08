@@ -29,11 +29,12 @@ block content
         #myTabContent.tab-content
           #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
             .row
-              if pic != null                         
-                each datas in data       
-                  .div.col-md-3
-                    .card 
-                      img.card-img-top(style='height:200px;width:auto', src='/itempic/' + data.itemimageupload, alt='Item')                              
-                      .card-body
-                        a(href='/productitem/' + data._id)
-                          p.card-title.text-center(style='height:50px')=data.itemname
+              if pic != null 
+                each doc in docs    
+                  if current == doc.wisher
+                    .div.col-md-3
+                      .card 
+                        img.card-img-top(style='height:200px;width:auto', src='/itempic/' + doc.itemimageupload, alt='Item')                              
+                        .card-body
+                          a(href='/productitem/' + doc.id)
+                            p.card-title.text-center(style='height:50px')=doc.itemname
