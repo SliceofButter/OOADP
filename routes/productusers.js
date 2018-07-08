@@ -98,28 +98,24 @@ router.get('/productitem/:id', function(req,res){
   })
   })
 
-router.get('/profile/:username/wishlist', function(req,res){
-  User.findOne({username:req.params.username}, function(err, user){
-    console.log(user);
-    WishlistItem.findOne({wisher:user.username},function(err, docs){
-      Items.find({itemname: docs.itemname}, function(err,data){
-        User.findById(req.user, function(err, user){
-        if (user.dp != null || user.bio !=null){
-          res.render('wishlist', {
-          current: user.username,
-          bio : user.bio,    
-          pic: user.dp,
-          data: data,
-          docs:docs,
-        });
-      } else {
-        res.render('wishlist');
-    }
-  })
-  })
+  router.get('/profile/:username/wishlist', function(req,res){
+    User.findOne({username:req.params.username}, function(err, user){
+      WishlistItem.find({wisher:user.username},function(err, docs){
+          if (user.dp != null || user.bio !=null){
+            res.render('wishlist', {
+            current: user.username,
+            bio : user.bio,    
+            pic: user.dp,
+            docs:docs,
+          });
+        } else {
+          res.render('wishlist');
+        }
+        })
+      })
     })
-  })
-})
+  
+
 
 
 router.post('/productitem/:id',(req, res, transac) => {

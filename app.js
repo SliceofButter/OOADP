@@ -117,6 +117,9 @@ let productusers = require('./routes/productusers');
 app.use('/', productusers);
 let transactions = require('./routes/transactiondetails');
 app.use('/',transactions);
+var mongooseadmin = require('mongooseadmin');
+app.use('/admin',mongooseadmin())
+
 
 // Start Server
 app.listen(3000, function(){
