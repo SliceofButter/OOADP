@@ -94,6 +94,10 @@ router.get('/productitem/:id', function(req,res){
       res.render('productitem', {
         data:data
     });
+    var inputValue = req.body.something
+    if (inputValue == 'Send offer'){
+      console.log('yay?')
+    }
   //  rs
   })
   })
@@ -114,34 +118,57 @@ router.get('/productitem/:id', function(req,res){
         })
       })
     })
-    
-
-router.post('/productitem/:id',function(req, res,next){
-  var wistlistitem = Items.findById(req.params.id,function(err,data){
-    let newWishlistItem = new WishlistItem();
-    newWishlistItem.itemname = data.itemname,
-    newWishlistItem.itemprice = data.itemprice,
-    newWishlistItem.username =  data.username,
-    //newItem.username =  req.user._id,
-    newWishlistItem.description = data.description,
-    newWishlistItem.itemimageupload = data.itemimageupload,
-    newWishlistItem.itemcondition = data.itemcondition,
-    newWishlistItem.category = data.category,
-    newWishlistItem.wisher = req.user.username,
-    newWishlistItem.id = data._id
-    newWishlistItem.save(function(err){
-      if(err){
-        console.log(err);
-        return;
-      } 
-      else {
-        alert('Item is now added to your wishlist!');
-        res.redirect('/'); 
+ 
+    router.post('/productitem/:id',function(req, res,next){
+      var something2 = req.body.wishlist;
+      var something = req.body.offer;
+      if (something2)
+      {
+        console.log('Testing')
+      var wistlistitem = Items.findById(req.params.id,function(err,data){
+        let newWishlistItem = new WishlistItem();
+        newWishlistItem.itemname = data.itemname,
+        newWishlistItem.itemprice = data.itemprice,
+        newWishlistItem.username =  data.username,
+        //newItem.username =  req.user._id,
+        newWishlistItem.description = data.description,
+        newWishlistItem.itemimageupload = data.itemimageupload,
+        newWishlistItem.itemcondition = data.itemcondition,
+        newWishlistItem.category = data.category,
+        newWishlistItem.wisher = req.user.username,
+        newWishlistItem.id = data._id
+        newWishlistItem.save(function(err){
+          if(err){
+            console.log(err);
+            return;
+          } 
+          else {
+            alert('Item is now added to your wishlist!');
+          }
+        })
+      })
+    }
+      else if (something)
+      {
+        console.log('Test')
+        let newTransac = new Transac();
+        newTransac.itemname = req.body.itemname,
+        newTransac.itemprice = req.body.itemprice,
+        newTransac.username =  req.params.id,
+        newTransac.uniqueID = uuidV4()
+        newTransac.status = 'Requested',
+        newTransac.buyer = req.user.username
+        newTransac.save(function(err){
+          if(err){
+            console.log(err)
+          } else {
+            res.redirect('/');
+            alert('Item offered')
+          }
+        })
       }
-    })
-  })
-})
-//   })
+      });
+  // })
 //   if(accept){
 //     Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Accepted', buyer: req.user.username}}, { new: true },function(err){
 //       if (err) return handleError(err);
