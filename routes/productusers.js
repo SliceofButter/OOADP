@@ -59,6 +59,53 @@ var upload = multer({
 //   });
 //   })
 
+
+
+// router.delete('/profile/:username/wishlist',function(req,res){
+//   WishlistItem.findById(req.params.wisher)
+//     .exec(function(err, entries) {
+//         // changed `if (err || !doc)` to `if (err || !entries)`
+//         if (err || !entries) {
+//             res.statusCode = 404;
+//             res.send({});
+//         } else {
+//             entries.remove(function(err) {
+//                 if (err) {
+//                     res.statusCode = 403;
+//                     res.send(err);
+//                 } else {
+//                     //res.send({});
+//                     alert('Item has been successfully deleted');
+//                     res.redirect('/')
+//                 }
+//             });
+//         }
+//     });
+// });
+router.delete('/profile/:username/wishlist/:id',function(req,res){
+  var x = req.params.id;
+  User.findOne({username:req.params.username}, function(err, user){
+    WishlistItem.findById(x)
+      .exec(function(err,entries){
+        if (err || !entries) {
+          res.statusCode = 404;
+          res.send({});
+        } else {
+          entries.remove(function(err) {
+              if (err) {
+                  res.statusCode = 403;
+                  res.send(err);
+              } else {
+                  //res.send({});
+                  alert('Item has been successfully removed from wishlist');
+                  res.redirect('/');
+              }
+          });
+      }
+  });
+});
+})
+
 router.delete('/productitem/:id',function(req,res){
   Items.findById(req.params.id)
     .exec(function(err, entries) {
@@ -74,7 +121,7 @@ router.delete('/productitem/:id',function(req,res){
                 } else {
                     //res.send({});
                     alert('Item has been successfully deleted');
-                    res.redirect('/')
+                    res.redirect('/');
                 }
             });
         }
@@ -102,73 +149,76 @@ router.get('/productitem/:id', function(req,res){
   })
   })
 
-  router.get('/profile/:username/wishlist', function(req,res){
-    User.findOne({username:req.params.username}, function(err, user){
-      WishlistItem.find({wisher:user.username},function(err, docs){
-          if (user.dp != null || user.bio !=null){
-            res.render('wishlist', {
-            current: user.username,
-            bio : user.bio,    
-            pic: user.dp,
-            docs:docs,
-          });
-        } else {
-          res.render('wishlist');
-        }
-        })
+router.get('/profile/:username/wishlist', function(req,res){
+  User.findOne({username:req.params.username}, function(err, user){
+    WishlistItem.find({wisher:user.username},function(err, docs){
+      console.log(docs)
+        if (user.dp != null || user.bio !=null){
+          res.render('wishlist', {
+          current: user.username,
+          bio : user.bio,    
+          pic: user.dp,
+          docs:docs,
+        });
+      } else {
+        res.render('wishlist');
+      }
       })
     })
- 
-    router.post('/productitem/:id',function(req, res,next){
-      var something2 = req.body.wishlist;
-      var something = req.body.offer;
-      if (something2)
-      {
-        console.log('Testing')
-      var wistlistitem = Items.findById(req.params.id,function(err,data){
-        let newWishlistItem = new WishlistItem();
-        newWishlistItem.itemname = data.itemname,
-        newWishlistItem.itemprice = data.itemprice,
-        newWishlistItem.username =  data.username,
-        //newItem.username =  req.user._id,
-        newWishlistItem.description = data.description,
-        newWishlistItem.itemimageupload = data.itemimageupload,
-        newWishlistItem.itemcondition = data.itemcondition,
-        newWishlistItem.category = data.category,
-        newWishlistItem.wisher = req.user.username,
-        newWishlistItem.id = data._id
-        newWishlistItem.save(function(err){
-          if(err){
-            console.log(err);
-            return;
-          } 
-          else {
-            alert('Item is now added to your wishlist!');
-          }
-        })
+  })
+    
+
+  router.post('/productitem/:id',function(req, res,next){
+    var something2 = req.body.wishlist;
+    var something = req.body.offer;
+    if (something2)
+    {
+      console.log('Testing')
+    var wistlistitem = Items.findById(req.params.id,function(err,data){
+      let newWishlistItem = new WishlistItem();
+      newWishlistItem.itemname = data.itemname,
+      newWishlistItem.itemprice = data.itemprice,
+      newWishlistItem.username =  data.username,
+      //newItem.username =  req.user._id,
+      newWishlistItem.description = data.description,
+      newWishlistItem.itemimageupload = data.itemimageupload,
+      newWishlistItem.itemcondition = data.itemcondition,
+      newWishlistItem.category = data.category,
+      newWishlistItem.wisher = req.user.username,
+      newWishlistItem.id = data._id
+      newWishlistItem.save(function(err){
+        if(err){
+          console.log(err);
+          return;
+        } 
+        else {
+          alert('Item is now added to your wishlist!');
+        }
+      })
+    })
+  }
+    else if (something)
+    {
+      console.log('Test')
+      let newTransac = new Transac();
+      newTransac.itemname = req.body.itemname,
+      newTransac.itemprice = req.body.itemprice,
+      newTransac.username =  req.params.id,
+      newTransac.uniqueID = uuidV4()
+      newTransac.status = 'Requested',
+      newTransac.buyer = req.user.username
+      newTransac.save(function(err){
+        if(err){
+          console.log(err)
+        } else {
+          res.redirect('/');
+          alert('Item offered')
+        }
       })
     }
-      else if (something)
-      {
-        console.log('Test')
-        let newTransac = new Transac();
-        newTransac.itemname = req.body.itemname,
-        newTransac.itemprice = req.body.itemprice,
-        newTransac.username =  req.params.id,
-        newTransac.uniqueID = uuidV4()
-        newTransac.status = 'Requested',
-        newTransac.buyer = req.user.username
-        newTransac.save(function(err){
-          if(err){
-            console.log(err)
-          } else {
-            res.redirect('/');
-            alert('Item offered')
-          }
-        })
-      }
-      });
-  // })
+    });
+    // })
+//   })
 //   if(accept){
 //     Items.findByIdAndUpdate({_id : req.params.id},{$set:{ status:'Accepted', buyer: req.user.username}}, { new: true },function(err){
 //       if (err) return handleError(err);

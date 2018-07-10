@@ -30,11 +30,29 @@ block content
           #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
             .row
               if pic != null 
-                each doc in docs    
+                each doc in docs
                   if current == doc.wisher
-                    .div.col-md-3
+                    .div.col-md-3(id=doc._id)
                       .card 
-                        img.card-img-top(style='height:200px;width:auto', src='/itempic/' + doc.itemimageupload, alt='Item')                              
+                        img.card-img-top(style='height:200px;width:auto', src='/itempic/' + doc.itemimageupload, alt='Item')
                         .card-body
                           a(href='/productitem/' + doc.id)
                             p.card-title.text-center(style='height:50px')=doc.itemname
+                          btn.btn.btn-danger(type='submit' value='Delete' style="margin-left:18%;margin-top:1px;" class="deleteBtn" id=doc._id) Delete
+    script.
+      $('.deleteBtn').click(function () {
+          var record_num = this.id;
+          $.ajax({
+            url: 'http://localhost:3000/profile/a/wishlist/' + record_num,
+            type: 'DELETE',
+            success: function (result) {
+              console.log(result.message);
+              //- var itemToRemove = '.div.col-md[id=' + record_num + ']';
+              //- $(itemToRemove).remove();
+            },
+            error: function (result) {
+              //- location.href = '/'
+              location.reload();
+            }
+          });
+        });
