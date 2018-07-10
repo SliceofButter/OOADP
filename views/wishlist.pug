@@ -47,12 +47,13 @@ block content
             type: 'DELETE',
             success: function (result) {
               console.log(result.message);
+              location.reload();
               //- var itemToRemove = '.div.col-md[id=' + record_num + ']';
               //- $(itemToRemove).remove();
             },
             error: function (result) {
               //- location.href = '/'
-              location.reload();
+              //location.reload();
             }
           });
         });

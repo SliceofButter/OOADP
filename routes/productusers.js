@@ -96,9 +96,9 @@ router.delete('/profile/:username/wishlist/:id',function(req,res){
                   res.statusCode = 403;
                   res.send(err);
               } else {
-                  //res.send({});
+                  res.send({});
                   alert('Item has been successfully removed from wishlist');
-                  res.redirect('/');
+                  //res.redirect('/');
               }
           });
       }
