@@ -24,6 +24,7 @@ let Items = require('../models/items');
 let WishlistItem = require('../models/wishlist');
 let User = require('../models/user');
 let Transac = require('../models/transaction');
+let Reports = require('../models/report');
 
 var storage = multer.diskStorage({
   destination: './public/itempic/',
@@ -171,6 +172,7 @@ router.get('/profile/:username/wishlist', function(req,res){
   router.post('/productitem/:id',function(req, res,next){
     var something2 = req.body.wishlist;
     var something = req.body.offer;
+    var something3 = req.body.report;
     if (something2)
     {
       console.log('Testing')
@@ -197,6 +199,32 @@ router.get('/profile/:username/wishlist', function(req,res){
       })
     })
   }
+    else if (something3){
+      var wistlistitem = Items.findById(req.params.id,function(err,data){
+        let newReport = new Reports();
+        newReport.itemname = data.itemname,
+        newReport.itemprice = data.itemprice,
+        newReport.username =  data.username,
+        //newItem.username =  req.user._id,
+        newReport.description = data.description,
+        newReport.itemimageupload = data.itemimageupload,
+        newReport.itemcondition = data.itemcondition,
+        newReport.category = data.category,
+        newReport.wisher = req.user.username,
+        newReport.id = data._id,
+        newReport.reporter = req.user.username,
+        newReport.reportmsg = req.body.reportmsg,
+        newReport.save(function(err){
+          if(err){
+            console.log(err);
+            return;
+          } 
+          else {
+            alert('Item is being reviewed now. Thanks for your cooperation');
+          }
+        })
+      })
+    }
     else if (something)
     {
       console.log('Test')
