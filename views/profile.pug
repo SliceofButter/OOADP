@@ -70,3 +70,18 @@ block content
                         .card-body
                           a(href='/productitem/' + datas._id)
                             p.card-title.text-center(style='height:50px')=datas.itemname
+                          button.btn.btn-info.btn-lg(type="button" data-toggle="modal" data-target="#myModal"  style="padding-right:20%;margin-left:15%;margin-top:10px;font-size:10px;") View Offers
+                          #myModal.modal.fade(role="dialog")
+                            .modal-dialog
+                              // Modal content
+                              .modal-content
+                                .modal-header
+                                  h4.modal-title Offers Listed #{data.itemname}
+                                  button.close(type="button" data-dismiss="modal") ×
+                                .modal-body
+                                 each offers in offer
+                                    p(style="font-size:18px") #{offers.buyer} wishes to purchase #{offers.itemname}
+                                    input#accept-offer.btn.btn-primary(href='#',data-id=data._id,name='accept1', type='button',value='Accept offer',style="display: inline-block; margin-right: 10px;")
+                                    input#reject-offer.btn.btn-danger(href='#',data-id=data._id, name= 'reject1', type='button',value='Reject offer',style="display: inline-block;")
+                                .modal-footer
+                                    button.btn.btn-default(type="button" data-dismiss="modal") Close
