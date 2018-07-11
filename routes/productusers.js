@@ -200,23 +200,26 @@ router.get('/profile/:username/wishlist', function(req,res){
     else if (something)
     {
       console.log('Test')
-      let newTransac = new Transac();
-      newTransac.itemname = req.body.itemname,
-      newTransac.itemprice = req.body.itemprice,
-      newTransac.username =  req.params.id,
-      newTransac.uniqueID = uuidV4()
-      newTransac.status = 'Requested',
-      newTransac.buyer = req.user.username
-      newTransac.save(function(err){
-        if(err){
-          console.log(err)
-        } else {
-          res.redirect('/');
-          alert('Item offered')
-        }
+      var wistlistitem = Items.findById(req.params.id,function(err,data){
+        let newTransac = new Transac();
+        newTransac.itemname = data.itemname,
+        newTransac.itemprice = data.itemprice,
+        newTransac.username =  data.username,
+        newTransac.uniqueID = uuidV4()
+        newTransac.status = 'Requested',
+        newTransac.id = data._id
+        newTransac.buyer = req.user.username
+        newTransac.save(function(err){
+          if(err){
+            console.log(err)
+          } else {
+            res.redirect('/');
+            alert('Item offered')
+          }
+        })
       })
     }
-    });
+      });
     // })
 //   })
 //   if(accept){

@@ -6,7 +6,7 @@ block content
         each datas, i in data
             if user.username == datas.username
                 p Transaction ID: #{datas.uniqueID}
-                a(href='/productitem/' + datas._id) Item Name: #{datas.itemname}
+                a(href='/productitem/' + datas.id) Item Name: #{datas.itemname}
                 p Item Price: $#{datas.itemprice}
                 p Customer: #{datas.buyer}
                 p Seller: #{datas.username}
@@ -18,7 +18,7 @@ block content
         each datas, i in data
             if user.username == datas.buyer
                 p Transaction ID: #{datas.uniqueID}
-                a(href='/productitem/' + datas._id) Item Name: #{datas.itemname}
+                a(href='/productitem/' + datas.id) Item Name: #{datas.itemname}
                 p Item Price: $#{datas.itemprice}
                 p Customer: #{datas.buyer}
                 p Seller: #{datas.username}

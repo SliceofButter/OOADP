@@ -115,7 +115,7 @@ let users = require('./routes/users');
 app.use('/', users);
 let productusers = require('./routes/productusers');
 app.use('/', productusers);
-let transactions = require('./routes/transactiondetails');
+let transactions = require('./routes/transaction');
 app.use('/',transactions);
 var mongooseadmin = require('mongooseadmin');
 app.use('/admin',mongooseadmin())
