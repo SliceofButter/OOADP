@@ -2,43 +2,86 @@ extends layout
 
 block content
   if user
-      .row
-        .col-md-2
-          .profilecenter
-            img(style='border-radius: 50%', width='100', height='100', src="/profilepic/" + pic)
-            .details
-                h5.name  #{user.username}
-                ul
-                    li
-        <div class="col-md-10">
-          <div class="card">
-            <div class="card-header">Bio</div>
-            <div class="card-body">#{bio}</div>
-          </div>
-          <br><br>
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-                <a href="#" class="nav-link active" id="home-tab" data-toggle="tab"  role="tab" aria-controls="home" aria-selected="true">Listing</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link" id="profile-tab" data-toggle="tab"  role="tab" aria-controls="profile" aria-selected="false">Request</a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link" id="contact-tab" data-toggle="tab"  role="tab" aria-controls="contact" aria-selected="false">History</a>
-            </li>
-          </ul>
-         
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="row">
-                    <div class="col-sm-6 col-md-2">
-                        <div class="card">
-                            <img class="card-img-top" style="height:200px;width:auto" src="{{ item['Picture'] }}" alt="Item">
-                        <div class="card-body">
-                            <a href="/product/" ><p class="card-title text-center" style="height:50px"></p></a>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
+    .row
+      .col-md-4
+        .profilecenter
+          img(style='border-radius: 50%', width='100', height='100', src="/profilepic/" + pic)
+          .details
+              h5.name  #{current}
+              ul
+                  li
+        .card-body
+          .row
+            .col-md
+              .counterbox
+                p.text-center.countertext Feedback Score
+            button.btn.btn-primary(type='button', data-toggle='modal', data-target='.bd-example-modal-lg') View Reviews
+            .modal.fade.bd-example-modal-lg(tabindex='-1', role='dialog', aria-labelledby='myLargeModalLabel', aria-hidden='true')
+              .modal-dialog.modal-lg
+                .modal-content
+                  .modal-header
+                    h5#exampleModalLongTitle.modal-title Feedback
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') ×
+                  .modal-body
+                    // start
+                    .row
+                      .col-sm-5
+                        .card(style='width: 20rem;')
+                          .card-body
+                            h4.card-title  Excellent Trader
+                            h6.card-subtitle.mb-2.text-muted
+                              | By 
+                              a(href="http://127.0.0.1:5000/profile/{{ review['Reviewer'] }}") me
+                              span(tyle='color:grey;') date}
+                            i.ion-ios-star
+                            p.card-text comment
+                    // end
+                  .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                    button.btn.btn-primary(type='button') Save changes
+
+
+      .col-md-8
+        .card
+          .card-header Bio           
+          .card-body #{bio}         
+        br
+        br         
+        ul#myTab.nav.nav-tabs(role='tablist')
+          li.nav-item
+            a#home-tab.nav-link.active(href='#') Listing          
+          li.nav-item
+            a#profile-tab.nav-link(href='#') Request          
+          li.nav-item
+            if user.username == current
+              a#contact-tab.nav-link(href='/profile/'+current+'/wallet') Wallet     
+          li.nav-item
+            a#contact-tab.nav-link(href='/profile/'+current+ '/wishlist') Wishlist   
+        #myTabContent.tab-content
+          #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
+            .row
+              if pic != null                         
+                each datas in data                        
+                  if current == datas.username
+                    .div.col-md-3
+                      .card 
+                        img.card-img-top(style='height:200px;width:auto', src='/itempic/' + datas.itemimageupload, alt='Item')                              
+                        .card-body
+                          a(href='/productitem/' + datas._id)
+                            p.card-title.text-center(style='height:50px')=datas.itemname
+                          button.btn.btn-info.btn-lg(type="button" data-toggle="modal" data-target="#myModal"  style="padding-right:20%;margin-left:15%;margin-top:10px;font-size:10px;") View Offers
+                          #myModal.modal.fade(role="dialog")
+                            .modal-dialog
+                              // Modal content
+                              .modal-content
+                                .modal-header
+                                  h4.modal-title Offers Listed #{data.itemname}
+                                  button.close(type="button" data-dismiss="modal") ×
+                                .modal-body
+                                 each offers in offer
+                                    p(style="font-size:18px") #{offers.buyer} wishes to purchase #{offers.itemname}
+                                    input#accept-offer.btn.btn-primary(href='#',data-id=data._id,name='accept1', type='button',value='Accept offer',style="display: inline-block; margin-right: 10px;")
+                                    input#reject-offer.btn.btn-danger(href='#',data-id=data._id, name= 'reject1', type='button',value='Reject offer',style="display: inline-block;")
+                                .modal-footer
+                                    button.btn.btn-default(type="button" data-dismiss="modal") Close

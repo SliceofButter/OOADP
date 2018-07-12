@@ -214,7 +214,49 @@ router.get('/confirmation/:token',function(req,res){
   // router.get('/profile', function(req, res, next){
   //       res.recnder('profile', { title: 'profile', user: req.user });
   //     });
-
+  router.post('/test/:username', function(req,res, next){
+    var Accept1 = req.body.accept1;
+    var Reject1 = req.body.reject1;
+    User.findOne({username:req.params.username}, function(err, user){
+      Items.find({username:user.username},function(err, data){
+        Transacs.find({username:user.username}, function(err,offer){
+        if (offer.id == data._id){
+        if (Accept1)
+        {
+          console.log(offer.itemname)
+          Transacs.update({status:'Accepted'},{ new: true })
+        }
+        if (Reject1)
+        {
+          Transacs.update({$set:{ status:'Rejected'}},{ new: true })
+        }
+        res.render('profile')
+      }
+    })
+  })
+    })
+  })
+  router.get('/profile/:username',ensureAuthenticated, function(req, res, next){
+    User.findOne({username:req.params.username}, function(err, user){
+      Items.find({username:user.username},function(err, data){
+        Transacs.find({username:user.username}, function(err,offer){
+          console.log(offer);
+        // console.log(data)
+        if (user.dp != null || user.bio !=null){
+          res.render('profile', {
+          current: user.username,
+          bio : user.bio,    
+          pic : user.dp,
+          data : data,
+          offer: offer
+        });
+        } else {
+          res.render('test')
+        }
+      })
+    })
+    })
+  })
 router.get('/profile/:username',ensureAuthenticated, function(req, res, next){
     User.findOne({username:req.params.username}, function(err, user){
       Items.find({username:user.username},function(err, data){
@@ -236,31 +278,6 @@ router.get('/profile/:username',ensureAuthenticated, function(req, res, next){
     })
     })
   })
-router.post('/profile/:username', ensureAuthenticated, function(req,res, next){
-  var Accept1 = req.body.accept1;
-  var Reject1 = req.body.reject1;
-  User.findOne({username:req.params.username}, function(err, user){
-    Items.find({username:user.username},function(err, data){
-      Transacs.find({username:user.username}, function(err,offer,transac){
-        console.log(offer);
-      // console.log(data)
-      if (offer.itemname == data.itemname){
-      if (Accept1)
-      {
-        console.log(offer.itemname)
-        Transacs.findOneAndUpdate({buyer:offer.buyer},{$set:{ status:'Accepted'}},{ new: true })
-      }
-      if (Reject1)
-      {
-        Transacs.update({$set:{ status:'Rejected'}},{ new: true })
-      }
-      res.render('profile')
-    }
-  })
-})
-  })
-})
-
 router.get('/profile/:username/wallet',ensureAuthenticated, function(req, res, next){
   User.findOne({username:req.params.username}, function(err, user){
       if (user.dp != null || user.bio !=null){

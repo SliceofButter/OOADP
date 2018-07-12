@@ -132,15 +132,18 @@ router.delete('/productitem/:id',function(req,res){
 //Get Product item page
 router.get('/productitem/:id', function(req,res){
     var item = Items.findById(req.params.id,function(err,data){
-      _id = item[0],
-      itemcondition = item[1]
-      itemimageupload = item[2],
-      description= item[3],
-      username = item[4],
-      itemprice = item[5],
-      itemname = item[6],
-      res.render('productitem', {
-        data:data
+      Transac.find({username:data.username}, function(err,offer){
+        console.log(data)
+        _id = item[0],
+        itemcondition = item[1]
+        itemimageupload = item[2],
+        description= item[3],
+        username = item[4],
+        itemprice = item[5],
+        itemname = item[6],
+        res.render('productitem', {
+          data:data,
+          offer:offer
     });
     var inputValue = req.body.something
     if (inputValue == 'Send offer'){
@@ -149,7 +152,7 @@ router.get('/productitem/:id', function(req,res){
   //  rs
   })
   })
-
+})
 router.get('/profile/:username/wishlist', function(req,res){
   User.findOne({username:req.params.username}, function(err, user){
     WishlistItem.find({wisher:user.username},function(err, docs){
