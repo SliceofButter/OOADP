@@ -13,33 +13,34 @@ block content
         .card-body
           .row
             .col-md
-              .counterbox
-                p.text-center.countertext Feedback Score
-            button.btn.btn-primary(type='button', data-toggle='modal', data-target='.bd-example-modal-lg') View Reviews
-            .modal.fade.bd-example-modal-lg(tabindex='-1', role='dialog', aria-labelledby='myLargeModalLabel', aria-hidden='true')
-              .modal-dialog.modal-lg
-                .modal-content
-                  .modal-header
-                    h5#exampleModalLongTitle.modal-title Feedback
-                    button.close(type='button', data-dismiss='modal', aria-label='Close')
-                      span(aria-hidden='true') ×
-                  .modal-body
-                    // start
-                    .row
-                      .col-sm-5
-                        .card(style='width: 20rem;')
-                          .card-body
-                            h4.card-title  Excellent Trader
-                            h6.card-subtitle.mb-2.text-muted
-                              | By 
-                              a(href="http://127.0.0.1:5000/profile/{{ review['Reviewer'] }}") me
-                              span(tyle='color:grey;') date}
-                            i.ion-ios-star
-                            p.card-text comment
-                    // end
-                  .modal-footer
-                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-                    button.btn.btn-primary(type='button') Save changes
+              form(method ='POST' action='/profile/' + current)
+                button.btn.btn-primary(type="submit", name="follow1") Follow
+            .col-md
+              button.btn.btn-primary(type='button', data-toggle='modal', data-target='.bd-example-modal-lg') Report User
+              .modal.fade.bd-example-modal-lg(tabindex='-1', role='dialog', aria-labelledby='myLargeModalLabel', aria-hidden='true')
+                .modal-dialog.modal-lg
+                  .modal-content
+                    .modal-header
+                      h5#exampleModalLongTitle.modal-title Feedback
+                      button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                    .modal-body
+                      // start
+                      .row
+                        .col-sm-5
+                          .card(style='width: 20rem;')
+                            .card-body
+                              h4.card-title  Excellent Trader
+                              h6.card-subtitle.mb-2.text-muted
+                                | By 
+                                a(href="http://127.0.0.1:5000/profile/{{ review['Reviewer'] }}") me
+                                span(tyle='color:grey;') date}
+                              i.ion-ios-star
+                              p.card-text comment
+                      // end
+                    .modal-footer
+                      button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                      button.btn.btn-primary(type='button') Save changes
 
 
       .col-md-8
