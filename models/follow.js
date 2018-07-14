@@ -5,9 +5,11 @@ var FollowSchema = new Schema({
 
     follower: {
         type: String,
+        ref: 'User'
     },
-    followee: {
+    following: {
         type: String,
+        ref: 'User'
     }
 
 });

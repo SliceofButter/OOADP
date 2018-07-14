@@ -13,6 +13,7 @@
     "alert-node": "^1.2.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
+    "cheerio": "^1.0.0-rc.2",
     "connect-flash": "^0.1.1",
     "credit-card": "^3.0.1",
     "crypto": "^1.0.1",
