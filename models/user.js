@@ -27,6 +27,12 @@ const userSchema = mongoose.Schema({
     },
     bio: String,
     dp:String,
+    follower: {
+        type: String, ref: 'Follow'
+    },
+    following: {
+        type: String, ref: 'Follow'
+    }
 })    
 
 

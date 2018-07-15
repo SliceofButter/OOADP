@@ -133,7 +133,7 @@ router.delete('/productitem/:id',function(req,res){
 router.get('/productitem/:id', function(req,res){
     var item = Items.findById(req.params.id,function(err,data){
       Transac.find({username:data.username}, function(err,offer){
-        console.log(data)
+        //console.log(data)
         _id = item[0],
         itemcondition = item[1]
         itemimageupload = item[2],
@@ -176,10 +176,11 @@ router.get('/profile/:username/wishlist', function(req,res){
     var something2 = req.body.wishlist;
     var something = req.body.offer;
     var something3 = req.body.report;
+    var something4 = req.body.accept;
     if (something2)
     {
       console.log('Testing')
-    var wistlistitem = Items.findById(req.params.id,function(err,data){
+      var wistlistitem = Items.findById(req.params.id,function(err,data){
       let newWishlistItem = new WishlistItem();
       newWishlistItem.itemname = data.itemname,
       newWishlistItem.itemprice = data.itemprice,
@@ -204,6 +205,7 @@ router.get('/profile/:username/wishlist', function(req,res){
   }
     else if (something3){
       var wistlistitem = Items.findById(req.params.id,function(err,data){
+        console.log(something3)
         let newReport = new Reports();
         newReport.itemname = data.itemname,
         newReport.itemprice = data.itemprice,
@@ -249,6 +251,19 @@ router.get('/profile/:username/wishlist', function(req,res){
           }
         })
       })
+    }
+    else if (something4)
+    {
+      console.log('Test')
+      console.log({id:data._id})
+      /*Transac.findOneAndUpdate({id: data._id,buyer: "donhitme34" },{$set:{ status:'Accepted'}},{new:true},function(err){
+        if(err){
+          console.log(err)
+        } else {
+          res.redirect('/');
+          alert('Offer Accepted')
+        }
+      }) */
     }
       });
     // })
