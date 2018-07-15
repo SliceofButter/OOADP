@@ -109,6 +109,12 @@ app.get('/test', function(req, res){
 app.get('/payment', function(req, res){
   res.render('payment');
 })
+
+app.get('/chat',function(req, res){
+  res.render('chat');//
+  });
+
+  
 // Route Files
 
 let users = require('./routes/users');

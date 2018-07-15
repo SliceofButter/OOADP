@@ -45,6 +45,8 @@ html(lang='en')
                   a(href='about.html') About
                 li
                   a(href='contact.html') Contact
+                li
+                  a(href='/chat') Chat test 
               ul.nav.navbar-nav.flex-row.justify-content-between.ml-auto
           // Header Icon
         if user
@@ -88,6 +90,8 @@ html(lang='en')
               a(href='about.html') About
             li.item-menu-mobile
               a(href='contact.html') Contact   
+            li.item-menu-mobile
+              a(href='/chat') chat test 
     .container
       != messages('message', locals)
       if errors
