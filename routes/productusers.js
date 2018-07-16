@@ -177,10 +177,21 @@ router.get('/profile/:username/wishlist', function(req,res){
   })
   router.post('/productitem/:id/:uniqueID',function(req,res,next)
 {
+  var accepted = req.body.acceptme;
+  var rejected = req.body.rejectme;
+  if(accepted){
   Transac.findOneAndUpdate({uniqueID:req.params.uniqueID},{$set:{status:'Accepted'}},function(err)
 {
   if (err) return handleError(err)
 })
+  }
+  if(rejected)
+  {
+    Transac.findOneAndUpdate({uniqueID:req.params.uniqueID},{$set:{status:'Rejected'}},function(err)
+{
+  if (err) return handleError(err)
+})
+  }
 res.redirect('/')
 })
   router.post('/productitem/:id',function(req, res,next){
