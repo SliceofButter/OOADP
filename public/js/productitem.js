@@ -14,7 +14,7 @@
         }
     });
     });
-});*/
+});
 var alert
 $(document).ready(function(){
     $('#accept-offer').on('click', function(e){
@@ -67,4 +67,4 @@ $(document).ready(function(){
     });
 });
 });
-});
+}); */

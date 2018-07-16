@@ -16,23 +16,23 @@ block content
     else if user.username == data.username
       form(method='POST', action='/productitem/' + data._id +'?_method=DELETE' style="margin-left:2%;margin-top:20px;")
         input.btn.btn-primary(type='submit' value='Delete item' style="margin-left:43%;margin-top:1px;")
-        button.btn.btn-info.btn-lg(type="button" data-toggle="modal" data-target="#offerlist"  style="padding-right:20%;margin-left:15%;margin-top:10px;font-size:10px;") View Offers
-        #offerlist.modal.fade(role="dialog")
-          .modal-dialog
-            // Modal content
-            .modal-content
-              .modal-header
-                h4.modal-title Offers Listed
-                button.close(type="button" data-dismiss="modal") ×
-              .modal-body
-                each offers in offer
-                  form(method="POST" action="/profile/" + current)
+      button.btn.btn-info.btn-lg(type="button" data-toggle="modal" data-target="#offerlist"  style="padding-right:20%;margin-left:15%;margin-top:10px;font-size:10px;") View Offers
+      #offerlist.modal.fade(role="dialog")
+        .modal-dialog
+          // Modal content
+          .modal-content
+            .modal-header
+              h4.modal-title Offers Listed
+              button.close(type="button" data-dismiss="modal") ×
+            .modal-body
+              each offers in offer
+                form(method="POST" action='/productitem/' +data._id)
                   if data.itemname == offers.itemname
                     p(style="font-size:18px") #{offers.buyer} wishes to purchase #{offers.itemname}
-                    input#accept-offer.btn.btn-primary(href='#',data-id=data._id,name='accept', type='button',value='Accept offer',style="display: inline-block; margin-right: 10px;")
-                    input#reject-offer.btn.btn-danger(href='#',data-id=data._id, name= 'reject1', type='button',value='Reject offer',style="display: inline-block;")
-              .modal-footer
-                  button.btn.btn-default(type="button" data-dismiss="modal") Close 
+                    input.btn.btn-primary(type='submit' name='acceptme',value="Accept Offer" style="display: inline-block; margin-right: 10px;")
+                    input.btn.btn-danger(href='#',data-id=data._id, name= 'reject1', type='button',value='Reject offer',style="display: inline-block;")
+            .modal-footer
+                button.btn.btn-default(type="button" data-dismiss="modal") Close 
     else if data.status == 'Accepted'
       h1(style="text-align:center;font-weight:bold;color:red") Item is no longer on sale. Sorry for the inconvenience. 
     else

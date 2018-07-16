@@ -114,6 +114,10 @@ app.get('/chat',function(req, res){
   res.render('chat');//
   });
 
+app.get('/test3', function(req,res)
+{
+  res.render('test3');
+})
   
 // Route Files
 

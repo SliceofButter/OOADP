@@ -129,10 +129,15 @@ router.delete('/productitem/:id',function(req,res){
     });
 });
 
+
 //Get Product item page
 router.get('/productitem/:id', function(req,res){
     var item = Items.findById(req.params.id,function(err,data){
       Transac.find({username:data.username}, function(err,offer){
+       /*offer.forEach(function(offers){
+         console.log(offers.uniqueID)
+         console.log(offers.buyer)
+       }) */
         //console.log(data)
         _id = item[0],
         itemcondition = item[1]
@@ -171,15 +176,14 @@ router.get('/profile/:username/wishlist', function(req,res){
     })
   })
     
-
   router.post('/productitem/:id',function(req, res,next){
     var something2 = req.body.wishlist;
     var something = req.body.offer;
     var something3 = req.body.report;
-    var something4 = req.body.accept;
+    var something4 = req.body.acceptme;
     if (something2)
     {
-      console.log('Testing')
+      //console.log('Testing')
       var wistlistitem = Items.findById(req.params.id,function(err,data){
       let newWishlistItem = new WishlistItem();
       newWishlistItem.itemname = data.itemname,
@@ -205,7 +209,7 @@ router.get('/profile/:username/wishlist', function(req,res){
   }
     else if (something3){
       var wistlistitem = Items.findById(req.params.id,function(err,data){
-        console.log(something3)
+        //console.log(something3)
         let newReport = new Reports();
         newReport.itemname = data.itemname,
         newReport.itemprice = data.itemprice,
@@ -232,7 +236,7 @@ router.get('/profile/:username/wishlist', function(req,res){
     }
     else if (something)
     {
-      console.log('Test')
+      //console.log('Test')
       var wistlistitem = Items.findById(req.params.id,function(err,data){
         let newTransac = new Transac();
         newTransac.itemname = data.itemname,
@@ -254,16 +258,16 @@ router.get('/profile/:username/wishlist', function(req,res){
     }
     else if (something4)
     {
-      console.log('Test')
-      console.log({id:data._id})
-      /*Transac.findOneAndUpdate({id: data._id,buyer: "donhitme34" },{$set:{ status:'Accepted'}},{new:true},function(err){
-        if(err){
-          console.log(err)
-        } else {
-          res.redirect('/');
-          alert('Offer Accepted')
-        }
-      }) */
+      Items.findById(req.params.id,function(err,data){
+      Transac.find({username:data.username}, function(err,offer){
+        Transac.findOneAndUpdate({uniqueID: offer.uniqueID},{$set:{status:'Accepted'}}, {new: true} ,function(err){
+          if (err) return handleError(err)
+
+      })
+
+    })
+  })
+  res.redirect('/')
     }
       });
     // })
