@@ -175,7 +175,14 @@ router.get('/profile/:username/wishlist', function(req,res){
       })
     })
   })
-    
+  router.post('/productitem/:id/:uniqueID',function(req,res,next)
+{
+  Transac.findOneAndUpdate({uniqueID:req.params.uniqueID},{$set:{status:'Accepted'}},function(err)
+{
+  if (err) return handleError(err)
+})
+res.redirect('/')
+})
   router.post('/productitem/:id',function(req, res,next){
     var something2 = req.body.wishlist;
     var something = req.body.offer;
@@ -256,19 +263,22 @@ router.get('/profile/:username/wishlist', function(req,res){
         })
       })
     }
+    /*
     else if (something4)
     {
       Items.findById(req.params.id,function(err,data){
       Transac.find({username:data.username}, function(err,offer){
-        Transac.findOneAndUpdate({uniqueID: offer.uniqueID},{$set:{status:'Accepted'}}, {new: true} ,function(err){
+      offer.forEach(function(offers){
+        Transac.findOneAndUpdate({uniqueID: offers.uniqueID},{$set:{status:'Accepted'}}, {new: true} ,function(err){
           if (err) return handleError(err)
 
       })
-
+      })
     })
   })
   res.redirect('/')
     }
+    */
       });
     // })
 //   })
