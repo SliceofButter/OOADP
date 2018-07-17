@@ -14,7 +14,7 @@ block content
           if current  != user.username 
             .row
               .col-md
-              if follow != current
+              if follow != current && follow != null
                 form(method ='POST' action='/profile/' + current)
                   input.btn.btn-primary(type="submit", name="follow1" value="Follow" style="  padding: 5px 80px;") 
               else 
