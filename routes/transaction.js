@@ -2,12 +2,15 @@ const express = require('express');
 const router = express.Router();
 const uuidV4 = require('uuid/v4');
 const userfinder = require('./users.js');
+const alert = require('alert-node')
+
 
 var testID =uuidV4()
 
 let Items = require('../models/items');
 let Transacs = require('../models/transaction');
 let User = require('../models/user');
+let Banker = require('../models/bank')
 
 router.get('/transaction',function(req,res){
         User.findById(req.user, function(err, user){
@@ -20,26 +23,52 @@ router.get('/transaction',function(req,res){
         }); 
         
 });
-router.post('/transaction',function(req,res){
-    Items.findById(req.params.id)
-      .exec(function(err, entries) {
-          // changed `if (err || !doc)` to `if (err || !entries)`
-          if (err || !entries) {
-              res.statusCode = 404;
-              res.send({});
-          } else {
-              entries.remove(function(err) {
-                  if (err) {
-                      res.statusCode = 403;
-                      res.send(err);
-                  } else {
-                      //res.send({});
-                      res.redirect('/')
-                  }
-              });
-          }
-      });
-  });
-
+router.get('/payment/:id', function(req,res){
+    Transacs.findOne({uniqueID:req.params.id},function(err,docs){
+        Banker.findOne({username:docs.buyer},function(err,buyer){
+            Banker.find({username:docs.username},function(err,merch){
+                Items.findOne({_id:docs.id}, function(err,data){
+                    res.render('payment',{
+                    docs:docs,
+                    data:data,
+                    buyer:buyer,
+                    merch:merch
+                })
+            })
+            })
+        })
+    })
+})
+router.post('/payment/:id', function(req,res){
+    Transacs.findOne({uniqueID:req.params.id},function(err,docs){
+        Banker.findOne({username:docs.buyer},function(err,buyer){
+            Banker.findOne({username:docs.username},function(err,merch){
+                Items.findOne({_id:docs.id}, function(err,data){
+                    var buywallet = buyer.amount;
+                    var itemprice = docs.itemprice;
+                    var sellwallet = merch.amount;
+                    var newbuywallet = buywallet - itemprice;
+                    var newsellwallet = sellwallet + itemprice;
+                    Banker.findOneAndUpdate({username:docs.username},{ $set: { amount: newsellwallet }},function(err){
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        else{ res.send();}
+                    });
+                    Banker.findOneAndUpdate({username:docs.buyer},{ $set: { amount: newbuywallet }},function(err){
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        else{ res.send();}
+                    });
+                    alert('Item has been bought!');
+                    res.redirect('/');
+                })
+            })
+        })
+    })
+})
 
 module.exports = router;

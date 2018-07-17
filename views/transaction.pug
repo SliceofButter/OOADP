@@ -23,6 +23,9 @@ block content
                 p Customer: #{datas.buyer}
                 p Seller: #{datas.username}
                 p Status: #{datas.status}
+                if datas.status == 'Accepted' 
+                    a(href='/payment/'+ datas.uniqueID ,class="btn btn-primary" type='button' name='paynow' style='margin-left:44%;margin-top:20px;') Pay Now!
+
                 br           
 
     // Footer
