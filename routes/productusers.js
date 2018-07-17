@@ -132,13 +132,18 @@ router.delete('/productitem/:id',function(req,res){
 
 //Get Product item page
 router.get('/productitem/:id', function(req,res){
+  User.findOne(req.user, function(err, user){
     var item = Items.findById(req.params.id,function(err,data){
       Transac.find({username:data.username}, function(err,offer){
+        WishlistItem.find({wisher:user.username, id:req.params.id},function(err, docs){
        /*offer.forEach(function(offers){
          console.log(offers.uniqueID)
          console.log(offers.buyer)
        }) */
         //console.log(data)
+        console.log(docs)
+        var meow = [];
+        console.log(data._id);
         _id = item[0],
         itemcondition = item[1]
         itemimageupload = item[2],
@@ -148,7 +153,9 @@ router.get('/productitem/:id', function(req,res){
         itemname = item[6],
         res.render('productitem', {
           data:data,
-          offer:offer
+          offer:offer,
+          docs:docs,
+          meow:meow,
     });
     var inputValue = req.body.something
     if (inputValue == 'Send offer'){
@@ -157,6 +164,8 @@ router.get('/productitem/:id', function(req,res){
   //  rs
   })
   })
+})
+})
 })
 router.get('/profile/:username/wishlist', function(req,res){
   User.findOne({username:req.params.username}, function(err, user){
