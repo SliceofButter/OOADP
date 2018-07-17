@@ -141,22 +141,22 @@ router.get('/productitem/:id', function(req,res){
          console.log(offers.buyer)
        }) */
         //console.log(data)
-        console.log(docs)
-        var meow = [];
-        console.log(data._id);
-        _id = item[0],
-        itemcondition = item[1]
-        itemimageupload = item[2],
-        description= item[3],
-        username = item[4],
-        itemprice = item[5],
-        itemname = item[6],
-        res.render('productitem', {
-          data:data,
-          offer:offer,
-          docs:docs,
-          meow:meow,
-    });
+          console.log(docs)
+          var meow = [];
+          console.log(data._id);
+          _id = item[0],
+          itemcondition = item[1]
+          itemimageupload = item[2],
+          description= item[3],
+          username = item[4],
+          itemprice = item[5],
+          itemname = item[6],
+          res.render('productitem', {
+            data:data,
+            offer:offer,
+            docs:docs,
+            meow:meow,
+          });
     var inputValue = req.body.something
     if (inputValue == 'Send offer'){
       console.log('yay?')
