@@ -229,6 +229,7 @@ res.redirect('/')
           return;
         } 
         else {
+          res.redirect('/productitem/' + data._id);
           alert('Item is now added to your wishlist!');
         }
       })
