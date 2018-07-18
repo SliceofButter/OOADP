@@ -12,7 +12,19 @@ block content
         p(style="font-weight:bolder;font-size:150%") Your wallet balance:$ #{buyer.amount}
         if buyer.amount > docs.itemprice
           form(method ='POST' action='/payment/'+docs.uniqueID )
-            input.btn.btn-info(type="submit" value="Pay now!" name="paynow" style="margin-left:44%;margin-top:20px")
+            button.btn.btn-danger.btn-lg(type="button" data-toggle="modal" data-target="#myModal" style="margin-left:44%;margin-top:20px;font-size:18px;") Buy This Item!
+            #myModal.modal.fade(role="dialog" style="background: rgba(0, 0, 0, 0.5); position: fixed; top: 0; right: 0; bottom: 0; left: 0;")
+              .modal-dialog
+                // Modal content
+                .modal-content
+                  .modal-header
+                    h4.modal-title Payment
+                    button.close(type="button" data-dismiss="modal") ×
+                  .modal-body
+                      h3(style="text-align:center;font-weight:bold;") Are you sure u want to buy this item?
+                      input.btn.btn-info(type="submit" value="Pay now!" name="paynow" style="margin-left:44%;margin-top:20px")
+                  .modal-footer
+                    button.btn.btn-default(type="button" data-dismiss="modal") Close 
         else
           p(style="text-align:center;font-weight:bold;") Your wallet has insufficient balance. Please add more via the profile page!
       
