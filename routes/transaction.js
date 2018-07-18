@@ -7,6 +7,7 @@ const alert = require('alert-node')
 
 var testID =uuidV4()
 
+let WishlistItem = require('../models/wishlist');
 let Items = require('../models/items');
 let Transacs = require('../models/transaction');
 let User = require('../models/user');
@@ -63,12 +64,29 @@ router.post('/payment/:id', function(req,res){
                         }
                         else{ res.send();}
                     });
+                    WishlistItem.findOneAndRemove({id:docs.id},function(err){
+                        if (err) {
+                            console.log(err);
+                            return;
+                        } 
+                        else {
+                            res.send();
+                        }
+                    })
+                    Items.findByIdAndRemove({_id:docs.id},function(err){
+                        if (err) {
+                            console.log(err);
+                            return;
+                        } else {
+                            res.send();
+                        }
+                    })
                     alert('Item has been bought!');
                     res.redirect('/');
                 })
             })
         })
-    })
+    });
 })
 
 module.exports = router;
