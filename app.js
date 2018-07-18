@@ -130,7 +130,66 @@ app.use('/',transactions);
 var mongooseadmin = require('mongooseadmin');
 app.use('/admin',mongooseadmin())
 
+
+// var path = require('path');
+// var express= require('express'),
+	//app=express(),
+	server = require('http').createServer(app),
+	io=require('socket.io').listen(server),
+    //mongoose = require('mongoose'),
+	users123={};
+
+	let ChatModel = require('./models/chat.js')
+	
+
+	io.on('connection',function(socket){
+		console.log('new connection done');
+		
+		ChatModel.find({}, function(err, docs){
+			if(err)throw err;
+			console.log('sending old msgs');
+			io.emit('load old msgs', docs);
+		});//if the schema is found then console log this msg, emit the docs
+
+		socket.on('send message',function(data){
+			//saved in mongodb like this
+			var newMsg = new ChatModel({msg:data.msg,sender: data.sender, reciever: data.reciever,nickname:socket.nickname});
+		//	console.log(data.msg)
+			newMsg.save(function(err){
+			if(err){
+			throw err;
+			}else{
+			io.emit('new message',{msg:data.msg,sender: data.sender, reciever: data.reciever,nickname:socket.nickname});
+			}
+			});			
+		});
+
+		socket.on('new user',function(data, callback){
+			console.log('new user added: '+data);
+			if(data in users123){
+			callback(false);
+			}
+			else{
+			callback(true);
+			socket.nickname = data;
+			users123[socket.nickname]=socket;
+			updateNicknames();//calling the update nickname function from below
+			}
+		});
+		
+		
+		socket.on('disconnect', function(data){
+			if(!socket.nickname) return;
+			delete users123[socket.nickname];
+			updateNicknames();
+		});
+		
+		function updateNicknames(){
+		io.emit('usernames',Object.keys(users123));
+		}
+	})
+
 // Start Server
-app.listen(3000, function(){
+server.listen(3000, function(){
   console.log('Server started on port 3000...');
 });
