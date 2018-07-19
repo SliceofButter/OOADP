@@ -9,11 +9,28 @@ const passport = require('passport');
 const config = require('./config/database');
 const multer = require('multer');
 var methodOverride = require('method-override');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 
 mongoose.connect(config.database,{
   useMongoClient: true,
 });
+
+var store = new MongoDBStore({
+  uri: config.database,
+  collection: 'users'
+});
+
+store.on('connected', function() {
+  store.client; 
+});
+ 
+
+store.on('error', function(error) {
+  assert.ifError(error);
+  assert.ok(false);
+});
+
 let db = mongoose.connection;
 
 // Check connection
@@ -47,8 +64,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Express Session Middleware
 app.use(session({
   secret: 'keyboard cat',
+	resave: true,
+	store: store,
   resave: true,
-  saveUninitialized: false
+  saveUninitialized: true,
 }));
 
 // Express Messages Middleware

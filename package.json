@@ -15,6 +15,7 @@
     "body-parser": "^1.17.2",
     "cheerio": "^1.0.0-rc.2",
     "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^2.0.3",
     "credit-card": "^3.0.1",
     "crypto": "^1.0.1",
     "ejs": "^2.6.1",
@@ -38,6 +39,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-rc.1",
+    "socket.io": "^2.1.1",
     "uuid": "^3.2.1",
     "uuid-random": "^1.0.6",
     "webdriveerio": "^0.1.5"
