@@ -64,7 +64,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Express Session Middleware
 app.use(session({
   secret: 'keyboard cat',
-	resave: true,
+  resave: true,
 	store: store,
   resave: true,
   saveUninitialized: true,
@@ -149,7 +149,6 @@ app.use('/',transactions);
 var mongooseadmin = require('mongooseadmin');
 app.use('/admin',mongooseadmin())
 
-
 // var path = require('path');
 // var express= require('express'),
 	//app=express(),
@@ -206,8 +205,8 @@ app.use('/admin',mongooseadmin())
 		function updateNicknames(){
 		io.emit('usernames',Object.keys(users123));
 		}
-	})
-
+  })
+  
 // Start Server
 server.listen(3000, function(){
   console.log('Server started on port 3000...');

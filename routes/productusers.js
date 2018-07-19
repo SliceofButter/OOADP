@@ -26,6 +26,15 @@ let User = require('../models/user');
 let Transac = require('../models/transaction');
 let Reports = require('../models/report');
 
+function ensureAuthenticated(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  } else {
+    req.flash('danger', 'Please login');
+    res.redirect('/login');
+  }
+  }
+
 var storage = multer.diskStorage({
   destination: './public/itempic/',
   filename: function (req, file, cb) {
@@ -203,87 +212,88 @@ router.get('/profile/:username/wishlist', function(req,res){
   }
 res.redirect('/')
 })
-  router.post('/productitem/:id',function(req, res,next){
-    var something2 = req.body.wishlist;
-    var something = req.body.offer;
-    var something3 = req.body.report;
-    var something4 = req.body.acceptme;
-    if (something2)
-    {
-      //console.log('Testing')
-      var wistlistitem = Items.findById(req.params.id,function(err,data){
-      let newWishlistItem = new WishlistItem();
-      newWishlistItem.itemname = data.itemname,
-      newWishlistItem.itemprice = data.itemprice,
-      newWishlistItem.username =  data.username,
+router.post('/productitem/:id',function(req, res,next){
+  var something2 = req.body.wishlist;
+  var something = req.body.offer;
+  var something3 = req.body.report;
+  var something4 = req.body.acceptme;
+  if (something2)
+  {
+    //console.log('Testing')
+    var wistlistitem = Items.findById(req.params.id,function(err,data){
+    let newWishlistItem = new WishlistItem();
+    newWishlistItem.itemname = data.itemname,
+    newWishlistItem.itemprice = data.itemprice,
+    newWishlistItem.username =  data.username,
+    //newItem.username =  req.user._id,
+    newWishlistItem.description = data.description,
+    newWishlistItem.itemimageupload = data.itemimageupload,
+    newWishlistItem.itemcondition = data.itemcondition,
+    newWishlistItem.category = data.category,
+    newWishlistItem.wisher = req.user.username,
+    newWishlistItem.id = data._id
+    newWishlistItem.save(function(err){
+      if(err){
+        console.log(err);
+        return;
+      } 
+      else {
+        res.redirect('/productitem/' + data._id);
+        alert('Item is now added to your wishlist!');
+      }
+    })
+  })
+}
+  else if (something3){
+    var wistlistitem = Items.findById(req.params.id,function(err,data){
+      //console.log(something3)
+      let newReport = new Reports();
+      newReport.itemname = data.itemname,
+      newReport.itemprice = data.itemprice,
+      newReport.username =  data.username,
       //newItem.username =  req.user._id,
-      newWishlistItem.description = data.description,
-      newWishlistItem.itemimageupload = data.itemimageupload,
-      newWishlistItem.itemcondition = data.itemcondition,
-      newWishlistItem.category = data.category,
-      newWishlistItem.wisher = req.user.username,
-      newWishlistItem.id = data._id
-      newWishlistItem.save(function(err){
+      newReport.description = data.description,
+      newReport.itemimageupload = data.itemimageupload,
+      newReport.itemcondition = data.itemcondition,
+      newReport.category = data.category,
+      newReport.wisher = req.user.username,
+      newReport.id = data._id,
+      newReport.reporter = req.user.username,
+      newReport.reportmsg = req.body.reportmsg,
+      newReport.save(function(err){
         if(err){
           console.log(err);
           return;
         } 
         else {
-          res.redirect('/productitem/' + data._id);
-          alert('Item is now added to your wishlist!');
+          alert('Item is being reviewed now. Thanks for your cooperation');
         }
       })
     })
   }
-    else if (something3){
-      var wistlistitem = Items.findById(req.params.id,function(err,data){
-        //console.log(something3)
-        let newReport = new Reports();
-        newReport.itemname = data.itemname,
-        newReport.itemprice = data.itemprice,
-        newReport.username =  data.username,
-        //newItem.username =  req.user._id,
-        newReport.description = data.description,
-        newReport.itemimageupload = data.itemimageupload,
-        newReport.itemcondition = data.itemcondition,
-        newReport.category = data.category,
-        newReport.wisher = req.user.username,
-        newReport.id = data._id,
-        newReport.reporter = req.user.username,
-        newReport.reportmsg = req.body.reportmsg,
-        newReport.save(function(err){
-          if(err){
-            console.log(err);
-            return;
-          } 
-          else {
-            alert('Item is being reviewed now. Thanks for your cooperation');
-          }
-        })
+  else if (something)
+  {
+    //console.log('Test')
+    var wistlistitem = Items.findById(req.params.id,function(err,data){
+      let newTransac = new Transac();
+      newTransac.itemname = data.itemname,
+      newTransac.itemprice = data.itemprice,
+      newTransac.username =  data.username,
+      newTransac.uniqueID = uuidV4()
+      newTransac.status = 'Requested',
+      newTransac.id = data._id
+      newTransac.buyer = req.user.username
+      newTransac.save(function(err){
+        if(err){
+          console.log(err)
+        } else {
+          res.redirect('/');
+          alert('Item offered')
+        }
       })
-    }
-    else if (something)
-    {
-      //console.log('Test')
-      var wistlistitem = Items.findById(req.params.id,function(err,data){
-        let newTransac = new Transac();
-        newTransac.itemname = data.itemname,
-        newTransac.itemprice = data.itemprice,
-        newTransac.username =  data.username,
-        newTransac.uniqueID = uuidV4()
-        newTransac.status = 'Requested',
-        newTransac.id = data._id
-        newTransac.buyer = req.user.username
-        newTransac.save(function(err){
-          if(err){
-            console.log(err)
-          } else {
-            res.redirect('/');
-            alert('Item offered')
-          }
-        })
-      })
-    }
+    })
+  }
+});
     /*
     else if (something4)
     {
@@ -300,7 +310,7 @@ res.redirect('/')
   res.redirect('/')
     }
     */
-      });
+ 
     // })
 //   })
 //   if(accept){
@@ -332,7 +342,25 @@ res.redirect('/')
 //   }
   
   
-
+router.get('/cart',ensureAuthenticated,function(req,res){
+  User.findById(req.user, function(err, user){
+    Transac.find({buyer:user.username},function(err, data) {
+      var xd =[];
+      for(var i = 0; i < data.length; i++) {
+        xd[i] = data[i].id
+      }
+      console.log(xd);
+      Items.find({_id:xd},function(err,docs){
+          res.render('cart',{
+          username : req.user,
+          data:data,
+          docs:docs,
+          xd:xd
+        })
+      })
+    })
+  })
+});
 
 router.post('/product', (req, res) => {
     var search = req.body.searchBar;

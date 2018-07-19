@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h3(style="text-align:center;font-weight:bold;") Cart Checkout page
+    // Cart
+    section.cart.bgwhite.p-t-70.p-b-100
+      .container
+        // Cart item
+      container
+        .row
+          .col-md-3
+            each i in docs
+              img(style="height:104px;width:74px;text-align:center;display:block;margin-left: 15%;" src="/itempic/" + i.itemimageupload)
+          .col-md-8
+            each datas in data
+              if user.username == datas.buyer
+                if datas.status !='Paid'
+                  p(style="font-weight:bolder;font-size:60%") Item Name: #{datas.itemname} 
+                  p(style="font-weight:bolder;font-size:70%") Item Price: $#{datas.itemprice}
+                if datas.status == 'Accepted' 
+                  a(href='/payment/'+ datas.uniqueID ,class="btn btn-primary" type='button' name='paynow') Pay Now!

@@ -81,6 +81,13 @@ router.post('/payment/:id', function(req,res){
                             res.send();
                         }
                     })
+                    Transacs.findOneAndUpdate({uniqueID:req.params.id},{ $set: { status: 'Paid' }},function(err){
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        else{ res.send();}
+                    });
                     alert('Item has been bought!');
                     res.redirect('/');
                 })
