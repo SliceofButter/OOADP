@@ -51,6 +51,10 @@ html(lang='en')
           // Header Icon
         if user
           .header-icons
+            if(wallet!=null)
+              a(href='/profile/'+user.username+'/wallet') $#{wallet.amount}.00
+            else
+              a(href='/profile/'+user.username+'/wallet') $0.00
             li.nav-item.dropdown
               a#navbardrop.nav-link.dropdown-toggle(href='#', data-toggle='dropdown') #{user.username}
               .dropdown-menu

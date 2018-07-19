@@ -30,13 +30,13 @@ block content
           #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
             if user.username == current
               .row
-                .col-md-4
-                .col-md-4
-                  if amount != null
-                    h1 $#{amount}
+                .col-md-2
+                .col-md-6
+                  if wallet != null
+                    h4 Wallet Balance: $#{wallet.amount}.00
                   else 
                     h1 $0.00
-                  button.btn.btn-primary(style='text-align: center;', type='button', data-toggle='modal', data-target='#exampleModal')
+                  button.btn.btn-primary(style='text-align: center;border-radius: 25px;', type='button', data-toggle='modal', data-target='#exampleModal')
                     | WALLET
                   #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
                     .modal-dialog(role='document')
@@ -46,35 +46,49 @@ block content
                             button.close(type='button', data-dismiss='modal', aria-label='Close')
                             span(aria-hidden='true') ×
                           .modal-body
-                            form(action='/profile/' +current+ '/wallet', method='POST')
-                              .form-group
-                                label Card type:
-                                input.form-control(type='text', name='type')
-                              .form-group
-                                label Card number:
-                                input.form-control.number(type='text', name='number', ng-model='ncard', maxlength='19')
-                              .form-group
-                                label Expiry Date:
-                                .row
-                                  .col-md-6
-                                    input.form-control.expire(type='text', name='date', maxlength='2', placeholder='MM')
-                                  .col-md-6
-                                    input.form-control.expire(type='text', name='year', maxlength='4', placeholder='YYYY')
-                              .form-group
-                                .row
-                                  .col-md-1
-                                  .col-md-5
-                                    label CVV:
-                                    input.form-control.expire(type='text', name='cvv', maxlength='3')
-                                  .col-md-5
-                                    label Amount:
-                                    <select name="amount" class="form-control">
-                                        <option value="6">$6.00</option>
-                                        <option value="12">$12.00</option>
-                                        <option value="30">$30.00</option>
-                                        <option value="60">$60.00</option>
-                                        <option value="120">$120.00</option>
-                                    </select>
-                                  .col-md-1
-                              button.btn.btn-primary(type='submit') Submit  
-                .col-md-4    
+                            if uwallet != null
+                              a(href='/profile/'+current+'/wallet/edit' style="") + add funds to your wallet
+                              div
+                                table(style="width:100%;")
+                                  tr
+                                    td(style="text-align: left;")
+                                      p Your card ending in **#{shit}
+                                    td(style="text-align: right;")
+                                      a(href='#') Edit
+                                    td(style="text-align: right;")
+                                      p |
+                                    td(style="text-align: left;")
+                                      p Delete 
+                            else
+                              form(action='/profile/' +current+ '/wallet', method='POST')
+                                .form-group
+                                  label Card type:
+                                  input.form-control(type='text', name='type')
+                                .form-group
+                                  label Card number:
+                                  input.form-control.number(type='text', name='number', ng-model='ncard', maxlength='19')
+                                .form-group
+                                  label Expiry Date:
+                                  .row
+                                    .col-md-6
+                                      input.form-control.expire(type='text', name='date', maxlength='2', placeholder='MM')
+                                    .col-md-6
+                                      input.form-control.expire(type='text', name='year', maxlength='4', placeholder='YYYY')
+                                .form-group
+                                  .row
+                                    .col-md-1
+                                    .col-md-5
+                                      label CVV:
+                                      input.form-control.expire(type='text', name='cvv', maxlength='3')
+                                    .col-md-5
+                                      label Amount:
+                                      <select name="amount" class="form-control">
+                                          <option value="6">$6.00</option>
+                                          <option value="12">$12.00</option>
+                                          <option value="30">$30.00</option>
+                                          <option value="60">$60.00</option>
+                                          <option value="120">$120.00</option>
+                                      </select>
+                                    .col-md-1
+                                button.btn.btn-primary(type='submit') Submit  
+                .col-md-2    

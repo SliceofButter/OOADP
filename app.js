@@ -44,6 +44,7 @@ db.on('error', function(err){
 });
 
 let User = require('./models/user');
+let Bank = require('./models/bank');
 
 // Init App
 const app = express();
@@ -102,9 +103,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('*', function(req, res, next){
-  res.locals.user = req.user || null;
+  res.locals.user = req.user || null;  
   next();
 });
+
+
 /*//Image Config
 app.use(multer({ 
   dest: './public/itempic',
@@ -116,7 +119,10 @@ app.use(multer({
 
 app.get('/', function(req, res, next){
   User.findById(req.user, function(err, user){
-    res.render('home', { title: 'home', user: user })
+    Bank.findOne({username:user.username},function(err,bank){
+      res.render('home', { title: 'home', user: user, wallet : bank })
+    })
+    
     //console.log(user)
   });
 });

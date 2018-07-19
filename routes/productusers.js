@@ -25,6 +25,7 @@ let WishlistItem = require('../models/wishlist');
 let User = require('../models/user');
 let Transac = require('../models/transaction');
 let Reports = require('../models/report');
+let bank = require('../models/bank')
 
 function ensureAuthenticated(req, res, next){
   if(req.isAuthenticated()){
@@ -145,26 +146,30 @@ router.get('/productitem/:id', function(req,res){
     var item = Items.findById(req.params.id,function(err,data){
       Transac.find({username:data.username}, function(err,offer){
         WishlistItem.find({wisher:user.username, id:req.params.id},function(err, docs){
-       /*offer.forEach(function(offers){
-         console.log(offers.uniqueID)
-         console.log(offers.buyer)
-       }) */
-        //console.log(data)
-          console.log(docs)
-          var meow = [];
-          console.log(data._id);
-          _id = item[0],
-          itemcondition = item[1]
-          itemimageupload = item[2],
-          description= item[3],
-          username = item[4],
-          itemprice = item[5],
-          itemname = item[6],
-          res.render('productitem', {
-            data:data,
-            offer:offer,
-            docs:docs,
-            meow:meow,
+          bank.findOne({username:req.user.username}, function(err, bank){
+            console.log(bank)
+              /*offer.forEach(function(offers){
+            console.log(offers.uniqueID)
+            console.log(offers.buyer)
+              }) */
+            //console.log(data)
+              console.log(docs)
+              var meow = [];
+              console.log(data._id);
+              _id = item[0],
+              itemcondition = item[1]
+              itemimageupload = item[2],
+              description= item[3],
+              username = item[4],
+              itemprice = item[5],
+              itemname = item[6],
+              res.render('productitem', {
+                data:data,
+                offer:offer,
+                docs:docs,
+                meow:meow,
+                wallet:bank,
+            })
           });
     var inputValue = req.body.something
     if (inputValue == 'Send offer'){
@@ -179,17 +184,21 @@ router.get('/productitem/:id', function(req,res){
 router.get('/profile/:username/wishlist', function(req,res){
   User.findOne({username:req.params.username}, function(err, user){
     WishlistItem.find({wisher:user.username},function(err, docs){
-      console.log(docs)
-        if (user.dp != null || user.bio !=null){
-          res.render('wishlist', {
-          current: user.username,
-          bio : user.bio,    
-          pic: user.dp,
-          docs:docs,
-        });
-      } else {
-        res.render('wishlist');
-      }
+      bank.findOne({username:req.user.username}, function(err, bank){
+        // console.log(bank)
+        // console.log(docs)
+          if (user.dp != null || user.bio !=null){
+            res.render('wishlist', {
+            current: user.username,
+            bio : user.bio,    
+            pic: user.dp,
+            docs:docs,
+          });
+        } else {
+          res.render('wishlist');
+        }
+        })
+      
       })
     })
   })
@@ -345,19 +354,22 @@ router.post('/productitem/:id',function(req, res,next){
 router.get('/cart',ensureAuthenticated,function(req,res){
   User.findById(req.user, function(err, user){
     Transac.find({buyer:user.username},function(err, data) {
-      var xd =[];
-      for(var i = 0; i < data.length; i++) {
-        xd[i] = data[i].id
-      }
-      console.log(xd);
-      Items.find({_id:xd},function(err,docs){
-          res.render('cart',{
-          username : req.user,
-          data:data,
-          docs:docs,
-          xd:xd
+      bank.findOne({username:req.user.username}, function(err, bank){
+        console.log(bank)
+        var xd =[];
+        for(var i = 0; i < data.length; i++) {
+          xd[i] = data[i].id
+        }
+        console.log(xd);
+        Items.find({_id:xd},function(err,docs){
+            res.render('cart',{
+            username : req.user,
+            data:data,
+            docs:docs,
+            xd:xd
+          })
         })
-      })
+        })      
     })
   })
 });
@@ -416,16 +428,27 @@ router.get('/product',function(req,res){
       })
     );
     var itemlist = Items.find({},function(err, data) {
-      res.render('product',{
-        username : req.user,
-        data:data
-      })
+      bank.findOne({username:req.user.username}, function(err, bank){
+        console.log(bank)
+        res.render('product',{
+          username : req.user,
+          data:data,
+          wallet:bank,
+        })
+        })
+      
       }); 
   }); 
 
 //Item register
 router.get('/registeritem',function(req,res){
-  res.render('registeritem')
+  bank.findOne({username:req.user.username}, function(err, bank){
+    console.log(bank)
+    res.render('registeritem',{
+      wallet:bank
+    })
+    })
+  
 });
   
 
