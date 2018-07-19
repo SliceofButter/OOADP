@@ -104,10 +104,10 @@ router.post('/register', function(req, res){
               if (err) { return res.status(500).send({ msg: err.message }); }
   
               // Send the email
-              var transporter = nodemailer.createTransport({ host: 'smtp.gmail.com', port:465, secure:true, auth: { user: 'sghawt@gmail.com', pass: 'NYPIT1704' } });
+              var transporter = nodemailer.createTransport({ host: 'smtp.gmail.com', port:465, secure:true, tls:{ rejectUnauthorized: false}, auth: { user: 'sghawt@gmail.com', pass: 'NYPIT1704' } });
               var mailOptions = { from: 'sghawt@gmail.com', to: newUser.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' };
               transporter.sendMail(mailOptions, function (err) {
-                  if (err) { return res.status(500).send({ msg: err.message }); }
+                  if (err) {console.log(err) }
                   res.status(200).send('A verification email has been sent to ' + newUser.email + '.');
             });
           });
