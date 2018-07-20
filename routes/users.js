@@ -299,10 +299,10 @@ Follow.findOne({follower:req.user.username},function(err,follow){
 router.get('/profile/:username/wallet',ensureAuthenticated, function(req, res, next){
 User.findOne({username:req.params.username}, function(err, user){
   bank.findOne({username:user.username},function(err,bank){
-    var str = bank.number
-    var shit = str.toString().slice(14,16);
-    console.log(shit)
     if (user.dp != null && user.bio !=null && bank != null){
+      var str = bank.number
+      var shit = str.toString().slice(14,16);
+      console.log(shit)
       res.render('wallet', {
       current: user.username,
       bio : user.bio,    
@@ -332,10 +332,10 @@ router.get('/profile/:username/addfunds',ensureAuthenticated, function(req, res,
 router.get('/profile/:username/wallet/edit',ensureAuthenticated, function(req, res, next){
   User.findOne({username:req.params.username}, function(err, user){
     bank.findOne({username:user.username},function(err,bank){
-      var str = bank.number
-      var shit = str.toString().slice(14,16);
-      console.log(shit)
       if (user.dp != null && user.bio !=null && bank != null){
+        var str = bank.number
+        var shit = str.toString().slice(14,16);
+        console.log(shit)
         res.render('editWallet', {
         current: user.username,
         bio : user.bio,    
