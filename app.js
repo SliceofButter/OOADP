@@ -118,6 +118,7 @@ app.use(multer({
 // Home route
 
 app.get('/', function(req, res, next){
+  if(req.user){
   User.findById(req.user, function(err, user){
     Bank.findOne({username:user.username},function(err,bank){
       res.render('home', { title: 'home', user: user, wallet : bank })
@@ -125,7 +126,10 @@ app.get('/', function(req, res, next){
     
     //console.log(user)
   });
-});
+  }else{
+    res.render('home', { title: 'home'})
+  }
+  });
 
 app.get('/test', function(req, res){
   res.render('test');

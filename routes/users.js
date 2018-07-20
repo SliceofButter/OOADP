@@ -298,18 +298,16 @@ Follow.findOne({follower:req.user.username},function(err,follow){
 router.get('/profile/:username/wallet',ensureAuthenticated, function(req, res, next){
 User.findOne({username:req.params.username}, function(err, user){
   bank.findOne({username:user.username},function(err,bank){
+    var str = bank.number
+    var shit = str.toString().slice(14,16);
+    console.log(shit)
     if (user.dp != null && user.bio !=null && bank != null){
-      var str = bank.number
-      var shit = str.toString().slice(13,15);
-      console.log(shit)
       res.render('wallet', {
       current: user.username,
       bio : user.bio,    
       pic: user.dp,
       wallet : bank, 
       shit : shit,
-      uwallet : bank.username
-      
     });
     } else {
       res.render('wallet',{
@@ -317,7 +315,7 @@ User.findOne({username:req.params.username}, function(err, user){
         bio : user.bio,    
         pic: user.dp,
         wallet : bank,
-                
+        shit : shit,      
       })
     }
    })
@@ -328,7 +326,7 @@ router.get('/profile/:username/wallet/edit',ensureAuthenticated, function(req, r
   User.findOne({username:req.params.username}, function(err, user){
     bank.findOne({username:user.username},function(err,bank){
       var str = bank.number
-      var shit = str.toString().slice(13,15);
+      var shit = str.toString().slice(14,16);
       console.log(shit)
       if (user.dp != null && user.bio !=null && bank != null){
         res.render('editWallet', {
@@ -405,27 +403,6 @@ User.findOne({username:req.params.username}, function(err, current){
   console.log(validation)
   if (validation.validCardNumber == true && validation.isExpired == false){
       bank.findOne({username:username}, function(err, user){
-          if (user){
-              newBalance = user.amount + parseInt(amount);
-              console.log(newBalance);
-              bank.findOneAndUpdate({username:current.username},{ $set: { amount: newBalance }},function(err){
-                if(err){
-                  console.log(err);
-                  return;
-                } else {
-                  var transporter = nodemailer.createTransport({ host: 'smtp.gmail.com', port:465, secure:true, auth: { user: 'sghawt@gmail.com', pass: 'NYPIT1704' } });
-                  var mailOptions = { from: 'sghawt@gmail.com', to: req.user.email, subject: 'You have successfully added funds to your Wallet', text: 'Hello ' + req.user.username+ '\n\n' + '$'+ amount + '.00 has been added to your account'};
-                  transporter.sendMail(mailOptions, function (err) {
-                      if (err) { 
-                        return res.status(500).send({ msg: err.message }); 
-                      }
-                    })
-                
-                  alert('Sucessfully added money and check your email for confirmation');
-                  res.redirect('/profile/'+user.username);
-                }
-              })
-          }else{
             newBalance = new bank({
               username:username,
               number:number,
@@ -446,11 +423,10 @@ User.findOne({username:req.params.username}, function(err, current){
                         return res.status(500).send({ msg: err.message }); 
                       }
                     })
-                res.redirect('/profile/'+req.user.username);
+                res.redirect('/profile/'+current.username);
                 alert('Check your email for confirmation')
               }
             })
-          }
       });
   } else{
     alert('You have entered the wrong credentials')
