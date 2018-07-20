@@ -302,7 +302,7 @@ User.findOne({username:req.params.username}, function(err, user){
     if (user.dp != null && user.bio !=null && bank != null){
       var str = bank.number
       var shit = str.toString().slice(14,16);
-      console.log(shit)
+      console.log(bank)
       res.render('wallet', {
       current: user.username,
       bio : user.bio,    
@@ -311,6 +311,8 @@ User.findOne({username:req.params.username}, function(err, user){
       shit : shit,
     });
     } else {
+      var str = bank.number
+      var shit = str.toString().slice(14,16);
       res.render('wallet',{
         current: user.username,
         bio : user.bio,    
@@ -325,7 +327,41 @@ User.findOne({username:req.params.username}, function(err, user){
 
 router.get('/profile/:username/addfunds',ensureAuthenticated, function(req, res, next){
   User.findOne({username:req.params.username}, function(err, user){
-    res.render('addfunds')
+    var lol = 6;
+    var lol1 = 12;
+    var lol2 = 30;
+    var lol3 = 60;
+    var lol4 = 120;
+    jwt.sign({data: lol}, 'secret', { expiresIn: '1h' },function(err,token){
+      jwt.sign({data: lol1}, 'secret', { expiresIn: '1h' },function(err,token1){
+        jwt.sign({data: lol2}, 'secret', { expiresIn: '1h' },function(err,token2){
+          jwt.sign({data: lol3}, 'secret', { expiresIn: '1h' },function(err,token3){
+            jwt.sign({data: lol4}, 'secret', { expiresIn: '1h' },function(err,token4){
+            res.render('addfunds',{
+              current:user.username,
+              token:token,
+              token1:token1,
+              token2:token2,
+              token3:token3,
+              token4:token4,
+            })
+            })
+          })
+        })
+      })
+    })
+  })
+})
+
+router.get('/profile/:username/addfunds/:id',ensureAuthenticated, function(req, res, next){
+  var token = req.params.id;
+  User.findOne({username:req.params.username}, function(err, user){
+    jwt.verify(token, 'secret', function (err, decoded){
+      console.log(decoded)
+      res.render('confirmfund',{
+        decoded:decoded.data
+      })
+    })
   })
 })
 
@@ -345,6 +381,8 @@ router.get('/profile/:username/wallet/edit',ensureAuthenticated, function(req, r
         
       });
       } else {
+        var str = bank.number
+        var shit = str.toString().slice(14,16);
         res.render('editWallet',{
           current: user.username,
           bio : user.bio,    
