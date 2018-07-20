@@ -202,18 +202,15 @@ router.get('/profile/:username/wishlist', function(req,res){
       })
     })
   })
-  router.post('/productitem/:id/:uniqueID',function(req,res,next)
-{
+router.post('/productitem/:id/:uniqueID',function(req,res,next){
   var accepted = req.body.acceptme;
   var rejected = req.body.rejectme;
   if(accepted){
-  Transac.findOneAndUpdate({uniqueID:req.params.uniqueID},{$set:{status:'Accepted'}},function(err)
-{
-  if (err) return handleError(err)
-})
+  Transac.findOneAndUpdate({uniqueID:req.params.uniqueID},{$set:{status:'Accepted'}},function(err){
+    if (err) return handleError(err)
+  })
   }
-  if(rejected)
-  {
+  if(rejected){
     Transac.findOneAndUpdate({uniqueID:req.params.uniqueID},{$set:{status:'Rejected'}},function(err)
 {
   if (err) return handleError(err)
@@ -286,7 +283,7 @@ router.post('/productitem/:id',function(req, res,next){
     var wistlistitem = Items.findById(req.params.id,function(err,data){
       let newTransac = new Transac();
       newTransac.itemname = data.itemname,
-      newTransac.itemprice = data.itemprice,
+      newTransac.itemprice = req.body.pricemoneyreq,
       newTransac.username =  data.username,
       newTransac.uniqueID = uuidV4()
       newTransac.status = 'Requested',
@@ -369,7 +366,7 @@ router.get('/cart',ensureAuthenticated,function(req,res){
             xd:xd
           })
         })
-        })      
+      })
     })
   })
 });
@@ -436,7 +433,6 @@ router.get('/product',function(req,res){
           wallet:bank,
         })
         })
-      
       }); 
   }); 
 

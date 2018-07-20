@@ -45,7 +45,6 @@ db.on('error', function(err){
 
 let User = require('./models/user');
 let Bank = require('./models/bank');
-
 // Init App
 const app = express();
 app.use(methodOverride('_method'));
@@ -123,13 +122,12 @@ app.get('/', function(req, res, next){
     Bank.findOne({username:user.username},function(err,bank){
       res.render('home', { title: 'home', user: user, wallet : bank })
     })
-    
     //console.log(user)
   });
-  }else{
-    res.render('home', { title: 'home'})
-  }
-  });
+}else{
+  res.render('home', { title: 'home'})
+}
+});
 
 app.get('/test', function(req, res){
   res.render('test');

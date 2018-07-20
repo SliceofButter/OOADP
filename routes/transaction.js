@@ -17,34 +17,32 @@ router.get('/transaction',function(req,res){
         User.findById(req.user, function(err, user){
         })
         var itemlist = Transacs.find({},function(err, data) {
-        Banker.findOne({username:req.user.username}, function(err, bank){
-            console.log(bank)
-             res.render('transaction',{
-            username : req.user,
-            data:data,
-            wallet:bank
-        })
-        })           
-        }); 
-        
+            Banker.findOne({username:req.user.username}, function(err, bank){
+                console.log(bank)
+                 res.render('transaction',{
+                username : req.user,
+                data:data,
+                wallet:bank
+            })
+            })           
+            }); 
+            
 });
 router.get('/payment/:id', function(req,res){
     Transacs.findOne({uniqueID:req.params.id},function(err,docs){
         Banker.findOne({username:docs.buyer},function(err,buyer){
             Banker.find({username:docs.username},function(err,merch){
-                Items.findOne({_id:docs.id}, function(err,data){
-                    Banker.findOne({username:req.user.username}, function(err, bank){
-                        console.log(bank)
-                        res.render('payment',{
-                        docs:docs,
-                        data:data,
-                        buyer:buyer,
-                        merch:merch,
-                        wallet:bank
-                    })
-                })                    
-            })
-            })
+                Banker.findOne({username:req.user.username}, function(err, bank){
+                    console.log(bank)
+                    res.render('payment',{
+                    docs:docs,
+                    data:data,
+                    buyer:buyer,
+                    merch:merch,
+                    wallet:bank
+                })
+            })                
+        })
         })
     })
 })

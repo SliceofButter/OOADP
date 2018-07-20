@@ -287,9 +287,10 @@ Follow.findOne({follower:req.user.username},function(err,follow){
         wallet : bank
         
         })
+        
       }
     })
-    })
+  })
   })
   })
 })
@@ -315,14 +316,13 @@ User.findOne({username:req.params.username}, function(err, user){
         bio : user.bio,    
         pic: user.dp,
         wallet : bank,
-        shit : shit,      
+        shit : shit,    
       })
     }
    })
   })
 });
-
-router.get('/profile/:username/wallet/edit',ensureAuthenticated, function(req, res, next){
++router.get('/profile/:username/wallet/edit',ensureAuthenticated, function(req, res, next){
   User.findOne({username:req.params.username}, function(err, user){
     bank.findOne({username:user.username},function(err,bank){
       var str = bank.number
@@ -484,7 +484,7 @@ router.get('/settings',ensureAuthenticated, function(req, res, next){
         wallet : bank,
         })
     })
-    
+  
 });
 
 router.post('/settings', upload.single('imageupload'),(req, res) => {
