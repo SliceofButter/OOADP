@@ -322,7 +322,14 @@ User.findOne({username:req.params.username}, function(err, user){
    })
   })
 });
-+router.get('/profile/:username/wallet/edit',ensureAuthenticated, function(req, res, next){
+
+router.get('/profile/:username/addfunds',ensureAuthenticated, function(req, res, next){
+  User.findOne({username:req.params.username}, function(err, user){
+    res.render('addfunds')
+  })
+})
+
+router.get('/profile/:username/wallet/edit',ensureAuthenticated, function(req, res, next){
   User.findOne({username:req.params.username}, function(err, user){
     bank.findOne({username:user.username},function(err,bank){
       var str = bank.number
