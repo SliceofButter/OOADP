@@ -12,6 +12,7 @@ var IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 const alert = require('alert-node')
 var generator = require('generate-password');
 
+
 function ensureAuthenticated(req, res, next){
 if(req.isAuthenticated()){
   return next();
@@ -193,7 +194,7 @@ router.get('/confirmation/:token',function(req,res){
 });
 // Login Form
 router.get('/login', function(req, res){
-  res.render('login');
+  res.render('login',);
 });
 
 // Login Process
@@ -201,7 +202,7 @@ router.post('/login', function(req, res, next){
   passport.authenticate('local', {
     successRedirect:'/',
     failureRedirect:'/login',
-    failureFlash: true
+    failureFlash: 'Invalid username or password.'
   })(req, res, next);
 });
 
@@ -284,7 +285,8 @@ Follow.findOne({follower:req.user.username},function(err,follow){
         pic : user.dp,
         data : data,
         offer: offer,
-        wallet : bank
+        wallet : bank,
+        follow : follow.following,
         
         })
         
@@ -311,8 +313,7 @@ User.findOne({username:req.params.username}, function(err, user){
       shit : shit,
     });
     } else {
-      var str = bank.number
-      var shit = str.toString().slice(14,16);
+
       res.render('wallet',{
         current: user.username,
         bio : user.bio,    
@@ -522,8 +523,10 @@ User.findOne({username:req.params.username}, function(err, current){
                         return res.status(500).send({ msg: err.message }); 
                       }
                     })
+                alert("Check your email for confirmation.");    
                 res.redirect('/profile/'+current.username);
-                alert('Check your email for confirmation')
+        
+                
               }
             })
       });

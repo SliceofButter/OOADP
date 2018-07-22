@@ -59,7 +59,7 @@ html(lang='en')
               a#navbardrop.nav-link.dropdown-toggle(href='#', data-toggle='dropdown') #{user.username}
               .dropdown-menu
                 a.dropdown-item(href='/profile/'+user.username) User Profile
-                a.dropdown-item(href='/settings') Edit profile
+                a.dropdown-item(href='/bio') Edit profile
                 a.dropdown-item(href='/registeritem') Register Item
                 a.dropdown-item(href='/transaction') Transactions
                 a.dropdown-item(href='/cart') Cart
@@ -100,7 +100,7 @@ html(lang='en')
     .container
       != messages('message', locals)
       if errors
-        each error, i in errors
+        each error in errors
           div(class="alert alert-danger") #{error.msg}
 
       block content
@@ -178,5 +178,6 @@ html(lang='en')
     script(type='text/javascript', src='/vendor/countdowntime/countdowntime.js')
     script(type='text/javascript', src='/vendor/lightbox2/js/lightbox.min.js')
     script(type='text/javascript', src='/vendor/sweetalert/sweetalert.min.js')
+    script(src="https://unpkg.com/js-alert/dist/jsalert.min.js")
     script(src='/js/main.js')
     script(src='/js/productitem.js') 
