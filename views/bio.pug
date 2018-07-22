@@ -28,9 +28,9 @@ block content
       .col-md-9
         .profile-content
           .container-fluid
-            b Bio: 
-            p
-            form(action='/bio', method='POST')
-              | Bio: 
-              input(type='text', name='Bio')
-              input(type='submit', name='uploadimage', value='Send')
+            form(action='/bio', method='POST') 
+              label(for='exampleFormControlTextarea1') Bio
+              textarea#exampleFormControlTextarea1.form-control(rows='3',name='Bio')
+              input.btn.btn-primary(type='submit',value='Submit')
+
+              

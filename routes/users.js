@@ -78,8 +78,10 @@ router.post('/register', function(req, res){
     User.findOne({ email: req.body.email }, function (err, user) {
 
     // Make sure user doesn't already exist
-    if (user) return res.status(400).send({ msg: 'The email address you have entered is already associated with another account.' });
-  
+    if (user){
+      req.flash('danger','The email address you have entered is already associated with another account.');  
+      res.redirect('/register');
+    } 
     // Create and save the user
     let newUser = new User({ 
       name:name,
@@ -133,8 +135,7 @@ User.findOne({ email: email }, function (err, user) {
       transporter.sendMail(mailOptions, function (err) {
       if (err) { return res.status(500).send({ msg: err.message }); }
       res.status(200).send('A verification email has been sent to ' + email + '.');
-      })
-    
+      })    
   });
 })
 })
@@ -600,7 +601,7 @@ router.post('/settings', upload.single('imageupload'),(req, res) => {
         console.log(err);
         return;
       } else {
-        req.flash('success','bio update');
+        req.flash('success','Profile pic updated');
         res.redirect('/profile/'+req.user.username);
       }
   });   
