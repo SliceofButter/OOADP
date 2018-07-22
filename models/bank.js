@@ -5,8 +5,12 @@ const bankSchema = mongoose.Schema({
         type:String,
         require :true,
     },
+    cardType:{
+        type:String,
+        require : true
+    },
     number:{
-        type: Number,
+        type: String,
         require :true,
     },
     date: { 

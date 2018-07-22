@@ -41,7 +41,7 @@ limits: {
 let User = require('../models/user');
 let Token = require('../models/token');
 let Items = require('../models/items');
-let bank = require('../models/bank');
+let Bank = require('../models/bank');
 let Transacs = require('../models/transaction');
 let Follow = require('../models/follow');
 let ReportUser = require('../models/reportuser')
@@ -265,7 +265,7 @@ Follow.findOne({follower:req.user.username},function(err,follow){
   User.findOne({username:req.params.username}, function(err, user){
     Items.find({username:user.username},function(err, data){
       Transacs.find({username:user.username}, function(err,offer){
-        bank.findOne({username:req.user.username}, function(err, bank){
+        Bank.findOne({username:req.user.username}, function(err, bank){
         //console.log(offer);
       if (user.dp != null && user.bio !=null && follow !=null){
         res.render('profile', {
@@ -298,7 +298,7 @@ Follow.findOne({follower:req.user.username},function(err,follow){
 
 router.get('/profile/:username/wallet',ensureAuthenticated, function(req, res, next){
 User.findOne({username:req.params.username}, function(err, user){
-  bank.findOne({username:user.username},function(err,bank){
+  Bank.findOne({username:user.username},function(err,bank){
     if (user.dp != null && user.bio !=null && bank != null){
       var str = bank.number
       var shit = str.toString().slice(14,16);
@@ -327,6 +327,10 @@ User.findOne({username:req.params.username}, function(err, user){
 
 router.get('/profile/:username/addfunds',ensureAuthenticated, function(req, res, next){
   User.findOne({username:req.params.username}, function(err, user){
+    Bank.findOne({username:user.username},function(err,bank){
+    // console.log(user)
+    var str = bank.number
+    var shit = str.toString().slice(14,16);
     var lol = 6;
     var lol1 = 12;
     var lol2 = 30;
@@ -344,6 +348,8 @@ router.get('/profile/:username/addfunds',ensureAuthenticated, function(req, res,
               token2:token2,
               token3:token3,
               token4:token4,
+              shit:shit
+            })
             })
             })
           })
@@ -356,10 +362,57 @@ router.get('/profile/:username/addfunds',ensureAuthenticated, function(req, res,
 router.get('/profile/:username/addfunds/:id',ensureAuthenticated, function(req, res, next){
   var token = req.params.id;
   User.findOne({username:req.params.username}, function(err, user){
+    Bank.findOne({username:user.username},function(err,bank){
+      // console.log(user)
+      var str = bank.number
+      var shit = str.toString().slice(14,16);
+      jwt.verify(token, 'secret', function (err, decoded){
+        console.log(decoded)
+        res.render('confirmfund',{
+          decoded:decoded.data,
+          shit:shit,
+          token:token,
+          current:user.username
+        })
+      })
+    })
+  })
+})
+
+router.post('/profile/:username/addfunds/:id',ensureAuthenticated, function(req, res, next){
+  var token = req.params.id;  
+  User.findOne({username:req.params.username}, function(err, user){
+    Bank.findOne({username:user.username},function(err,bank){
     jwt.verify(token, 'secret', function (err, decoded){
-      console.log(decoded)
-      res.render('confirmfund',{
-        decoded:decoded.data
+    const type = bank.cardType;  
+    const number = bank.number;
+    const date = bank.date;
+    const year = bank.year;
+    const cvv = req.body.cvv
+      // console.log(user)
+    var card = {
+      cardType:type,
+      number: number,
+      expiryMonth: date,
+      expiryYear: year,
+      cvv: cvv
+    };
+    var validation = CreditCard.validate(card);
+    console.log(validation)
+    newBalance = bank.amount + decoded.data;
+    console.log(newBalance)
+    if (validation.validCardNumber == true && validation.isExpired == false){
+      Bank.findOneAndUpdate({username:user.username},{ $set: { amount:newBalance }},function(err){
+        if(err){
+          console.log(err);
+          return;
+        } else{
+        alert('You have added funds');
+          res.redirect('/profile/'+user.username);
+        }
+      })
+      
+    }
       })
     })
   })
@@ -367,7 +420,7 @@ router.get('/profile/:username/addfunds/:id',ensureAuthenticated, function(req, 
 
 router.get('/profile/:username/wallet/edit',ensureAuthenticated, function(req, res, next){
   User.findOne({username:req.params.username}, function(err, user){
-    bank.findOne({username:user.username},function(err,bank){
+    Bank.findOne({username:user.username},function(err,bank){
       if (user.dp != null && user.bio !=null && bank != null){
         var str = bank.number
         var shit = str.toString().slice(14,16);
@@ -404,7 +457,7 @@ router.post('/profile/:username/wallet/edit',ensureAuthenticated, function(req, 
   const year = req.body.year;
   const cvv = req.body.cvv;
   var card = {
-      cardType: type,
+      cardType : type,
       number: number,
       expiryMonth: date,
       expiryYear: year,
@@ -413,8 +466,8 @@ router.post('/profile/:username/wallet/edit',ensureAuthenticated, function(req, 
   var validation = CreditCard.validate(card);
   console.log(validation)
   if (validation.validCardNumber == true && validation.isExpired == false){
-    bank.findOne({username:username}, function(err, user){
-      bank.findOneAndUpdate({username:current.username},{ $set: { number: number, date:date, year:year }},function(err){
+    Bank.findOne({username:username}, function(err, user){
+      Bank.findOneAndUpdate({username:current.username},{ $set: { cardType : type, number: number, date:date, year:year }},function(err){
         if(err){
           console.log(err);
           return;
@@ -447,8 +500,9 @@ User.findOne({username:req.params.username}, function(err, current){
   var validation = CreditCard.validate(card);
   console.log(validation)
   if (validation.validCardNumber == true && validation.isExpired == false){
-      bank.findOne({username:username}, function(err, user){
-            newBalance = new bank({
+    Bank.findOne({username:username}, function(err, user){
+            newBalance = new Bank({
+              cardType : type,
               username:username,
               number:number,
               date:date,
@@ -480,7 +534,7 @@ User.findOne({username:req.params.username}, function(err, current){
 });
 
 router.get('/password',ensureAuthenticated, function(req, res, next){
-  bank.findOne({username:req.user.username}, function(err, bank){
+  Bank.findOne({username:req.user.username}, function(err, bank){
     console.log(bank)
     res.render('password', { 
       title: 'password',
@@ -522,7 +576,7 @@ req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 }
 });
 router.get('/settings',ensureAuthenticated, function(req, res, next){
-  bank.findOne({username:req.user.username}, function(err, bank){
+  Bank.findOne({username:req.user.username}, function(err, bank){
     console.log(bank)
     res.render('editProfile', {
         title: 'settings',
@@ -551,7 +605,7 @@ router.post('/settings', upload.single('imageupload'),(req, res) => {
 });
 
 router.get('/bio',ensureAuthenticated, function(req, res, next){
-  bank.findOne({username:req.user.username}, function(err, bank){
+  Bank.findOne({username:req.user.username}, function(err, bank){
     console.log(bank)
     res.render('bio', {
         title: 'bio',
