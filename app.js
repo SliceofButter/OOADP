@@ -214,7 +214,12 @@ app.use('/admin',mongooseadmin())
 		io.emit('usernames',Object.keys(users123));
 		}
   })
-  
+app.use(function(req, res, next) {
+  if(req.accepts('html') && res.status(404)) {
+      res.render('errors');
+      return;
+  }
+});
 // Start Server
 server.listen(3000, function(){
   console.log('Server started on port 3000...');
