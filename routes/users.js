@@ -286,11 +286,8 @@ Follow.findOne({follower:req.user.username},function(err,follow){
         pic : user.dp,
         data : data,
         offer: offer,
-        wallet : bank,
-        follow : follow.following,
-        
+        wallet : bank,     
         })
-        
       }
     })
   })

@@ -11,10 +11,10 @@ block content
               ul
                   li
         .card-body
-          if current  != user.username 
+          if current != user.username 
             .row
               .col-md
-              if follow != current && follow != null
+              if follow == null
                 form(method ='POST' action='/profile/' + current)
                   input.btn.btn-primary(type="submit", name="follow1" value="Follow" style="  padding: 5px 80px;") 
               else 
