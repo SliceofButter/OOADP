@@ -17,13 +17,38 @@ block content
               if user.username == datas.buyer
                 if datas.status !='Paid'
                   h4(style="margin-top:10px;padding-right:10px;display:inline-block;") Product Name
-                    p(style="margin-top:10px;font-weight:bolder;font-size:60%;margin-bottom:48px;") Item Name: #{datas.itemname}
+                    p(style="margin-top:10px;font-weight:bolder;font-size:60%;margin-bottom:48px;")  #{datas.itemname}
                     hr  
                   h4(style="padding-right:40px;display:inline-block;margin-left: 70px") Product Price
-                    p(style="margin-top:10px;font-weight:bolder;font-size:60%;padding-bottom:32px;") Item Price: $#{datas.itemprice}
+                    p(style="margin-top:10px;font-weight:bolder;font-size:60%;padding-bottom:32px;") $#{datas.itemprice}
                     hr
                 if datas.status == 'Accepted' 
                   h4(style="display:inline-block;") Payment
                     p(style="margin-top:5px; padding-bottom:24px;")
                       a(href='/payment/'+ datas.uniqueID ,class="btn btn-primary" type='button' name='paynow') Pay Now!
-                      hr
+        
+        form(method ='POST' action='/cart')        
+          button.btn.btn-primary(type="button" data-toggle="modal" data-target="#myModalx") Pay for all items!    
+          #myModalx.modal.fade(role="dialog" style="background: rgba(0, 0, 0, 0.3); position: fixed; top: 0; right: 0; bottom: 0; left: 0;")
+            .modal-dialog
+              // Modal content
+              .modal-content
+                .modal-header
+                  h4.modal-title Pay for all Items.
+                  button.close(type="button" data-dismiss="modal") ×
+                .modal-body
+                  h4 Total Price would be: $#{y}
+                  if bank.amount > y
+                    input.btn.btn-info(type="submit" value="Pay All!" name="paynow" style="margin-top:20px;")
+                  else
+                    p(style="text-align:center;font-weight:bold;") Your wallet has insufficient balance. Please add more via the profile page!
+                .modal-footer
+                  button.btn.btn-default(type="button" data-dismiss="modal") Close 
+    style. 
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+      }
+          
+

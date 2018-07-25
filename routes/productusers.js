@@ -346,24 +346,104 @@ router.post('/productitem/:id',function(req, res,next){
 //   });
 //   res.send(transac);
 //   }
-  
+// router.post('/cart',ensureAuthenticated, function(req,res){
+//   Transacs.findOne({uniqueID:req.params.id},function(err,docs){
+//       Banker.findOne({username:docs.buyer},function(err,buyer){
+//           Banker.findOne({username:docs.username},function(err,merch){
+//               Items.findById({_id:docs.id}, function(err,data){
+//                 var y = 0;
+//                 var xd1= [];
+//                 var xd2 =[];
+//                 var xd3=[];
+//                 for(var i = 0; i < docs.length; i++) {
+//                   xd1[i] = docs[i].id
+//                   if (user.username == docs[i].buyer){
+//                     if (docs[i].status !='Paid'){
+//                       y = y+ docs[i].itemprice;
+//                       var buywallet = buyer.amount;
+//                       var itemprice = docs[i].itemprice;
+//                       var newbuywallet = buywallet - y;
+//                       var newsellwallet = sellwallet + y;
+//                     }
+//                   }
+//                 }
+//                 for(var i = 0; i < merch.length; i++) {
+//                   xd2[i] = merch[i].id
+//                 }
+//                 for(var i = 0; i < data.length; i++) {
+//                   xd3[i] = data[i].id
+//                 }
+
+//                   Banker.find({_id:xd2},{ $set: { amount: newsellwallet }},function(err){
+//                       if(err){
+//                           console.log(err);
+//                           return;
+//                       }
+//                       else{ res.send();}
+//                   });
+//                   Banker.findOneAndUpdate({username:docs.buyer},{ $set: { amount: newbuywallet }},function(err){
+//                       if(err){
+//                           console.log(err);
+//                           return;
+//                       }
+//                       else{ res.send();}
+//                   });
+//                   WishlistItem.findByIdAndRemove({id:xd1},function(err){
+//                       if (err) {
+//                           console.log(err);
+//                           return;
+//                       } 
+//                       else {
+//                           res.send();
+//                       }
+//                   })
+//                   Items.findByIdAndRemove({_id:xd3},function(err){
+//                       if (err) {
+//                           console.log(err);
+//                           return;
+//                       } else {
+//                           res.send();
+//                       }
+//                   })
+//                   Transacs.findOneAndUpdate({uniqueID:req.params.id},{ $set: { status: 'Paid' }},function(err){
+//                       if(err){
+//                           console.log(err);
+//                           return;
+//                       }
+//                       else{ res.send();}
+//                   });
+//                   alert('Item has been bought!');
+//                   res.redirect('/');
+//               })
+//           })
+//       })
+//   });
+// })
   
 router.get('/cart',ensureAuthenticated,function(req,res){
   User.findById(req.user, function(err, user){
     Transac.find({buyer:user.username},function(err, data) {
       bank.findOne({username:req.user.username}, function(err, bank){
-        console.log(bank)
+        console.log(bank.amount)
         var xd =[];
+        var y = 0;
         for(var i = 0; i < data.length; i++) {
           xd[i] = data[i].id
+          if (user.username == data[i].buyer){
+            if (data[i].status !='Paid'){
+              y = y+ data[i].itemprice;
+            }
+          }
         }
         console.log(xd);
         Items.find({_id:xd},function(err,docs){
             res.render('cart',{
             username : req.user,
+            bank:bank,
             data:data,
             docs:docs,
-            xd:xd
+            xd:xd,
+            y:y
           })
         })
       })
