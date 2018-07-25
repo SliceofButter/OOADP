@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  .container-fluid
+    h1 Admin
+    ul#myTab.nav.nav-tabs(role='tablist')
+          li.nav-item
+            a#home-tab.nav-link.active(href='/admin') Users              
+          li.nav-item
+            a#profile-tab.nav-link(href='/admin/items') Items      
+          li.nav-item            
+            a#contact-tab.nav-link(href='#') Transactions    
+          li.nav-item
+            a#contact-tab.nav-link(href='#') Reports         
+    table(style="width:100%;")
+      each users in user
+        if users.username != null
+          tr 
+            td       
+              p #{users.username}
+            td           
+              button.btn.btn-primary(type="button",) 
+                a(href='/admin/edit/'+users._id ) Edit 

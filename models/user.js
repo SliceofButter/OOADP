@@ -27,12 +27,12 @@ const userSchema = mongoose.Schema({
     },
     bio: String,
     dp:String,
-    follower: {
+    follower: [{
         type: String, ref: 'Follow'
-    },
-    following: {
+    }],
+    following: [{
         type: String, ref: 'Follow'
-    }
+    }]
 })    
 
 

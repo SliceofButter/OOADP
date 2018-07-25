@@ -263,38 +263,41 @@ router.post('/profile/:username', function(req,res){
 
 
 router.get('/profile/:username',ensureAuthenticated, function(req, res, next){
-Follow.findOne({follower:req.user.username},function(err,follow){
   User.findOne({username:req.params.username}, function(err, user){
-    Items.find({username:user.username},function(err, data){
-      Transacs.find({username:user.username}, function(err,offer){
+    Items.find({username:user.username},function(err, data){      
         Bank.findOne({username:req.user.username}, function(err, bank){
+        // console.log(follow)
         //console.log(offer);
-      if (user.dp != null && user.bio !=null && follow !=null){
-        res.render('profile', {
-        current: user.username,
-        bio : user.bio,    
-        pic : user.dp,
-        data : data,
-        offer: offer,
-        follow : follow.following,
-        wallet : bank
-      });
-      } else {
-        res.render('profile',{
-        current: user.username,
-        bio : user.bio,    
-        pic : user.dp,
-        data : data,
-        offer: offer,
-        wallet : bank,     
+        // User.findOne({username:req.params.username}, function(err, user1){
+        //   if (err) return res.json(err);
+        //   return res.json(user);
+        // }).populate([
+        //   { path: 'following' },
+        //   { path: 'followers' }
+        // ])
+        if (user.dp != null && user.bio !=null){
+          res.render('profile', {
+          current: user.username,
+          bio : user.bio,    
+          pic : user.dp,
+          data : data,
+          // follow : follow.following,
+          wallet : bank,
+          user:user
+        });
+        } else {
+          res.render('profile',{
+          current: user.username,
+          bio : user.bio,    
+          pic : user.dp,
+          data : data,            
+          wallet : bank,     
+          })
+        }
         })
-      }
-    })
+      })
+    }).populate(['following','follower'])
   })
-  })
-  })
-})
-})
 
 router.get('/profile/:username/wallet',ensureAuthenticated, function(req, res, next){
 User.findOne({username:req.params.username}, function(err, user){

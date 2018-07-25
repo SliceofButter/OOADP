@@ -154,9 +154,13 @@ let productusers = require('./routes/productusers');
 app.use('/', productusers);
 let transactions = require('./routes/transaction');
 app.use('/',transactions);
-var mongooseadmin = require('mongooseadmin');
-app.use('/admin',mongooseadmin())
-
+let admins = require('./routes/admin');
+app.use('/', admins)
+// let admins = require('./routes/admin')
+// app.use('/', admins);
+// app.get('/admin',function(req,res){
+//   res.render('admin')
+// });
 // var path = require('path');
 // var express= require('express'),
 	//app=express(),

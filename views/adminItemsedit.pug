@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  .row
+    .col-md-2
+    .col-md-8
+      form(action='/admin/items/edit/'+item._id, method='POST')
+        .form-group
+            label Item Name:
+            input.form-control(type='text', name='name', value=item.itemname) 
+        .form-group
+            label Itemprice:
+            input.form-control(type='text', name='price', value=item.itemprice)
+        .form-group
+            label Username:                        
+            input.form-control(type='text', name='username', value=item.username)    
+        .form-group    
+            label Description:        
+            input.form-control(type='text', name='description', value=item.description)   
+        .form-group    
+            label Status:        
+            input.form-control(type='text', name='status', value=item.status)
+                                               
+        button.btn.btn-primary(type='submit') Update     
+    .col-md-2 

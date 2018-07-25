@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  .row
+    .col-md-2
+    .col-md-8
+      form(action='/admin/edit/'+user._id, method='POST')
+        .form-group
+            label Name:
+            input.form-control(type='text', name='name', value=user.name) 
+        .form-group
+            label Email:
+            input.form-control(type='text', name='email', value=user.email)
+        .form-group
+            label Username:                        
+            input.form-control(type='text', name="username", value=user.username)    
+        .form-group    
+            label Bio:        
+            input.form-control(type='text', name="bio", value=user.bio)
+
+        button.btn.btn-primary(type='submit') Update     
+    .col-md-2        

@@ -11,14 +11,15 @@ block content
               ul
                   li
         .card-body
+          p #{user}
           if current != user.username 
             .row
               .col-md
-              if follow == null
-                form(method ='POST' action='/profile/' + current)
-                  input.btn.btn-primary(type="submit", name="follow1" value="Follow" style="  padding: 5px 80px;") 
-              else 
-                button.btn.btn-primary(type="button", name="follow1" style="  padding: 5px 80px;") Followed
+              //- if follow == null
+              //-   form(method ='POST' action='/profile/' + current)
+              //-     input.btn.btn-primary(type="submit", name="follow1" value="Follow" style="  padding: 5px 80px;") 
+              //- else 
+              //-   button.btn.btn-primary(type="button", name="follow1" style="  padding: 5px 80px;") Followed
               .col-md
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">...</button>
                 <ul class="dropdown-menu" role="menu">
