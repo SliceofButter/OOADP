@@ -32,17 +32,15 @@ router.get('/payment/:id', function(req,res){
     Transacs.findOne({uniqueID:req.params.id},function(err,docs){
         Banker.findOne({username:docs.buyer},function(err,buyer){
             Banker.find({username:docs.username},function(err,merch){
-                Banker.findOne({username:req.user.username}, function(err, bank){
-                    console.log(bank)
+                Items.findOne({_id:docs.id}, function(err,data){
                     res.render('payment',{
                     docs:docs,
                     data:data,
                     buyer:buyer,
-                    merch:merch,
-                    wallet:bank
+                    merch:merch
                 })
-            })                
-        })
+            })
+            })
         })
     })
 })

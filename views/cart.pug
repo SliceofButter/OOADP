@@ -10,12 +10,12 @@ block content
         .row
           .col-md-3
             each i in docs
-              img(style="height:104px;width:74px;text-align:center;display:block;margin-left: 15%;" src="/itempic/" + i.itemimageupload)
-          .col-md-8
+              img(style="height:104px;width:74px;text-align:center;display:block;margin-left: 15%;margin-bottom:14px;" src="/itempic/" + i.itemimageupload)
+              hr
+          .col-md-8(style="width:1400px;")
             each datas in data
               if user.username == datas.buyer
                 if datas.status !='Paid'
-<<<<<<< HEAD
                   h4(style="margin-top:10px;padding-right:10px;display:inline-block;") Product Name
                     p(style="margin-top:10px;font-weight:bolder;font-size:60%;margin-bottom:48px;")  #{datas.itemname}
                     hr  
@@ -26,6 +26,7 @@ block content
                   h4(style="display:inline-block;") Payment
                     p(style="margin-top:5px; padding-bottom:24px;")
                       a(href='/payment/'+ datas.uniqueID ,class="btn btn-primary" type='button' name='paynow') Pay Now!
+                      hr
         
         form(method ='POST' action='/cart')        
           button.btn.btn-primary(type="button" data-toggle="modal" data-target="#myModalx") Pay for all items!    
@@ -52,9 +53,3 @@ block content
       }
           
 
-=======
-                  p(style="font-weight:bolder;font-size:60%") Item Name: #{datas.itemname} 
-                  p(style="font-weight:bolder;font-size:70%") Item Price: $#{datas.itemprice}
-                if datas.status == 'Accepted' 
-                  a(href='/payment/'+ datas.uniqueID ,class="btn btn-primary" type='button' name='paynow') Pay Now!
->>>>>>> parent of 4fd9fef... savestate cart 1.
