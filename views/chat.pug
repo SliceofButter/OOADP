@@ -343,7 +343,7 @@ block content
         p Confirm username
         p#nickError
         form#setNick
-          input#nickname(size="35")
+          input#nickname(size="35" , value = user.username)
           input(type="submit")
       //- #contentWrap
       //-   .category
@@ -432,6 +432,11 @@ block content
       $users.html(html);
       calculate_popups();
       });
+      
+
+
+
+
       
       Array.remove = function(array, from, to) {
       var rest = array.slice((to || from) + 1 || array.length);
