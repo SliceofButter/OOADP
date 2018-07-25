@@ -16,8 +16,8 @@ block content
       break
     else if user.username == data.username
       form(method='POST', action='/productitem/' + data._id +'?_method=DELETE' style="margin-left:2%;margin-top:20px;")
-        input.btn.btn-primary(type='submit' value='Delete item' style="margin-left:43%;margin-top:1px;")
-      button.btn.btn-info.btn-lg(type="button" data-toggle="modal" data-target="#offerlist"  style="padding-right:20%;margin-left:15%;margin-top:10px;font-size:10px;") View Offers
+        input.btn.btn-primary(type='submit' value='Delete item' style="margin-left:33%;margin-top:1px;")
+      button.btn.btn-info.btn-lg(type="button" data-toggle="modal" data-target="#offerlist"  style="display:block;margin-left:50%;margin-top:-39px;font-size:15px;") View Offers
       #offerlist.modal.fade(role="dialog")
         .modal-dialog
           // Modal content

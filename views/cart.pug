@@ -10,12 +10,20 @@ block content
         .row
           .col-md-3
             each i in docs
-              img(style="height:104px;width:74px;text-align:center;display:block;margin-left: 15%;" src="/itempic/" + i.itemimageupload)
-          .col-md-8
+              img(style="height:104px;width:74px;text-align:center;display:block;margin-left: 15%;margin-bottom:12px;" src="/itempic/" + i.itemimageupload)
+              hr
+          .col-md-8(style="width:1400px;")
             each datas in data
               if user.username == datas.buyer
                 if datas.status !='Paid'
-                  p(style="font-weight:bolder;font-size:60%") Item Name: #{datas.itemname} 
-                  p(style="font-weight:bolder;font-size:70%") Item Price: $#{datas.itemprice}
+                  h4(style="margin-top:10px;padding-right:10px;display:inline-block;") Product Name
+                    p(style="margin-top:10px;font-weight:bolder;font-size:60%;margin-bottom:48px;") Item Name: #{datas.itemname}
+                    hr  
+                  h4(style="padding-right:40px;display:inline-block;margin-left: 70px") Product Price
+                    p(style="margin-top:10px;font-weight:bolder;font-size:60%;padding-bottom:32px;") Item Price: $#{datas.itemprice}
+                    hr
                 if datas.status == 'Accepted' 
-                  a(href='/payment/'+ datas.uniqueID ,class="btn btn-primary" type='button' name='paynow') Pay Now!
+                  h4(style="display:inline-block;") Payment
+                    p(style="margin-top:5px; padding-bottom:24px;")
+                      a(href='/payment/'+ datas.uniqueID ,class="btn btn-primary" type='button' name='paynow') Pay Now!
+                      hr
