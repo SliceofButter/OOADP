@@ -35,11 +35,11 @@ const TransSchema = mongoose.Schema({
     id:{
         type: String,
         require: true,
-    }
-    // itemimageupload:{
-    //     type:String,
-    //     require:true,
-    // },
+    },
+    itemimageupload:{
+        type:String,
+         require:true,
+     },
 
 })
 

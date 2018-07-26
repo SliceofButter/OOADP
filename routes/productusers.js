@@ -287,8 +287,9 @@ router.post('/productitem/:id',function(req, res,next){
       newTransac.username =  data.username,
       newTransac.uniqueID = uuidV4()
       newTransac.status = 'Requested',
-      newTransac.id = data._id
-      newTransac.buyer = req.user.username
+      newTransac.id = data._id,
+      newTransac.buyer = req.user.username,
+      newTransac.itemimageupload = data.itemimageupload
       newTransac.save(function(err){
         if(err){
           console.log(err)
@@ -437,7 +438,6 @@ router.get('/cart',ensureAuthenticated,function(req,res){
         }
         console.log(xd);        
         Items.find({_id:xd},function(err,docs){
-          doc = ""
           docs.forEach(function(yikes){
             console.log(yikes.itemimageupload)  
             doc = yikes       
