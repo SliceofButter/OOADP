@@ -134,10 +134,14 @@ User.findOne({ email: email }, function (err, user) {
       var mailOptions = { from: 'sghawt@gmail.com', to: email, subject: 'Password Reset', text: 'Hello,\n\n' + 'You have requested to reset your password' + 'Click on the link if you need to reset your password \nhttp:\/\/' + req.headers.host + '\/confirm_reset\/' + token + '.\n' };
       transporter.sendMail(mailOptions, function (err) {
       if (err) { return res.status(500).send({ msg: err.message }); }
-      res.status(200).send('A verification email has been sent to ' + email + '.');
+      res.redirect("/passwordconfirm")
       })    
   });
 })
+})
+
+router.get('/passwordconfirm',(req,res)=>{
+  res.render('passwordconfirm')
 })
 
 var passwordgen = generator.generate({
@@ -164,10 +168,10 @@ jwt.verify(token, 'secret', function (err, decoded){
         })
         })
         var transporter = nodemailer.createTransport({ host: 'smtp.gmail.com', port:465, secure:true, auth: { user: 'sghawt@gmail.com', pass: 'NYPIT1704' } });
-        var mailOptions = { from: 'sghawt@gmail.com', to: user.email, subject: 'Password Reseted', text: 'Hello,\n\n' + 'Here is your new password ' + passwordgen + req.headers.host};
+        var mailOptions = { from: 'sghawt@gmail.com', to: user.email, subject: 'Password Reseted', text: 'Hello,\n\n' + 'Here is your new password ' + passwordgen};
         transporter.sendMail(mailOptions, function (err) {
         if (err) { return res.status(500).send({ msg: err.message }); }
-        res.render('login')
+        
       })
     })
   })

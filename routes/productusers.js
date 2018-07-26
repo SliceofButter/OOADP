@@ -435,13 +435,18 @@ router.get('/cart',ensureAuthenticated,function(req,res){
             }
           }
         }
-        console.log(xd);
+        console.log(xd);        
         Items.find({_id:xd},function(err,docs){
+          doc = ""
+          docs.forEach(function(yikes){
+            console.log(yikes.itemimageupload)  
+            doc = yikes       
+        }) 
             res.render('cart',{
             username : req.user,
             bank:bank,
             data:data,
-            docs:docs,
+            doc:doc,
             xd:xd,
             y:y
           })

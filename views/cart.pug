@@ -3,48 +3,41 @@ extends layout
 block content
   h3(style="text-align:center;font-weight:bold;") Cart Checkout page
     // Cart
-    section.cart.bgwhite.p-t-70.p-b-100
-      .container
-        // Cart item
-      container
-        .row
-          .col-md-3
-            each i in docs
-              img(style="height:104px;width:74px;text-align:center;display:block;margin-left: 15%;margin-bottom:14px;" src="/itempic/" + i.itemimageupload)
-              hr
-          .col-md-8(style="width:1400px;")
-            each datas in data
-              if user.username == datas.buyer
-                if datas.status !='Paid'
-                  h4(style="margin-top:10px;padding-right:10px;display:inline-block;") Product Name
-                    p(style="margin-top:10px;font-weight:bolder;font-size:60%;margin-bottom:48px;")  #{datas.itemname}
-                    hr  
-                  h4(style="padding-right:40px;display:inline-block;margin-left: 70px") Product Price
-                    p(style="margin-top:10px;font-weight:bolder;font-size:60%;padding-bottom:32px;") $#{datas.itemprice}
-                    hr
-                if datas.status == 'Accepted' 
-                  h4(style="display:inline-block;") Payment
-                    p(style="margin-top:5px; padding-bottom:24px;")
-                      a(href='/payment/'+ datas.uniqueID ,class="btn btn-primary" type='button' name='paynow') Pay Now!
-                      hr
+    each datas in data      
+      if user.username == datas.buyer && datas.status !='Paid'
+          .container-table-cart.pos-relative
+            .wrap-table-shopping-cart.bgwhite
+              table.table-shopping-cart
+                tr.table-head
+                  th.column-1
+                  th.column-2 Product
+                  th.column-3 Price                  
+                  th.column-5 Total
+                tr.table-row
+                  td.column-1
+                    .cart-img-product.b-rad-4.o-f-hidden                      
+                        img(style="height:104px;width:74px;text-align:center;display:block;margin-left: 15%;margin-bottom:14px;" src="/itempic/" + doc.itemimageupload)                        
+                  td.column-2 #{datas.itemname}
+                  td.column-3 $#{datas.itemprice}                 
+                  td.column-5 $#{datas.itemprice}
         
-        form(method ='POST' action='/cart')        
-          button.btn.btn-primary(type="button" data-toggle="modal" data-target="#myModalx") Pay for all items!    
-          #myModalx.modal.fade(role="dialog" style="background: rgba(0, 0, 0, 0.3); position: fixed; top: 0; right: 0; bottom: 0; left: 0;")
-            .modal-dialog
-              // Modal content
-              .modal-content
-                .modal-header
-                  h4.modal-title Pay for all Items.
-                  button.close(type="button" data-dismiss="modal") ×
-                .modal-body
-                  h4 Total Price would be: $#{y}
-                  if bank.amount > y
-                    input.btn.btn-info(type="submit" value="Pay All!" name="paynow" style="margin-top:20px;")
-                  else
-                    p(style="text-align:center;font-weight:bold;") Your wallet has insufficient balance. Please add more via the profile page!
-                .modal-footer
-                  button.btn.btn-default(type="button" data-dismiss="modal") Close 
+                  form(method ='POST' action='/cart')        
+                    button.btn.btn-primary(type="button" data-toggle="modal" data-target="#myModalx") Pay for all items!    
+                    #myModalx.modal.fade(role="dialog" style="background: rgba(0, 0, 0, 0.3); position: fixed; top: 0; right: 0; bottom: 0; left: 0;")
+                      .modal-dialog
+                        // Modal content
+                        .modal-content
+                          .modal-header
+                            h4.modal-title Pay for all Items.
+                            button.close(type="button" data-dismiss="modal") ×
+                          .modal-body
+                            h4 Total Price would be: $#{y}
+                            if bank.amount > y
+                              input.btn.btn-info(type="submit" value="Pay All!" name="paynow" style="margin-top:20px;")
+                            else
+                              p(style="text-align:center;font-weight:bold;") Your wallet has insufficient balance. Please add more via the profile page!
+                          .modal-footer
+                            button.btn.btn-default(type="button" data-dismiss="modal") Close 
     style. 
       input[type=number]::-webkit-inner-spin-button,
       input[type=number]::-webkit-outer-spin-button {
