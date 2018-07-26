@@ -425,7 +425,7 @@ router.get('/cart',ensureAuthenticated,function(req,res){
   User.findById(req.user, function(err, user){
     Transac.find({buyer:user.username},function(err, data) {
       bank.findOne({username:req.user.username}, function(err, bank){
-        console.log(bank.amount)
+        
         var xd =[];
         var y = 0;
         for(var i = 0; i < data.length; i++) {
@@ -446,7 +446,7 @@ router.get('/cart',ensureAuthenticated,function(req,res){
             username : req.user,
             wallet:bank,
             data:data,
-            doc:doc,
+            doca:docs,
             xd:xd,
             y:y
           })
