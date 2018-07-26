@@ -8,8 +8,8 @@ block content
         img(style="height:208px;width:147px;text-align:center;display:block;margin-left: 15%;" src= "/itempic/" + data.itemimageupload )
       .col-md-8
         p(style="font-weight:bolder;font-size:100%") Name of item: #{docs.itemname}
-        p(style="font-weight:bolder;font-size:150%") Price of item:$ #{docs.itemprice}
-        p(style="font-weight:bolder;font-size:150%") Your wallet balance:$ #{buyer.amount}
+        p(style="font-weight:bolder;font-size:150%") Price of item: $#{docs.itemprice}
+        p(style="font-weight:bolder;font-size:150%") Your wallet balance: $#{buyer.amount}
         if buyer.amount > docs.itemprice
           form(method ='POST' action='/payment/'+docs.uniqueID )
             button.btn.btn-danger.btn-lg(type="button" data-toggle="modal" data-target="#myModal" style="margin-left:44%;margin-top:20px;font-size:18px;") Buy This Item!
@@ -21,7 +21,7 @@ block content
                     h4.modal-title Payment
                     button.close(type="button" data-dismiss="modal") ×
                   .modal-body
-                      h3(style="text-align:center;font-weight:bold;") Are you sure u want to buy this item?
+                      h3(style="text-align:center;font-weight:bold;") Are you sure you want to buy this item?
                       input.btn.btn-info(type="submit" value="Pay now!" name="paynow" style="margin-left:44%;margin-top:20px")
                   .modal-footer
                     button.btn.btn-default(type="button" data-dismiss="modal") Close 

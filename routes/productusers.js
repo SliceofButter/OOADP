@@ -444,7 +444,7 @@ router.get('/cart',ensureAuthenticated,function(req,res){
         }) 
             res.render('cart',{
             username : req.user,
-            bank:bank,
+            wallet:bank,
             data:data,
             doc:doc,
             xd:xd,
