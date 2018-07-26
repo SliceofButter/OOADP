@@ -97,10 +97,10 @@ router.post('/payment/:id', function(req,res){
                                 console.log(err);
                                 return;
                             }
-                            else{ res.send();}
-                            alert('Item has been bought!');
-                            res.redirect('/');
+                            else{ res.send();}                            
                         });
+                        alert('Item has been bought!');
+                            res.redirect('/');
                     } else {                      
                 
                     var buywallet = buyer.amount;

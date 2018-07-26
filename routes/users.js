@@ -306,7 +306,7 @@ router.get('/profile/:username',ensureAuthenticated, function(req, res, next){
 router.get('/profile/:username/wallet',ensureAuthenticated, function(req, res, next){
 User.findOne({username:req.params.username}, function(err, user){
   Bank.findOne({username:user.username},function(err,bank){
-    console.log(bank.amount)
+    // console.log(bank.amount)
     if (user.dp != null && user.bio !=null && bank != null && bank.number !=null){
       var str = bank.number
       var shit = str.toString().slice(14,16);
@@ -315,7 +315,8 @@ User.findOne({username:req.params.username}, function(err, user){
       current: user.username,
       bio : user.bio,    
       pic: user.dp,
-      wallet : bank, 
+      wallet : bank,
+      bank :bank.number, 
       shit : shit,
     });
     } else {
@@ -507,24 +508,7 @@ User.findOne({username:req.params.username}, function(err, current){
   console.log(validation)
   if (validation.validCardNumber == true && validation.isExpired == false){
     Bank.findOne({username:current.username}, function(err, user){
-      if(user.number == null){        
-          query = {username : req.params.username};
-          let ppl = {}
-          ppl.cardType = type
-          ppl.number = number
-          ppl.date = date
-          ppl.year = year
-          Bank.findOneAndUpdate(query,{ $set: ppl},function(err){
-              if(err){
-              console.log(err);
-              return;
-              } else {
-              req.flash('success','Updated');
-              res.redirect('/profile/'+current.username);
-              }
-          });
-      
-      }else {
+      if(user == null){      
         console.log(user)
         newBalance = new Bank({
           cardType : type,
@@ -549,10 +533,28 @@ User.findOne({username:req.params.username}, function(err, current){
                 })
             alert("Check your email for confirmation.");    
             res.redirect('/profile/'+current.username);
-    
-            
+      
           }
         })
+      
+      }else if(user.number == null){
+        query = {username : req.params.username};
+          let ppl = {}
+          ppl.cardType = type
+          ppl.number = number
+          ppl.date = date
+          ppl.year = year
+          Bank.findOneAndUpdate(query,{ $set: ppl},function(err){
+              if(err){
+              console.log(err);
+              return;
+              } else {
+              req.flash('success','Updated');
+              res.redirect('/profile/'+current.username);
+              }
+          });
+            
+          
       }             
     });
   } else{
