@@ -138,8 +138,12 @@ app.get('/payment', function(req, res){
 })
 
 app.get('/chat',function(req, res){
-  res.render('chat');//
+  User.findById(req.user, function(err, user){
+  Bank.findOne({username:user.username},function(err,bank){
+  res.render('chat', {wallet:bank});//
   });
+});
+});
 
 app.get('/test3', function(req,res)
 {

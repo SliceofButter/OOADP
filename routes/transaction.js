@@ -31,13 +31,14 @@ router.get('/transaction',function(req,res){
 router.get('/payment/:id', function(req,res){
     Transacs.findOne({uniqueID:req.params.id},function(err,docs){
         Banker.findOne({username:docs.buyer},function(err,buyer){
-            Banker.find({username:docs.username},function(err,merch){
+            Banker.findOne({username:docs.username},function(err,merch){
                 Items.findOne({_id:docs.id}, function(err,data){
+                    console.log(merch)
                     res.render('payment',{
                     docs:docs,
                     data:data,
                     buyer:buyer,
-                    merch:merch
+                    wallet:merch
                 })
             })
             })
