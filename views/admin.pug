@@ -9,11 +9,11 @@ block content
           li.nav-item
             a#profile-tab.nav-link(href='/admin/items') Items      
           li.nav-item            
-            a#contact-tab.nav-link(href='#') Transactions    
+            a#contact-tab.nav-link(href='/admin/transac') Transactions    
           li.nav-item
-            a#contact-tab.nav-link(href='#') Reports         
+            a#contact-tab.nav-link(href='/admin/reports') Reports         
     table(style="width:100%;")
-      each users in user
+      each users in doc
         if users.username != null
           tr 
             td       

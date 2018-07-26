@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  .container-fluid
+    h1 Admin
+    ul#myTab.nav.nav-tabs(role='tablist')
+          li.nav-item
+            a#home-tab.nav-link(href='/admin') Users              
+          li.nav-item
+            a#profile-tab.nav-link(href='/admin/items') Items      
+          li.nav-item            
+            a#contact-tab.nav-link(href='/admin/transac') Transactions    
+          li.nav-item
+            a#contact-tab.nav-link.active(href='/admin/reports') Reports         
+    table(style="width:100%;")
+      each reports in report        
+        tr 
+          td       
+            p #{reports.reason}
+          td           
+            button.btn.btn-info.report2(type="button",data-toggle="modal", data-target='#'+reports._id) view                     
+            .modal.fade(id=reports._id, role="dialog")
+              .modal-dialog
+                // Modal content
+                .modal-content
+                  .modal-header
+                    h4.modal-title Reports
+                    button.close(type="button" data-dismiss="modal") ×
+                  .modal-body                
+                    p(style="font-size:18px") Reason: #{reports.reason}
+                    p(style="font-size:18px") Comment: #{reports.comment}
+                    p(style="font-size:18px") From: #{reports.fromUser}
+                    p(style="font-size:18px") To: #{reports.toUser}                  
+                  .modal-footer
+                      button.btn.btn-default(type="button" data-dismiss="modal") Close
+  script.
+      $(document).on("click", ".report2", function () {
+        var myBookId = $(this).data('id');
+        $(".modal-body").val( myBookId );        
+    });                        

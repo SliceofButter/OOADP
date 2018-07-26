@@ -142,7 +142,7 @@ router.delete('/productitem/:id',function(req,res){
 
 //Get Product item page
 router.get('/productitem/:id', function(req,res){
-  User.findOne(req.user, function(err, user){
+  User.findOne({username:req.user.username}, function(err, user){
     var item = Items.findById(req.params.id,function(err,data){
       Transac.find({username:data.username}, function(err,offer){
         WishlistItem.find({wisher:user.username, id:req.params.id},function(err, docs){

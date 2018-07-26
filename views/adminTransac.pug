@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  .container-fluid
+    h1 Admin
+    ul#myTab.nav.nav-tabs(role='tablist')
+          li.nav-item
+            a#home-tab.nav-link(href='/admin') Users              
+          li.nav-item
+            a#profile-tab.nav-link(href='/admin/items') Items      
+          li.nav-item            
+            a#contact-tab.nav-link.active(href='/admin/transac') Transactions    
+          li.nav-item
+            a#contact-tab.nav-link(href='/admin/reports') Reports         
+    table(style="width:100%;")
+      each docs in doc        
+        tr 
+          td       
+            p #{docs.uniqueID} (#{docs.itemname})
+          td           
+            button.btn.btn-primary(type="button",) 
+              a(href='/admin/transac/edit/'+docs._id ) Edit 

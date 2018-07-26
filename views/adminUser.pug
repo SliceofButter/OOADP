@@ -4,19 +4,35 @@ block content
   .row
     .col-md-2
     .col-md-8
-      form(action='/admin/edit/'+user._id, method='POST')
+      form(action='/admin/edit/'+doc._id, method='POST')
         .form-group
             label Name:
-            input.form-control(type='text', name='name', value=user.name) 
+            input.form-control(type='text', name='name', value=doc.name) 
         .form-group
             label Email:
-            input.form-control(type='text', name='email', value=user.email)
+            input.form-control(type='text', name='email', value=doc.email)
         .form-group
             label Username:                        
-            input.form-control(type='text', name="username", value=user.username)    
+            input.form-control(type='text', name="username", value=doc.username)    
         .form-group    
             label Bio:        
-            input.form-control(type='text', name="bio", value=user.bio)
+            input.form-control(type='text', name="bio", value=doc.bio)
 
         button.btn.btn-primary(type='submit') Update     
+        button.btn.btn-danger(type='submit' value='Delete' style="margin-left:18%;margin-top:1px;" class="deleteBtn" id=doc._id) Delete
     .col-md-2        
+
+  script.
+      $('.deleteBtn').click(function () {
+          var record_num = this.id;
+          $.ajax({
+            url: '/admin/edit/' + record_num,
+            type: 'DELETE',
+            success: function (result) {
+              console.log(result.message);
+              location.href = "http://localhost:3000/admin";              
+            },
+            error: function (result) {              
+            }
+          });
+        });  

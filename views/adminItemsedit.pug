@@ -21,5 +21,21 @@ block content
             label Status:        
             input.form-control(type='text', name='status', value=item.status)
                                                
-        button.btn.btn-primary(type='submit') Update     
+        button.btn.btn-primary(type='submit') Update    
+        button.btn.btn-danger(type='submit' value='Delete' style="margin-left:18%;margin-top:1px;" class="deleteBtn" id=item._id) Delete 
     .col-md-2 
+
+  script.
+      $('.deleteBtn').click(function () {
+          var record_num = this.id;
+          $.ajax({
+            url: '/admin/items/edit/' + record_num,
+            type: 'DELETE',
+            success: function (result) {
+              console.log(result.message);
+              location.href = "http://localhost:3000/admin";              
+            },
+            error: function (result) {        
+            }
+          });
+        });      
