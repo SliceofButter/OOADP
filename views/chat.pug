@@ -111,7 +111,7 @@ block content
       width: 234px;
       }
       .sendmsg{
-      width:60px;
+      width:45px;
       }
       #InfoBar
       {
@@ -503,7 +503,7 @@ block content
       element = element + '<div class="popup-head">';
       element = element + '<div class="popup-head-left">'+ name +'</div>';
       element = element + '<div class="popup-head-right"><a href="javascript:close_popup(\''+ id +'\');">✕</a></div>';
-      element = element + '<div style="clear: both"></div></div><div class="popup-messages"><div chatboxid="'+ id +'"  class="chat"></div><input size="35" chatboxid="'+ id +'" class="message" id="message_'+ id +'"></input><input chatboxid="'+ id +'" class="sendmsg" value="submit" type="submit"></input></div></div>';
+      element = element + '<div style="clear: both"></div></div><div class="popup-messages"><div chatboxid="'+ id +'"  class="chat"></div><input size="35" chatboxid="'+ id +'" class="message" id="message_'+ id +'"></input><input chatboxid="'+ id +'" class="sendmsg" value="send" type="submit"></input></div></div>';
       $('body').append(element);
       }
       popups.unshift(id);
