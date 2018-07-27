@@ -9,9 +9,9 @@ block content
       .col-md-8
         p(style="font-weight:bolder;font-size:100%") Name of item: #{docs.itemname}
         p(style="font-weight:bolder;font-size:150%") Price of item: $#{docs.itemprice}
-        p(style="font-weight:bolder;font-size:150%") Your wallet balance: $#{buyer.amount}
-        if buyer != null
-          if buyer.amount > docs.itemprice
+        p(style="font-weight:bolder;font-size:150%") Your wallet balance: $#{wallet.amount}
+        if wallet != null
+          if wallet.amount > docs.itemprice
             form(method ='POST' action='/payment/'+docs.uniqueID )
               button.btn.btn-danger.btn-lg(type="button" data-toggle="modal" data-target="#myModal" style="margin-left:44%;margin-top:20px;font-size:18px;") Buy This Item!
               #myModal.modal.fade(role="dialog" style="background: rgba(0, 0, 0, 0.5); position: fixed; top: 0; right: 0; bottom: 0; left: 0;")

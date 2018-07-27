@@ -40,8 +40,8 @@ router.get('/payment/:id', function(req,res){
                     res.render('payment',{
                     docs:docs,
                     data:data,
-                    buyer:buyer,
-                    wallet:merch
+                    wallet:buyer,
+                    buyer:merch
                 })
             })
             })

@@ -195,13 +195,15 @@ router.get('/profile/:username/wishlist', function(req,res){
             bio : user.bio,    
             pic: user.dp,
             docs:docs,
-            user:user
+            user:user,
+            wallet:bank
           });
         } else {
           res.render('wishlist',{
             current: current.username,
             docs:docs,
             user:user,
+            wallet:bank
           });
         }
         })
