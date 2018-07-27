@@ -244,22 +244,18 @@ block content
             // 
             .flex-sb-m.flex-w.p-b-35
               .flex-w
-                .rs2-select2.bo4.of-hidden.w-size12.m-t-5.m-b-5.m-r-10
-                  select.selection-2(name="sortingPrice")
-                    option Price
-                    option $0.00 - $50.00
-                    option $50.00 - $100.00
-                    option $100.00 - $150.00
-                    option $150.00 - $200.00
-                    option $200.00+
+                <form action="/product" method="post" id="search">
+                  select.selection-2(name="sorting" style="padding:4px;")
+                    option Sort by...
+                    option(value="itemname") A-Z
+                    option(value="itemcondition") Item Condition
+                    option(value="itemprice") Price
+                  select.selection-2(name="sortasc" style="padding:4px;")
+                    option(value='ASC') ASC
+                    option(value='DESC') DESC
               div.form-group
                 <form action="/product" method="post" id="search">
-                  select.selection-2(name="sorting")
-                    option Default
-                    option(value="itemname") Title
-                    option(value="itemcondition") Condition
-                    option(value="itemprice") Price
-                  <input type="text" name="searchBar" placeholder="Search for...">
+                  <input type="text" name="searchBar" placeholder="Search for..." style="margin-top:15px;">
                   <input type="submit" value="Search">
                 </form>
 

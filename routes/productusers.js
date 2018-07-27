@@ -469,7 +469,7 @@ router.get('/cart',ensureAuthenticated,function(req,res){
 router.post('/product', (req, res) => {
     var search = req.body.searchBar;
     var sorting = req.body.sorting;
-    var sort = 1;
+    var sort = req.body.sortasc == 'ASC' ? 1 : -1;
     whereClause = {};
     if (search != "") {
         var filter = new RegExp(search, 'i');
