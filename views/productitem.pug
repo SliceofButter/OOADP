@@ -57,7 +57,8 @@ block content
                 h4.modal-title Send Offer for #{data.itemname}
                 button.close(type="button" data-dismiss="modal") ×
               .modal-body
-                input(name='pricemoneyreq' type='number' style='margin-left:28%;' placeholder="Original price: $"+ data.itemprice) 
+                label(style="margin-left:26%;") $
+                input(name='pricemoneyreq' type='number'  value=data.itemprice) 
                 input.btn.btn-primary(href='#', data-id=data._id, type='submit', name='offer', value='Send new offer', onclick='offer()', style='margin-left:34%;margin-top:20px;')
               .modal-footer
                 button.btn.btn-default(type="button" data-dismiss="modal") Close 
