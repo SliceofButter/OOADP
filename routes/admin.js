@@ -14,7 +14,7 @@ let Follow = require('../models/follow');
 let ReportUser = require('../models/reportuser')
 
 function ensureAuthenticated(req, res, next){
-    if(req.user.username == 'admin'){
+    if(req.user.username == 'Admin'){
       return next();
     } else {
     res.render('errors');

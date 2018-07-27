@@ -5,11 +5,50 @@ block content
     .row
       .col-md-4
         .profilecenter
-          img(style='border-radius: 50%', width='100', height='100', src="/profilepic/" + pic)
+          if pic!=null
+            img(style='border-radius: 50%', width='100', height='100', src="/profilepic/" + pic)
+          else  
+            img(style='border-radius: 50%', width='100', height='100', src="/profilepic/download.jpg")
           .details
               h5.name  #{current}
               ul
                   li
+        .card-body
+          if current != user.username 
+            .row
+              .col-md
+              //- if follow == null
+              //-   form(method ='POST' action='/profile/' + current)
+              //-     input.btn.btn-primary(type="submit", name="follow1" value="Follow" style="  padding: 5px 80px;") 
+              //- else 
+              //-   button.btn.btn-primary(type="button", name="follow1" style="  padding: 5px 80px;") Followed
+              .col-md
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">...</button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#" data-toggle='modal' data-target='.report'>Report user</a></li>
+                </ul>
+                .modal.fade.report(tabindex='-1', role='dialog', aria-labelledby='myLargeModalLabel', aria-hidden='true')
+                  .modal-dialog.modal-lg
+                    .modal-content
+                      .modal-header
+                        h6
+                          strong Why are your reporting this user?
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                          span(aria-hidden='true') ×
+                      .modal-body
+                        .form-group
+                          form(method ='POST' action='/profile/' + current)
+                            select.form-control(name='report')
+                              option(value='An item i sold') An item i sold
+                              option(value='An item i bought') An item i bought
+                              option(value='Suspicious account') Suspicious account
+                              option(value='Cancelling deal') Cancelling deal
+                              option(value='Selling Counterfeit items') Selling Counterfeit items
+                              option(value='Selling Prohibited items') Selling Prohibited items
+                              option(value='Offencive behaviour') Offencive behaviour
+                              br
+                              textarea#comment.form-control(name="comment", rows='5')
+                            input.btn.btn-primary(type='submit' value="submit" name="reporting") 
       .col-md-8
         .card
           .card-header Bio           
@@ -18,14 +57,12 @@ block content
         br         
         ul#myTab.nav.nav-tabs(role='tablist')
           li.nav-item
-            a#home-tab.nav-link(href='/profile/'+current) Listing          
-          li.nav-item
-            a#profile-tab.nav-link(href='#') Request          
+            a#home-tab.nav-link(href='/profile/'+current) Listing                    
           li.nav-item
             if user.username == current
               a#contact-tab.nav-link(href='/profile/'+current+'/wallet') Wallet     
           li.nav-item
-            a#contact-tab.nav-link.active(href='#') Wishlist     
+            a#contact-tab.nav-link.active(href='/profile/'+current+ '/wishlist') Wishlist   
         #myTabContent.tab-content
           #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
             .row

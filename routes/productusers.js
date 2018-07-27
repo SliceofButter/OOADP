@@ -25,7 +25,7 @@ let WishlistItem = require('../models/wishlist');
 let User = require('../models/user');
 let Transac = require('../models/transaction');
 let Reports = require('../models/report');
-let bank = require('../models/bank')
+let Bank = require('../models/bank')
 
 function ensureAuthenticated(req, res, next){
   if(req.isAuthenticated()){
@@ -146,7 +146,7 @@ router.get('/productitem/:id', function(req,res){
     var item = Items.findById(req.params.id,function(err,data){
       Transac.find({username:data.username}, function(err,offer){
         WishlistItem.find({wisher:user.username, id:req.params.id},function(err, docs){
-          bank.findOne({username:req.user.username}, function(err, bank){
+          Bank.findOne({username:req.user.username}, function(err, bank){
             console.log(bank)
               /*offer.forEach(function(offers){
             console.log(offers.uniqueID)
@@ -182,26 +182,34 @@ router.get('/productitem/:id', function(req,res){
 })
 })
 router.get('/profile/:username/wishlist', function(req,res){
-  User.findOne({username:req.params.username}, function(err, user){
+  User.findOne({username:req.params.username}, function(err, current){
+    User.findOne({username:req.user.username},function(err, user){  
+    console.log(user.username)
     WishlistItem.find({wisher:user.username},function(err, docs){
-      bank.findOne({username:req.user.username}, function(err, bank){
+      Bank.findOne({username:req.user.username}, function(err, bank){
         // console.log(bank)
         // console.log(docs)
           if (user.dp != null || user.bio !=null){
             res.render('wishlist', {
-            current: user.username,
+            current: current.username,
             bio : user.bio,    
             pic: user.dp,
             docs:docs,
+            user:user
           });
         } else {
-          res.render('wishlist');
+          res.render('wishlist',{
+            current: current.username,
+            docs:docs,
+            user:user,
+          });
         }
         })
-      
       })
     })
   })
+})
+
 router.post('/productitem/:id/:uniqueID',function(req,res,next){
   var accepted = req.body.acceptme;
   var rejected = req.body.rejectme;
@@ -424,7 +432,7 @@ router.post('/productitem/:id',function(req, res,next){
 router.get('/cart',ensureAuthenticated,function(req,res){
   User.findById(req.user, function(err, user){
     Transac.find({buyer:user.username},function(err, data) {
-      bank.findOne({username:req.user.username}, function(err, bank){
+      Bank.findOne({username:req.user.username}, function(err, bank){
         
         var xd =[];
         var y = 0;
@@ -510,7 +518,7 @@ router.get('/product',function(req,res){
       })
     );
     var itemlist = Items.find({},function(err, data) {
-      bank.findOne({username:req.user.username}, function(err, bank){
+      Bank.findOne({username:req.user.username}, function(err, bank){
         console.log(bank)
         res.render('product',{
           username : req.user,
@@ -523,7 +531,7 @@ router.get('/product',function(req,res){
 
 //Item register
 router.get('/registeritem',function(req,res){
-  bank.findOne({username:req.user.username}, function(err, bank){
+  Bank.findOne({username:req.user.username}, function(err, bank){
     console.log(bank)
     res.render('registeritem',{
       wallet:bank

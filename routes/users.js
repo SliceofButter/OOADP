@@ -267,7 +267,9 @@ router.post('/profile/:username', function(req,res){
 
 
 router.get('/profile/:username',ensureAuthenticated, function(req, res, next){
-  User.findOne({username:req.params.username}, function(err, user){
+  User.findOne({username:req.params.username}, function(err, current){
+    User.findOne({username:req.user.username},function(err, user){
+      console.log(user)
     Items.find({username:user.username},function(err, data){      
         Bank.findOne({username:req.user.username}, function(err, bank){
         // console.log(follow)
@@ -281,7 +283,7 @@ router.get('/profile/:username',ensureAuthenticated, function(req, res, next){
         // ])
         if (user.dp != null && user.bio !=null){
           res.render('profile', {
-          current: user.username,
+          current: current.username,
           bio : user.bio,    
           pic : user.dp,
           data : data,
@@ -291,7 +293,7 @@ router.get('/profile/:username',ensureAuthenticated, function(req, res, next){
         });
         } else {
           res.render('profile',{
-          current: user.username,
+          current: current.username,
           bio : user.bio,    
           pic : user.dp,
           data : data,            
@@ -300,34 +302,40 @@ router.get('/profile/:username',ensureAuthenticated, function(req, res, next){
         }
         })
       })
-    }).populate(['following','follower'])
+    })
+  // }).populate(['following','follower'])
   })
+})
 
 router.get('/profile/:username/wallet',ensureAuthenticated, function(req, res, next){
-User.findOne({username:req.params.username}, function(err, user){
+User.findOne({username:req.params.username}, function(err, current){
+  User.findOne({username:req.user.username},function(err, user){  
   Bank.findOne({username:user.username},function(err,bank){
-    // console.log(bank.amount)
-    if (user.dp != null && user.bio !=null && bank != null && bank.number !=null){
+    console.log(user)
+    if (user.dp != null || user.bio !=null || bank != null && bank.number !=null){
       var str = bank.number
       var shit = str.toString().slice(14,16);
       // console.log(bank)
       res.render('wallet', {
-      current: user.username,
+      current: current.username,
       bio : user.bio,    
       pic: user.dp,
       wallet : bank,
       bank :bank.number, 
       shit : shit,
+      user:user
     });
     } else {
       res.render('wallet',{
-        current: user.username,
+        current: current.username,
         bio : user.bio,    
         pic: user.dp,
         wallet : bank,
+        user : user,
         shit : shit,    
       })
     }
+  })
    })
   })
 });
