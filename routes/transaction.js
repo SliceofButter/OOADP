@@ -104,18 +104,15 @@ router.post('/payment/:id', function(req,res){
                     } else {                      
                 
                     var buywallet = buyer.amount;
-                    //var itemprice = docs.itemprice;
+                    var itemprice = docs.itemprice;
+                    var fee = 3
                     var sellwallet = merch.amount;
-                    if (docs.deliverymethod =="Delivery")
-                    {
-                        var itemprice = docs.itemprice + 3
+                    if (docs.deliverymethod =="Delivery"){              
+                        var newbuywallet = buywallet - itemprice - fee;
                     }
-                    else if(docs.deliverymethod =="Meet-up")
-                    {
-                        var itemprice = docs.itemprice
+                    else{
+                        var newbuywallet = buywallet - itemprice;
                     }
-                    
-                    var newbuywallet = buywallet - itemprice;
                     var newsellwallet = sellwallet + itemprice;
                     Banker.findOneAndUpdate({username:docs.username},{ $set: { amount: newsellwallet }},function(err){
                         if(err){
