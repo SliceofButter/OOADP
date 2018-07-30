@@ -147,6 +147,7 @@ router.get('/productitem/:id', function(req,res){
       Transac.find({username:data.username}, function(err,offer){
         WishlistItem.find({wisher:user.username, id:req.params.id},function(err, docs){
           Bank.findOne({username:req.user.username}, function(err, bank){
+            Items.find({category:data.category}, function(err,nugget){
             console.log(bank)
               /*offer.forEach(function(offers){
             console.log(offers.uniqueID)
@@ -156,19 +157,22 @@ router.get('/productitem/:id', function(req,res){
               console.log(docs)
               var meow = [];
               console.log(data._id);
+              console.log(nugget.category)
               _id = item[0],
-              itemcondition = item[1]
-              itemimageupload = item[2],
-              description= item[3],
-              username = item[4],
-              itemprice = item[5],
-              itemname = item[6],
+              category = item[1],
+              itemcondition = item[2],
+              itemimageupload = item[3],
+              description= item[4],
+              username = item[5],
+              itemprice = item[6],
+              itemname = item[7],
               res.render('productitem', {
                 data:data,
                 offer:offer,
                 docs:docs,
                 meow:meow,
                 wallet:bank,
+                nugget:nugget,
             })
           });
     var inputValue = req.body.something
@@ -178,6 +182,7 @@ router.get('/productitem/:id', function(req,res){
   //  rs
   })
   })
+})
 })
 })
 })
