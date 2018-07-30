@@ -53,7 +53,7 @@ router.post('/payment/:id', function(req,res){
         Banker.findOne({username:docs.buyer},function(err,buyer){
             Banker.findOne({username:docs.username},function(err,merch){
                 Items.findOne({_id:docs.id}, function(err,data){
-                    if (merch==null){                        
+                    if (merch==null){                    
                         var itemprice = docs.itemprice;                        
                         var newsellwallet = 0 + itemprice;
                         newBalance = new Banker({           
@@ -104,8 +104,17 @@ router.post('/payment/:id', function(req,res){
                     } else {                      
                 
                     var buywallet = buyer.amount;
-                    var itemprice = docs.itemprice;
+                    //var itemprice = docs.itemprice;
                     var sellwallet = merch.amount;
+                    if (docs.deliverymethod =="Delivery")
+                    {
+                        var itemprice = docs.itemprice + 3
+                    }
+                    else if(docs.deliverymethod =="Meet-up")
+                    {
+                        var itemprice = docs.itemprice
+                    }
+                    
                     var newbuywallet = buywallet - itemprice;
                     var newsellwallet = sellwallet + itemprice;
                     Banker.findOneAndUpdate({username:docs.username},{ $set: { amount: newsellwallet }},function(err){

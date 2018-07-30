@@ -221,9 +221,13 @@ router.post('/productitem/:id/:uniqueID',function(req,res,next){
   var accepted = req.body.acceptme;
   var rejected = req.body.rejectme;
   if(accepted){
-  Transac.findOneAndUpdate({uniqueID:req.params.uniqueID},{$set:{status:'Accepted'}},function(err){
+    User.findOne({username:req.params.username}, function(err, current){
+      User.findOne({username:req.user.username},function(err, user){ 
+  Transac.findOneAndUpdate({uniqueID:req.params.uniqueID},{$set:{status:'Accepted',isSeller:req.user.username},},function(err){
     if (err) return handleError(err)
   })
+})
+    })
   }
   if(rejected){
     Transac.findOneAndUpdate({uniqueID:req.params.uniqueID},{$set:{status:'Rejected'}},function(err)
@@ -237,7 +241,8 @@ router.post('/productitem/:id',function(req, res,next){
   var something2 = req.body.wishlist;
   var something = req.body.offer;
   var something3 = req.body.report;
-  var something4 = req.body.acceptme;
+  var delivery = req.body.delivery;
+  var meetup = req.body.meetup;
   if (something2)
   {
     //console.log('Testing')
@@ -297,6 +302,8 @@ router.post('/productitem/:id',function(req, res,next){
     //console.log('Test')
     var wistlistitem = Items.findById(req.params.id,function(err,data){
       let newTransac = new Transac();
+      if(delivery)
+      {
       newTransac.itemname = data.itemname,
       newTransac.itemprice = req.body.pricemoneyreq,
       newTransac.username =  data.username,
@@ -305,6 +312,7 @@ router.post('/productitem/:id',function(req, res,next){
       newTransac.id = data._id,
       newTransac.buyer = req.user.username,
       newTransac.itemimageupload = data.itemimageupload
+      newTransac.deliverymethod = 'Delivery'
       newTransac.save(function(err){
         if(err){
           console.log(err)
@@ -313,6 +321,27 @@ router.post('/productitem/:id',function(req, res,next){
           alert('Item offered')
         }
       })
+    }
+    else if(meetup)
+    {
+      newTransac.itemname = data.itemname,
+      newTransac.itemprice = req.body.pricemoneyreq,
+      newTransac.username =  data.username,
+      newTransac.uniqueID = uuidV4()
+      newTransac.status = 'Requested',
+      newTransac.id = data._id,
+      newTransac.buyer = req.user.username,
+      newTransac.itemimageupload = data.itemimageupload
+      newTransac.deliverymethod = 'Meet-up'
+      newTransac.save(function(err){
+        if(err){
+          console.log(err)
+        } else {
+          res.redirect('/');
+          alert('Item offered')
+        }
+      }) 
+    }
     })
   }
 });

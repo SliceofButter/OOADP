@@ -9,6 +9,8 @@ block content
       .col-md-8
         p(style="font-weight:bolder;font-size:100%") Name of item: #{docs.itemname}
         p(style="font-weight:bolder;font-size:150%") Price of item: $#{docs.itemprice}
+        if docs.deliverymethod == 'Delivery'
+          p(style="font-weight:bolder;font-size:150%") Delivery Charge: $3
         p(style="font-weight:bolder;font-size:150%") Your wallet balance: $#{wallet.amount}
         if wallet != null
           if wallet.amount > docs.itemprice

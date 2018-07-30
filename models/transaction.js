@@ -38,8 +38,12 @@ const TransSchema = mongoose.Schema({
     },
     itemimageupload:{
         type:String,
-         require:true,
+        require:true,
      },
+    deliverymethod:{
+        type:String,
+        require:true,
+    }
 
 })
 
