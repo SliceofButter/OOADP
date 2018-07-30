@@ -105,7 +105,7 @@ router.post('/payment/:id', function(req,res){
                 
                     var buywallet = buyer.amount;
                     var itemprice = docs.itemprice;
-                    var fee = 3
+                    var fee = 3;
                     var sellwallet = merch.amount;
                     if (docs.deliverymethod =="Delivery"){              
                         var newbuywallet = buywallet - itemprice - fee;
