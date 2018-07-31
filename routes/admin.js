@@ -29,7 +29,7 @@ var storage = multer.diskStorage({
     });
 
 function ensureAuthenticated(req, res, next){
-    if(req.user.username == 'admin'){
+    if(req.user.isAdmin === true){
       return next();
     } else {
     res.render('errors');
