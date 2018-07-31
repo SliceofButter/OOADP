@@ -1,6 +1,13 @@
 extends layout
 
 block content
+  style.
+    img{
+      border-radius: 50%;
+      max-width:180px;  
+      max-height:180px;    
+    }
+    
   .container-fluid
     h1 Admin
     ul#myTab.nav.nav-tabs(role='tablist')
@@ -16,8 +23,56 @@ block content
       each users in doc
         if users.username != null
           tr 
-            td       
-              p #{users.username}
+            td    
+              img(style='border-radius: 50%', width='100', height='100', src="/profilepic/" + users.dp)
+            td(style="text-align: left;")    
+              h5 #{users.username} 
             td           
               button.btn.btn-primary(type="button",) 
                 a(href='/admin/edit/'+users._id ) Edit 
+    .row      
+      button.btn.btn-primary(style='text-align: center;border-radius: 25px;', type='button', data-toggle='modal', data-target='#exampleModal')
+        | New user
+      #exampleModal.modal.fade.report(tabindex='-1', role='dialog', aria-labelledby='myLargeModalLabel', aria-hidden='true')
+        .modal-dialog.modal-lg
+          .modal-content
+            .modal-header             
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') ×
+            .modal-body
+              .form-group                    
+                form(method ='POST' action='/admin', enctype='multipart/form-data')
+                  table(style="width:100%;text-align:center;")      
+                    tr                      
+                      td                       
+                        <img id="blah" width='100' height='100's src="http://placehold.it/180" alt="your image" />
+                    tr                        
+                      td  
+                        <input type='file'name='imageupload' onchange="readURL(this);" />
+                  #form-group
+                    label Name:
+                    input.form-control(name='name', type='text')
+                  #form-group
+                    label Email:
+                    input.form-control(name='email', type='text')
+                  #form-group
+                    label Username:
+                    input.form-control(name='username',type='text')
+                  #form-group
+                    label Password:
+                    input.form-control(name='password',type='password')      
+                    
+                  button.btn.btn-primary(type='submit') Submit
+  script. 
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+              $('#blah')
+                  .attr('src', e.target.result);
+          };
+
+          reader.readAsDataURL(input.files[0]);
+      }
+    }                             
