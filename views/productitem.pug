@@ -60,12 +60,12 @@ block content
               .modal-body
                 label(style="margin-left:26%;") $
                 input(name='pricemoneyreq' type='number'  value=data.itemprice) 
-                input.btn.btn-primary(href='#', data-id=data._id, type='submit', name='offer', value='Send new offer', onclick='offer()', style='margin-left:34%;margin-top:20px;')
                 p(style="margin-top:20px; text-align:center;") How would you like to receive the product?
                 input#delivery(type='radio', name='delivery' style="margin-left:25%;")
                 label(for='delivery' style="margin-right: 50px;") Delivery
                 input#meetup(type='radio', name='meetup')
                 label(for='delivery') Meet-Up
+                input.btn.btn-primary(href='#', data-id=data._id, type='submit', name='offer', value='Send new offer', onclick='offer()', style='margin-left:34%;margin-top:20px;')
               .modal-footer
                 button.btn.btn-default(type="button" data-dismiss="modal") Close 
         button.btn.btn-danger.btn-lg(type="button" data-toggle="modal" data-target="#myModal"  style="margin-left:44%;margin-top:20px;font-size:18px;") Report This Item!

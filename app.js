@@ -12,6 +12,7 @@ var methodOverride = require('method-override');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 
+
 mongoose.connect(config.database,{
   useMongoClient: true,
 });
@@ -145,9 +146,9 @@ app.get('/chat',function(req, res){
 });
 });
 
-app.get('/test3', function(req,res)
+app.get('/about', function(req,res)
 {
-  res.render('test3');
+  res.render('about');
 })
   
 // Route Files
@@ -160,6 +161,7 @@ let transactions = require('./routes/transaction');
 app.use('/',transactions);
 let admins = require('./routes/admin');
 app.use('/', admins)
+
 // let admins = require('./routes/admin')
 // app.use('/', admins);
 // app.get('/admin',function(req,res){
@@ -224,8 +226,10 @@ app.use('/', admins)
   })
 app.use(function(req, res, next) {
   if(req.accepts('html') && res.status(404)) {
-      res.render('errors');
+    Bank.findOne({username:req.user.username}, function(err, bank){
+      res.render('errors', {wallet:bank});
       return;
+    });
   }
 });
 // Start Server
