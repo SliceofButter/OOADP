@@ -18,22 +18,37 @@ block content
                   i.glyphicon.glyphicon-home
                   | 							Account Settings
               li
-                a(href='/password')
-                  i.glyphicon.glyphicon-user
-                  | 							Password Settings
-              li.active
                 a(href='#')
                   i.glyphicon.glyphicon-user
-                  | 							Profile Picture Settings
+                  | 							Password Settings
               li
+                a(href='/settings')
+                  i.glyphicon.glyphicon-user
+                  | 							Profile Picture Settings
+              li.active
                 a(href='/address')
                   i.glyphicon.glyphicon-user
                   | 							Address Settings    
       .col-md-9
         .profile-content
           .container-fluid
-            b Profile Pic: 
+
             p
-            form(action='/settings', method='POST', enctype='multipart/form-data')
-              input(type='file', name='imageupload')
-              input(type='submit', name='uploadimage', value='Upload Image')
+            form(action='/address', method='POST')
+              #form-group
+                label Name:
+                input.form-control(name='name',type='text')
+              #form-group
+                label Address:
+                input.form-control(name='addr1',type='text')    
+              #form-group
+                label Address, line 2:
+                input.form-control(name='addr2',type='text')     
+              #form-group
+                label Unit:
+                input.form-control(name='unit',type='text')     
+              #form-group
+                label Zip/Postal Code:
+                input.form-control(name='code',type='number')    
+              <br>
+                input.btn.btn-primary(type='submit',value='Submit', name="Submit1")

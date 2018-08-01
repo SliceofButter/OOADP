@@ -46,6 +46,7 @@ let Bank = require('../models/bank');
 let Transacs = require('../models/transaction');
 let Follow = require('../models/follow');
 let ReportUser = require('../models/reportuser')
+let Address = require('../models/address');
 
 // router.set('superSecret', config.secret); 
 
@@ -669,6 +670,45 @@ User.findByIdAndUpdate(query,about,function(err){
   }
 });
 });
+
+router.get('/address', ensureAuthenticated,(req, res) => {
+  Bank.findOne({username:req.user.username}, function(err, bank){
+    console.log(bank)
+    res.render('address', {
+        title: 'Address',
+        wallet : bank,
+    })
+    
+  })
+})
+router.post('/address', ensureAuthenticated, (req,res) => {
+  User.findById(req.user, function(err, user){
+    var submit = req.body.Submit1;
+
+    let newAddr = new Address();
+    if(submit)
+    {
+      newAddr.username = req.user.username
+      newAddr.name = req.body.name,
+      newAddr.addr1 = req.body.addr1,
+      newAddr.addr2 = req.body.addr2,
+      newAddr.unit = req.body.unit,
+      newAddr.code = req.body.code,
+      newAddr.save(function(err){
+        if(err){
+          console.log(err);
+          return;
+        } 
+        else {
+          req.flash('success','Address updated');
+          res.redirect('/profile/' + req.user.username);
+        }
+    })
+
+  }
+})
+
+})
 
 
 // router.post('/settings', upload.single('imageupload'),(req, res) => {
