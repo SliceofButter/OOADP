@@ -27,6 +27,10 @@ const userSchema = mongoose.Schema({
     },
     bio: String,
     dp:String,
+    isAdmin:{
+        type: Boolean, 
+        default: false
+    },
     follower: [{
         type: String, ref: 'Follow'
     }],

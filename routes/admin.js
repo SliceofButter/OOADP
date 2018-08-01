@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const bcrypt = require('bcryptjs');
 
 
 let User = require('../models/user');
@@ -13,8 +14,22 @@ let Transacs = require('../models/transaction');
 let Follow = require('../models/follow');
 let ReportUser = require('../models/reportuser')
 
+var storage = multer.diskStorage({
+    destination: './public/profilepic/',
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+    })
+    
+    var upload = multer({
+    storage: storage,
+    limits: {
+      fileSize: 10000000
+    },
+    });
+
 function ensureAuthenticated(req, res, next){
-    if(req.user.username == 'Admin'){
+    if(req.user.isAdmin === true){
       return next();
     } else {
     res.render('errors');
@@ -33,6 +48,38 @@ router.get('/admin',ensureAuthenticated, function(req,res){
     })
 }); 
 
+router.post('/admin',ensureAuthenticated, upload.single('imageupload') , function(req,res){
+  const name = req.body.name;
+  const photo = req.file.originalname;
+  const email = req.body.email;
+  const username = req.body.username;
+  const password = req.body.password;
+  let newUser = new User({ 
+    name:name,
+    email:email,
+    username:username,
+    password:password,
+    dp:photo
+  });
+  bcrypt.genSalt(10, function(err, salt){
+    bcrypt.hash(newUser.password, salt, function(err, hash){
+      if(err){
+        console.log(err);
+      }
+      newUser.password = hash;
+      newUser.save(function (err) {
+        if(err){
+            console.log(err);
+            return;
+          } 
+          else {
+            res.redirect('/admin');            
+          }
+        })
+    })
+})
+})
+
 router.get('/admin/edit/:id',ensureAuthenticated, function(req,res){
     User.findOne({_id:req.user},function(err, user){
         User.findOne({_id:req.params.id}, function(err, doc){            
@@ -44,7 +91,7 @@ router.get('/admin/edit/:id',ensureAuthenticated, function(req,res){
     })
 });
 
-router.post('/admin/edit/:id',ensureAuthenticated, function(req,res){
+router.post('/admin/edit/:id',ensureAuthenticated, upload.single('imageupload'), function(req,res){
     User.findOne({_id:req.params.id},function(err, user){
         query = {_id : req.params.id};
         let ppl = {}
@@ -52,6 +99,7 @@ router.post('/admin/edit/:id',ensureAuthenticated, function(req,res){
         ppl.email = req.body.email
         ppl.username = req.body.username
         ppl.bio = req.body.bio
+        ppl.dp = req.file.originalname
         User.findByIdAndUpdate(query,{ $set: ppl},function(err){
             if(err){
             console.log(err);

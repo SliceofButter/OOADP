@@ -312,7 +312,7 @@ User.findOne({username:req.params.username}, function(err, current){
   User.findOne({username:req.user.username},function(err, user){  
   Bank.findOne({username:user.username},function(err,bank){
     console.log(user)
-    if (user.dp != null || user.bio !=null || bank != null && bank.number !=null){
+    if (user.dp != null && user.bio !=null && bank != null && bank.number !=null){
       var str = bank.number
       var shit = str.toString().slice(14,16);
       // console.log(bank)

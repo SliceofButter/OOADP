@@ -85,9 +85,9 @@ block content
         .related(style="display:inline-flex;")
             each nuggets in nugget
               if nuggets.category == data.category && data.uniqueID != nuggets.uniqueID  
-                img(style="height:10%;width:10%;display:block;margin-top:20px;" src= "/itempic/" + nuggets.itemimageupload )
-                .text(style="margin-top:130px; margin-right:150px; margin-left:-60px; text-align:center;float:left;")
-                  a(href='/productitem/' + nuggets._id style="margin-left:-90%") #{nuggets.itemname}
+                img(style="height:48px;width:64px;display:block;margin-top:20px;" src= "/itempic/" + nuggets.itemimageupload )
+                .text(style="margin-top:80px; margin-right:150px; margin-left:-60px; text-align:center;float:left;")
+                  a(href='/productitem/' + nuggets._id style="margin-left:-30%") #{nuggets.itemname}
     style. 
       input[type=number]::-webkit-inner-spin-button,
       input[type=number]::-webkit-outer-spin-button {
