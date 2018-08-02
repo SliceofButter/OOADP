@@ -16,7 +16,7 @@ block content
            p(style="font-weight:bolder;font-size:100%") Delivery Address:
            p(style="font-weight:bolder;font-size:100%") Name: #{addr.name}
            p(style="font-weight:bolder;font-size:100%") Street Address: #{addr.addr1}
-           if addr.addr2 != null
+           if addr.addr2 != ''
             p(style="font-weight:bolder;font-size:100%") Street Address, Line 2: #{addr.addr2}
            else
            p(style="font-weight:bolder;font-size:100%") Unit/Apartment Number: #{addr.unit} 
