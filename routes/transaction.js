@@ -60,18 +60,18 @@ router.post('/payment/:id', function(req,res){
         Banker.findOne({username:docs.buyer},function(err,buyer){
             User.findOne({username:buyer.username},function(err,user1){
                 Banker.findOne({username:docs.username},function(err,merch){
-                    User.findOne({username:buyer.username},function(err,user2){
+                    User.findOne({username:merch.username},function(err,user2){
                         Items.findOne({_id:docs.id}, function(err,data){
                             console.log(user1.email);
                             console.log(merch);
                             var transporter = nodemailer.createTransport({ host: 'smtp.gmail.com', port:465, secure:true, tls:{ rejectUnauthorized: false}, auth: { user: 'sghawt@gmail.com', pass: 'NYPIT1704' } });
                             var mailOptions = { from: 'sghawt@gmail.com', to: user1.email, subject: 'Item purchased receipt', text: 'Hello,\n\n' + 'Thanks for purchasing the item ' + docs.itemname + ' at the price of '+ docs.itemprice + '\n\nWe hope to see you again' };
-                            transporter.sendMail(mailOptions, function (err) {
+                            var mailOptions2 = { from: 'sghawt@gmail.com', to: user2.email, subject: 'Item purchased receipt', text: 'Hello,\n\n' + docs.itemname +' has been sold.' + '\n\nWe hope to see you again' };
+                            transporter.sendMail(mailOptions2, function (err) {
                                 if (err) {console.log(err) }
                                 res.send();
                             });
-                            var mailOptions2 = { from: 'sghawt@gmail.com', to: user2.email, subject: 'Item purchased receipt', text: 'Hello,\n\n' + docs.itemname +' has been sold.' + '\n\nWe hope to see you again' };
-                            transporter.sendMail(mailOptions2, function (err) {
+                            transporter.sendMail(mailOptions,mailOptions2, function (err) {
                                 if (err) {console.log(err) }
                                 res.send();
                             });
