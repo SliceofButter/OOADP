@@ -12,7 +12,8 @@ let WishlistItem = require('../models/wishlist');
 let Items = require('../models/items');
 let Transacs = require('../models/transaction');
 let User = require('../models/user');
-let Banker = require('../models/bank')
+let Banker = require('../models/bank');
+let Address = require('../models/address');
 
 router.get('/transaction',function(req,res){
         User.findById(req.user, function(err, user){
@@ -33,6 +34,8 @@ router.get('/payment/:id', function(req,res){
     Transacs.findOne({uniqueID:req.params.id},function(err,docs){
         Banker.findOne({username:docs.buyer},function(err,buyer){
             Banker.findOne({username:docs.username},function(err,merch){
+                User.findById(req.user, function(err, user){
+                Address.findOne({username:user.username}, function(err,addr){
                 Items.findOne({_id:docs.id}, function(err,data){
                     // console.log(merch)
                     var itemprice = docs.itemprice;                        
@@ -42,11 +45,14 @@ router.get('/payment/:id', function(req,res){
                     docs:docs,
                     data:data,
                     wallet:buyer,
-                    buyer:merch
+                    buyer:merch,
+                    addr: addr
                 })
             })
             })
         })
+        })
+    })
     })
 })
 router.post('/payment/:id', function(req,res){
