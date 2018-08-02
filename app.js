@@ -8,6 +8,7 @@ const session = require('express-session');
 const passport = require('passport');
 const config = require('./config/database');
 const multer = require('multer');
+const http = require('http');
 var methodOverride = require('method-override');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
@@ -46,6 +47,7 @@ db.on('error', function(err){
 
 let User = require('./models/user');
 let Bank = require('./models/bank');
+let DB = require( './models/db' );
 // Init App
 const app = express();
 app.use(methodOverride('_method'));
@@ -161,6 +163,7 @@ let transactions = require('./routes/transaction');
 app.use('/',transactions);
 let admins = require('./routes/admin');
 app.use('/', admins)
+
 
 // let admins = require('./routes/admin')
 // app.use('/', admins);

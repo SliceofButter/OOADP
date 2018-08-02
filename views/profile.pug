@@ -66,6 +66,8 @@ block content
               a#contact-tab.nav-link(href='/profile/'+current+'/wallet') Wallet     
           li.nav-item
             a#contact-tab.nav-link(href='/profile/'+current+ '/wishlist') Wishlist   
+          li.nav-item
+            a#contact-tab.nav-link(href='/profile/'+current+ '/comments') Comments
         #myTabContent.tab-content
           #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
             .row
@@ -78,24 +80,3 @@ block content
                         .card-body
                           a(href='/productitem/' + datas._id)
                             p.card-title.text-center(style='height:50px')=datas.itemname
-        div.addCommentForm
-        form( method="post", action="/create")
-            div
-                div
-                    span.label Name :
-                    input(type="text", class="nameTxt", name="username")
-                div
-                    span.label Comment :
-                    textarea(name="comment")
-                div#addCommentSubmit
-                    input(type="submit", value="Save")
-        br
-        br
-          #comments
-            each comment in comments
-              div.comment
-                div.name= comment.username
-                div.created_at= comment.created
-                br
-                div.content= comment.content 
-                hr

@@ -1,6 +1,6 @@
 let mongoose = require( 'mongoose' );
 
-const Comment = mongoose.Schema({
+const Commentst = mongoose.Schema({
     username : String,
     content  : String,
     created  : Date
@@ -9,6 +9,5 @@ const Comment = mongoose.Schema({
    
  
 //mongoose.model( 'Comment', Comment );
-const Comment  = module.exports = mongoose.model('Comment', Comment);
- 
+const Comments = module.exports = mongoose.model('Comment',Commentst);
 // mongoose.connect( 'mongodb://localhost/commentsThing' );

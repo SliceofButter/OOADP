@@ -1,8 +1,7 @@
 
 
  
-var mongoose = require( 'mongoose' );
-var Comment = mongoose.model( 'Comment' );
+let Comment = require( '../models/db' );
 
 exports.index = function ( req, res ){
   Comment.find( function ( err, comments, count ){

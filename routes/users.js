@@ -47,6 +47,7 @@ let Transacs = require('../models/transaction');
 let Follow = require('../models/follow');
 let ReportUser = require('../models/reportuser')
 let Address = require('../models/address');
+let Comment1 = require('../models/db')
 
 // router.set('superSecret', config.secret); 
 
@@ -709,6 +710,41 @@ router.post('/address', ensureAuthenticated, (req,res) => {
   }
 })
 })
+
+router.get('/profile/:username/comments', ensureAuthenticated,(req,res) =>{
+  User.findOne({username:req.params.username}, function(err, current){
+    User.findOne({username:req.user.username},function(err, user){  
+    Bank.findOne({username:user.username},function(err,bank){
+    Comment1.find({username:user.username}, function(err,comments){
+      comments.forEach(function(test){
+  console.log(test.username)
+  console.log(test.content)
+})
+  res.render('comments', {
+    current: current.username,
+    bio : user.bio,    
+    pic : user.dp,           
+    wallet : bank, 
+    comments:comments 
+  })
+  
+})
+    })
+    })
+  })
+
+})
+
+router.post('/profile/:username/comments',ensureAuthenticated,(req,res) =>{
+  let Comments = new Comment1()
+    Comments.username = req.body.username,
+    Comments.content = req.body.comment,
+    Comments.created = Date.now()
+    Comments.save( function( err, comment, count ){
+    res.redirect( '/' );
+    })
+  });
+
 
 
 
