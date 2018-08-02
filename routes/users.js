@@ -90,6 +90,13 @@ router.post('/register', function(req, res){
       username:username,
       password:password
     });
+    let newAddress = new Address();{
+      newAddress.username = username
+    }
+    newAddress.save(function(err,add)
+  {
+    
+  })
 
     bcrypt.genSalt(10, function(err, salt){
       bcrypt.hash(newUser.password, salt, function(err, hash){
@@ -685,30 +692,24 @@ router.post('/address', ensureAuthenticated, (req,res) => {
   User.findById(req.user, function(err, user){
     var submit = req.body.Submit1;
 
-    let newAddr = new Address();
+    var name = req.body.name;
+    var addr1 = req.body.addr1;
+    var  addr2 = req.body.addr2;
+    var  unit = req.body.unit;
+    var  code = req.body.code;
+
     if(submit)
     {
-      newAddr.username = req.user.username
-      newAddr.name = req.body.name,
-      newAddr.addr1 = req.body.addr1,
-      newAddr.addr2 = req.body.addr2,
-      newAddr.unit = req.body.unit,
-      newAddr.code = req.body.code,
-      newAddr.save(function(err){
-        if(err){
-          console.log(err);
-          return;
-        } 
-        else {
+      Address.findOneAndUpdate({username:user.username},{ $set: { name : name, addr1: addr1, addr2:addr2, unit:unit, code:code}},function(err){
+      
           req.flash('success','Address updated');
           res.redirect('/profile/' + req.user.username);
-        }
     })
 
   }
 })
-
 })
+
 
 
 // router.post('/settings', upload.single('imageupload'),(req, res) => {
