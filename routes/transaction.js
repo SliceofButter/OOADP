@@ -71,7 +71,7 @@ router.post('/payment/:id', function(req,res){
                                 if (err) {console.log(err) }
                                 res.send();
                             });
-                            transporter.sendMail(mailOptions,mailOptions2, function (err) {
+                            transporter.sendMail(mailOptions, function (err) {
                                 if (err) {console.log(err) }
                                 res.send();
                             });
