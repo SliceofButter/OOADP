@@ -165,6 +165,7 @@ let admins = require('./routes/admin');
 app.use('/', admins)
 
 
+
 // let admins = require('./routes/admin')
 // app.use('/', admins);
 // app.get('/admin',function(req,res){
