@@ -7,7 +7,8 @@ block content
     img(style="height:50%;width:50%;text-align:center;display:block;margin-left: auto;margin-right: auto;" src= "/itempic/" + data.itemimageupload )
     h4(style="text-align:center;font-weight:bold;") Item Name: #{data.itemname}
     h4(style="text-align:center;font-weight:bold;") Item Price: $#{data.itemprice}
-    h5(style="text-align:center;font-weight:bold;") Seller: #{data.username}
+    a(href='/profile/' + data.username)
+      h5(style="text-align:center;font-weight:bold;") Seller: #{data.username}
     h5(style="text-align:center;font-weight:bold;") Category: #{data.category}
     h5(style="text-align:center;font-weight:bold;") Item's Current Condition: #{data.itemcondition}
     h5(style="text-align:center;font-weight:bold;width:50%;margin-left:25%") Description: #{data.description} 
