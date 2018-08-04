@@ -18,7 +18,7 @@ module.exports = function(passport){
       // Match Password
       bcrypt.compare(password, user.password, function(err, isMatch){
         if(err) throw err;
-        if (!user.isVerified) return done(null, false, { type: 'not-verified', message: 'Your account has not been verified.' }); 
+        if (user.isVerified===false) return done(null, false, { type: 'not-verified', message: 'Your account has not been verified.' }); 
         if(isMatch){
           return done(null, user);
         } else {

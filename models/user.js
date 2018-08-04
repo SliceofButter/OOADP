@@ -18,9 +18,7 @@ const userSchema = mongoose.Schema({
     password:{
         type: String,
         require :true,
-    },
-    passwordResetToken: String,
-    passwordResetExpires: Date,
+    },    
     username:{
         type:String,
         require :true,
@@ -30,13 +28,7 @@ const userSchema = mongoose.Schema({
     isAdmin:{
         type: Boolean, 
         default: false
-    },
-    follower: [{
-        type: String, ref: 'Follow'
-    }],
-    following: [{
-        type: String, ref: 'Follow'
-    }]
+    },    
 })    
 
 
