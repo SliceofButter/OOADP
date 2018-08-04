@@ -738,6 +738,7 @@ router.get('/profile/:username/comments', ensureAuthenticated,(req,res) =>{
 })
 
 router.post('/profile/:username/comments',ensureAuthenticated,(req,res) =>{
+  User.findOne({username:req.params.username}, function(err, current){
   User.findOne({username:req.user.username},function(err, user){  
   let Comments = new Comment1()
     Comments.username = user.username,
@@ -748,6 +749,7 @@ router.post('/profile/:username/comments',ensureAuthenticated,(req,res) =>{
     res.redirect( '/' );
     })
   })
+})
   });
 
 
