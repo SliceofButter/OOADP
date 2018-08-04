@@ -738,13 +738,15 @@ router.get('/profile/:username/comments', ensureAuthenticated,(req,res) =>{
 })
 
 router.post('/profile/:username/comments',ensureAuthenticated,(req,res) =>{
+  User.findOne({username:req.user.username},function(err, user){  
   let Comments = new Comment1()
-    Comments.username = req.body.username,
+    Comments.username = user.username,
     Comments.content = req.body.comment,
     Comments.created = Date.now()
     Comments.save( function( err, comment, count ){
     res.redirect( '/' );
     })
+  })
   });
 
 
