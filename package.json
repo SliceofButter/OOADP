@@ -38,11 +38,8 @@
     "nodemailer": "^4.6.7",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "passport-totp": "0.0.2",
     "pug": "^2.0.0-rc.1",
-    "qrcode": "^1.2.2",
     "socket.io": "^2.1.1",
-    "speakeasy": "^2.0.0",
     "uuid": "^3.2.1",
     "uuid-random": "^1.0.6",
     "webdriveerio": "^0.1.5"

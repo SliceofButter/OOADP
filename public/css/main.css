@@ -188,7 +188,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 .profile-content {
   padding: 20px;
   background: #fff;
-  min-height: 100px;
+  min-height: 460px;
 }
 
 body, html {
