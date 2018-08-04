@@ -52,9 +52,10 @@ block content
                                     br
                             #comments
                                 each comment in comments
-                                    div.comment
-                                    div.name= comment.username
+                                    if comment.username != current
+                                        div.comment
+                                        div.name= comment.username
 
-                                    br
-                                    div.content= comment.content 
-                                    hr
+                                        br
+                                        div.content= comment.content 
+                                        hr
