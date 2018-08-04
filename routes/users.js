@@ -120,7 +120,9 @@ router.post('/register', function(req, res){
               var mailOptions = { from: 'sghawt@gmail.com', to: newUser.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' };
               transporter.sendMail(mailOptions, function (err) {
                   if (err) {console.log(err) }
-                  res.status(200).send('A verification email has been sent to ' + newUser.email + '.');
+                  res.render('registration',{
+                    email:newUser.email
+                  })
             });
           });
         });
@@ -201,7 +203,7 @@ router.get('/confirmation/:token',function(req,res){
         user.isVerified = true;
         user.save(function (err) {
             if (err) { return res.status(500).send({ msg: err.message }); }
-            res.status(200).send("The account has been verified. Please log in.");
+            res.render("confirm-email");
         });
     });
 });
