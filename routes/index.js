@@ -15,7 +15,7 @@ exports.create = function ( req, res ){
   new Comment({
     username : req.body.username,
     content : req.body.comment,
-    created : Date.now()
+    //created : Date.now()
   }).save( function( err, comment, count ){
     res.redirect( '/' );
   });

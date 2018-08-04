@@ -30,22 +30,30 @@ block content
                     li.nav-item
                         a#contact-tab.nav-link.active(href='#') Comments    
                 #myTabContent.tab-content
-                    #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')         
+                    #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')   
+                        br      
                         div.addCommentForm
+                         div(style='width: 70%;')
                             form( method="post", action="/profile/:username/comments")
                                 div
-                                    div
-                                        span.label Comment :
-                                        textarea(name="comment")
-                                    div#addCommentSubmit
-                                        input(type="submit", value="Save")
+                                    .form-group 
+                                    input.form-control(type='text', name='comment', placeholder='Comment your experience with this seller!')
+                                    br
+                                    input(type="submit", value="Comment", class="btn-success" , style="float: right;")
+                                br
+                                br
+                                    //- div
+                                    //-     span.label Comment :
+                                    //-     textarea(name="comment")
+                                    //- div#addCommentSubmit
+                                    //-     input(type="submit", value="Save")
                                 br
                                 br
                                 #comments
                                     each comment in comments
                                         div.comment
                                         div.name= comment.username
-                                        div.created_at= comment.created
+
                                         br
                                         div.content= comment.content 
                                         hr

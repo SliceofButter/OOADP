@@ -742,8 +742,9 @@ router.post('/profile/:username/comments',ensureAuthenticated,(req,res) =>{
   let Comments = new Comment1()
     Comments.username = user.username,
     Comments.content = req.body.comment,
-    Comments.created = Date.now()
+    //Comments.created = Date.now()
     Comments.save( function( err, comment, count ){
+    //res.redirect('/profile/' + req.user.username);
     res.redirect( '/' );
     })
   })
