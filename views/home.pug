@@ -24,4 +24,17 @@ block content
               .wrap-btn-slide1.w-size1.animated.visible-false(data-appear='rotateIn')
                 // Button
                 a.flex-c-m.size2.bo-rad-23.s-text2.bgwhite.hov1.trans-0-4(href='product.html') Shop Now
+    h3(style="text-align:center;font-weight:bold;") Recent Items
+    .row
+        each datas, i in data
+         .col-sm(style="margin-left:5%;")
+            .block2(style="margin-right:20px;")
+              a(href='productitem/' + datas._id)
+                img(src= "/itempic/" + datas.itemimageupload,alt="IMG-PRODUCT", style="width:125px;height:160px;")
+              .block2-txt.p-t-20
+                a.block2-name.dis-block.s-text3.p-b-5(href="productitem/" + datas._id)
+                    p #{datas.itemname}
+                span.block2-price.m-text6.p-r-5
+                    span $#{datas.itemprice}
+
     

@@ -3,33 +3,47 @@ let mongoose = require('mongoose');
 // User schema 
 
 const userSchema = mongoose.Schema({
-    name:{
+    name: {
         type: String,
-        require :true,
+        require: true,
     },
-    email:{
+    email: {
         type: String,
-        require :true,
+        require: true,
     },
-    isVerified: { 
-        type: Boolean, 
+    isVerified: {
+        type: Boolean,
         default: false
     },
-    password:{
+    password: {
         type: String,
-        require :true,
-    },    
-    username:{
-        type:String,
-        require :true,
+        require: true,
+    },
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    username: {
+        type: String,
+        require: true,
     },
     bio: String,
-    dp:String,
-    isAdmin:{
-        type: Boolean, 
+    dp: {
+        type:String,
+        default: 'download.jpg'
+    },
+    isAdmin: {
+        type: Boolean,
         default: false
-    },    
-})    
+    },
+    is2Fa: {
+        type: Boolean,
+        default: false
+    },
+    authNo: {
+        type: String,
+        require: true
+    }
+
+})
 
 
 const User = module.exports = mongoose.model('User', userSchema);
