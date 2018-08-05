@@ -109,6 +109,7 @@ block content
       }
       .message{
       width: 234px;
+      padding-bottom: 50px;
       }
       .sendmsg{
       width:45px;
@@ -294,7 +295,7 @@ block content
       {
       display: none;
       position: fixed;
-      bottom: 0px;
+      bottom: 10px;
       right: 220px;
       height: 285px;
       background-color: rgb(237, 239, 244);
@@ -340,24 +341,25 @@ block content
         #userslist
       #content
         #title
-          h1
-            | SgHawt
         .clear
         #nickWrap
-          p Confirm username
+          p Your username will appear as this: 
           p#nickError
           form#setNick
-            input#nickname(size="35" , value = user.username)
+            input#nickname(size="35" , value = user.username , readonly)
             input(type="submit")
-      //- #contentWrap
-      //-   .category
-         
-      //-   .clear
-      //-   div
-      //-     .header
-            
-        
-        .clear
+      #contentWrap
+          .container
+          .jumbotron
+            h1 Chat with your seller/buyer!
+            br
+            h4 Communicate with the seller/buyer to get the best experience.
+            h4 
+            br
+            h4 Wise men speak before they buy; 
+            h4 Fools cry after buying. - Ayushi
+
+
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js' type='text/javascript')    
     script(src='/socket.io/socket.io.js')
     script.
@@ -368,7 +370,6 @@ block content
       var $nickBox = $('#nickname');
       var $users = $('#userslist');
       var $mainBox=$('#mainBox');
-      var $picBox;
       var $nicknameBox = $('#nicknamebox');
       var oldDocs;
       $(document).on('click', "input.sendmsg", function() {

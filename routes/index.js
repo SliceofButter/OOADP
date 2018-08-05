@@ -17,6 +17,6 @@ exports.create = function ( req, res ){
     content : req.body.comment,
     //created : Date.now()
   }).save( function( err, comment, count ){
-    res.redirect( '/' );
+    res.redirect( '/product' );
   });
 };
