@@ -59,6 +59,8 @@ html(lang='en')
               a#navbardrop.nav-link.dropdown-toggle(href='#', data-toggle='dropdown') #{user.username}
               .dropdown-menu
                 a.dropdown-item(href='/profile/'+user.username) User Profile
+                if (user.isAdmin === true)
+                  a.dropdown-item(href='/admin') Admin
                 a.dropdown-item(href='/bio') Edit profile
                 a.dropdown-item(href='/registeritem') Register Item
                 a.dropdown-item(href='/profile/'+user.username+'/wishlist') Wishlist
