@@ -220,10 +220,11 @@ router.get('/login', function (req, res) {
 // Login Process
 router.post('/login', function (req, res, next) {
   var username = req.body.username;
+  var upass = req.body.password;
   console.log(username)
   User.findOne({ username: username }, function (err, user) {
     if (user.is2Fa === true) {
-      password = user.password
+      password = jwt.sign({ data: upass }, 'kitty123', { expiresIn: '1h' })
       res.redirect('/authentication/' + username + '/' + password)
     } else {
       passport.authenticate('login', {
@@ -235,8 +236,10 @@ router.post('/login', function (req, res, next) {
   })
 
   router.get('/authentication/:id/:lol', function (req, res) {
-    id = req.params.id
-    lol = req.params.lol
+    var id = req.params.id
+    var lol = req.params.lol
+    var decoded = jwt.verify(lol, 'kitty123') 
+    console.log(decoded.data)
     res.render('2fa', {
       lol: lol,
       id: id
@@ -245,7 +248,9 @@ router.post('/login', function (req, res, next) {
 
   router.post('/authentication/:id/:lol', function (req, res, next) {
     req.query.username = req.params.id;
-    req.query.password = req.params.lol;
+    var lol = req.params.lol;
+    var decoded = jwt.verify(lol, 'kitty123') 
+    req.query.password = decoded.data;
     next();
   },
     function (req, res, next) {
@@ -261,9 +266,12 @@ router.post('/login', function (req, res, next) {
         });
         console.log(verified)
         if (verified === true) {
-          passport.authenticate('login-2fa', {
+          passport.authenticate('login', {
             successRedirect: '/',
           })(req, res, next)
+        } else{
+          req.flash('danger', 'You have entered the wrong 2fa code');
+          res.redirect('/authentication/' + id + '/' + lol)
         }
       })
     })
