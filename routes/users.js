@@ -329,7 +329,7 @@ router.post('/profile/:username', function (req, res) {
       }
       else {
         res.redirect('/');
-        alert('lol')
+        
       }
     })
   }
