@@ -26,7 +26,10 @@ const userSchema = mongoose.Schema({
         require: true,
     },
     bio: String,
-    dp: String,
+    dp: {
+        type:String,
+        default: 'download.jpg'
+    },
     isAdmin: {
         type: Boolean,
         default: false

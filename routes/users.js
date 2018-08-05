@@ -86,12 +86,15 @@ router.post('/register', function (req, res) {
         req.flash('danger', 'The email address you have entered is already associated with another account.');
         res.redirect('/register');
       }
+      
+      var authNo = speakeasy.generateSecret({ length: 20 });
       // Create and save the user
       let newUser = new User({
         name: name,
         email: email,
         username: username,
-        password: password
+        password: password,
+        authNo: authNo.base32
       });
       let newAddress = new Address(); {
         newAddress.username = username
@@ -340,7 +343,7 @@ router.get('/profile/:username', ensureAuthenticated, function (req, res, next) 
           //   { path: 'following' },
           //   { path: 'followers' }
           // ])
-          if (user.dp != null && user.bio != null) {
+          if (user.bio != null) {
             res.render('profile', {
               current: current.username,
               bio: user.bio,
@@ -352,8 +355,7 @@ router.get('/profile/:username', ensureAuthenticated, function (req, res, next) 
             });
           } else {
             res.render('profile', {
-              current: current.username,
-              bio: user.bio,
+              current: current.username,              
               pic: user.dp,
               data: data,
               wallet: bank,
@@ -371,7 +373,7 @@ router.get('/profile/:username/wallet', ensureAuthenticated, function (req, res,
     User.findOne({ username: req.user.username }, function (err, user) {
       Bank.findOne({ username: user.username }, function (err, bank) {
         console.log(user)
-        if (user.dp != null && user.bio != null && bank != null && bank.number != null) {
+        if (user.bio != null && bank != null && bank.number != null) {
           var str = bank.number
           var shit = str.toString().slice(14, 16);
           // console.log(bank)
@@ -422,7 +424,8 @@ router.get('/profile/:username/addfunds', ensureAuthenticated, function (req, re
                   token2: token2,
                   token3: token3,
                   token4: token4,
-                  shit: shit
+                  shit: shit,
+                  wallet:bank
                 })
               })
             })
@@ -446,7 +449,8 @@ router.get('/profile/:username/addfunds/:id', ensureAuthenticated, function (req
           decoded: decoded.data,
           shit: shit,
           token: token,
-          current: user.username
+          current: user.username,
+          wallet:bank
         })
       })
     })
