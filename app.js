@@ -47,6 +47,7 @@ db.on('error', function(err){
 
 let User = require('./models/user');
 let Bank = require('./models/bank');
+let Items = require('./models/items');
 let DB = require( './models/db' );
 // Init App
 const app = express();
@@ -123,7 +124,11 @@ app.get('/', function(req, res, next){
   if(req.user){
   User.findById(req.user, function(err, user){
     Bank.findOne({username:user.username},function(err,bank){
-      res.render('home', { title: 'home', user: user, wallet : bank })
+      var query = Items.find({}, null, {limit: 4, sort:  {'_id': -1}});
+      query.exec(function(err, data) {  
+        console.log(data)
+        res.render('home', { title: 'home', user: user, wallet : bank, data:data})
+    });
     })
     //console.log(user)
   });
