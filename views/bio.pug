@@ -36,5 +36,59 @@ block content
               label(for='exampleFormControlTextarea1') Bio
               textarea#exampleFormControlTextarea1.form-control(rows='3',name='Bio')
               input.btn.btn-primary(type='submit',value='Submit')
-
-              
+        if user.is2Fa === false      
+          .profile-content      
+            .container-fluid 
+              H5 TWO-FACTOR AUTHENTICATION      
+              p Protect your account with an extra layer of security. Once configure you'll be required to enter both your password and an authentication code form your mobile phone in order to sign in
+              button.btn.btn-primary(style='text-align: center;border-radius: 25px;', type='button', data-toggle='modal', data-target='#exampleModal')
+                | Enable Two-Factor Auth
+              #exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                .modal-dialog.modal-lg(role='document')
+                    .modal-content
+                      .modal-header
+                        h5#exampleModalLabel.modal-title
+                          | Enable Two-Factor Auth                      
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×                      
+                      .modal-body
+                        p Make your account safer in 3 easy steps
+                        .row 
+                          .col-md-4
+                            img(style='border-radius: 50;display: block;margin-left: auto;margin-right: auto;', width='100', height='100', src='/images/icons/auth.png')
+                          .col-md-8
+                            p.strong Download an Authenticator app
+                            p 
+                              | Download and install  
+                              a(href='https://authy.com/') Authy 
+                              | or 
+                              a(href='https://support.google.com/accounts/answer/1066447?hl=en') Google Authenticator 
+                              |  for your phone or tablet
+                        hr
+                        .row    
+                          .col-md-4
+                            img(style='display: block;margin-left: auto;margin-right: auto;',width='175', height='175', src=image_data)
+                          .col-md-8
+                            p.strong Scan the QR code
+                            p Open the authentication app and scan the image to the left, using your phone's camera.
+                            P.strong 2FA key (manual entry)
+                            p #{user.authNo}
+                        hr
+                        .row 
+                          .col-md-4
+                            img(style='border-radius: 50;display: block;margin-left: auto;margin-right: auto;', width='100', height='100', src='/images/icons/2fa.jpg')
+                          .col-md-8
+                            p.strong Login with your code 
+                            p Enter the 6-digit verification code generated                          
+                            .row 
+                              .col-md-8
+                                form(action='/authy', method='POST')                            
+                                  .form-group                              
+                                    input.form-control.number(type='text', name='number', maxlength='6')                                 
+                                  button.btn.btn-primary(type='submit') Activate 
+        else  
+          .profile-content      
+            .container-fluid 
+              H5 TWO-FACTOR AUTHENTICATION
+              p
+                font(color='green') TWO-FACTOR AUTHENTICATION ENABLED
