@@ -38,7 +38,7 @@ block content
               .row
                 .col-md-2
                 .col-md-6
-                  if wallet != null
+                  if bank != null
                     h4 Wallet Balance: $#{wallet.amount}.00
                   else 
                     h1 $0.00
@@ -60,13 +60,16 @@ block content
                                         td(style="text-align: left;")
                                           p Your card ending in **#{shit}
                                         td(style="text-align: right;")
-                                          a(href='/profile/'+current+'/wallet/edit') Edit
-                                        
+                                          a(href='/profile/'+current+'/wallet/edit') Edit                                        
                               else
                                 form(action='/profile/' +current+ '/wallet', method='POST')
                                   .form-group
                                     label Card type:
-                                    input.form-control(type='text', name='type')
+                                    <select name="type" class="form-control">
+                                        <option value="MASTERCARD">MASTERCARD</option>
+                                        <option value="VISA">VISA</option>
+                                        <option value="AMEX">AMEX</option>                                       
+                                    </select>
                                   .form-group
                                     label Card number:
                                     input.form-control.number(type='text', name='number', ng-model='ncard', maxlength='19')
