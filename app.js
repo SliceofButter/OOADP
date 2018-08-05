@@ -14,7 +14,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 
 
 
-mongoose.connect(config.database,{
+mongoose.connect(config.database, {
   useMongoClient: true,
 });
 
@@ -23,12 +23,12 @@ var store = new MongoDBStore({
   collection: 'users'
 });
 
-store.on('connected', function() {
-  store.client; 
+store.on('connected', function () {
+  store.client;
 });
- 
 
-store.on('error', function(error) {
+
+store.on('error', function (error) {
   assert.ifError(error);
   assert.ok(false);
 });
@@ -36,19 +36,19 @@ store.on('error', function(error) {
 let db = mongoose.connection;
 
 // Check connection
-db.once('open', function(){
+db.once('open', function () {
   console.log('Connected to MongoDB');
 });
 
 // Check for DB errors
-db.on('error', function(err){
+db.on('error', function (err) {
   console.log(err);
 });
 
 let User = require('./models/user');
 let Bank = require('./models/bank');
 let Items = require('./models/items');
-let DB = require( './models/db' );
+let DB = require('./models/db');
 // Init App
 const app = express();
 app.use(methodOverride('_method'));
@@ -69,7 +69,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'keyboard cat',
   resave: true,
-	store: store,
+  store: store,
   resave: true,
   saveUninitialized: true,
 }));
@@ -83,32 +83,32 @@ app.use(function (req, res, next) {
 
 // Express Validator Middleware
 app.use(expressValidator({
-  errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
+  errorFormatter: function (param, msg, value) {
+    var namespace = param.split('.')
+      , root = namespace.shift()
       , formParam = root;
 
-    while(namespace.length) {
+    while (namespace.length) {
       formParam += '[' + namespace.shift() + ']';
     }
     return {
-      param : formParam,
-      msg   : msg,
-      value : value
+      param: formParam,
+      msg: msg,
+      value: value
     };
   }
 }));
 
-  // Passport Config
-  require('./config/passport')(passport);
-  // Passport Middleware
-  app.use(passport.initialize());
-  app.use(passport.session());
+// Passport Config
+require('./config/passport')(passport);
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
-  app.get('*', function(req, res, next){
-    res.locals.user = req.user || null;  
-    next();
-  });
+app.get('*', function (req, res, next) {
+  res.locals.user = req.user || null;
+  next();
+});
 
 
 /*//Image Config
@@ -120,44 +120,50 @@ app.use(multer({
  }));*/
 // Home route
 
-app.get('/', function(req, res, next){
-  if(req.user){
-  User.findById(req.user, function(err, user){
-    Bank.findOne({username:user.username},function(err,bank){
-      var query = Items.find({}, null, {limit: 4, sort:  {'_id': -1}});
-      query.exec(function(err, data) {  
-        console.log(data)
-        res.render('home', { title: 'home', user: user, wallet : bank, data:data})
+app.get('/', function (req, res, next) {
+  if (req.user) {
+    User.findById(req.user, function (err, user) {
+      Bank.findOne({ username: user.username }, function (err, bank) {
+        var query = Items.find({}, null, { limit: 4, sort: { '_id': -1 } });
+        query.exec(function (err, data) {
+          console.log(data)
+          res.render('home', { title: 'home', user: user, wallet: bank, data: data })
+        });
+      })
+      //console.log(user)
     });
+  } else {
+    var query = Items.find({}, null, { limit: 4, sort: { '_id': -1 } });
+    query.exec(function (err, data) {
+      console.log(data)
+      res.render('home', { 
+        title: 'home',
+        data: data
+      })
     })
-    //console.log(user)
-  });
-}else{
-  res.render('home', { title: 'home'})
-}
+  }
 });
 
-app.get('/test', function(req, res){
+app.get('/test', function (req, res) {
   res.render('test');
 })
 
-app.get('/payment', function(req, res){
+app.get('/payment', function (req, res) {
   res.render('payment');
 })
 
-app.get('/chat',function(req, res){
-  User.findById(req.user, function(err, user){
-  Bank.findOne({username:user.username},function(err,bank){
-  res.render('chat', {wallet:bank});//
+app.get('/chat', function (req, res) {
+  User.findById(req.user, function (err, user) {
+    Bank.findOne({ username: user.username }, function (err, bank) {
+      res.render('chat', { wallet: bank });//
+    });
   });
 });
-});
 
-app.get('/about', function(req,res)
-{
+app.get('/about', function (req, res) {
   res.render('about');
 })
-  
+
 // Route Files
 
 let users = require('./routes/users');
@@ -165,7 +171,7 @@ app.use('/', users);
 let productusers = require('./routes/productusers');
 app.use('/', productusers);
 let transactions = require('./routes/transaction');
-app.use('/',transactions);
+app.use('/', transactions);
 let admins = require('./routes/admin');
 app.use('/', admins)
 
@@ -177,70 +183,70 @@ app.use('/', admins)
 // });
 // var path = require('path');
 // var express= require('express'),
-	//app=express(),
-	server = require('http').createServer(app),
-	io=require('socket.io').listen(server),
-    //mongoose = require('mongoose'),
-	users123={};
+//app=express(),
+server = require('http').createServer(app),
+  io = require('socket.io').listen(server),
+  //mongoose = require('mongoose'),
+  users123 = {};
 
-	let ChatModel = require('./models/chat.js')
-	
+let ChatModel = require('./models/chat.js')
 
-	io.on('connection',function(socket){
-		console.log('new connection done');
-		
-		ChatModel.find({}, function(err, docs){
-			if(err)throw err;
-			console.log('sending old msgs');
-			io.emit('load old msgs', docs);
-		});//if the schema is found then console log this msg, emit the docs
 
-		socket.on('send message',function(data){
-			//saved in mongodb like this
-			var newMsg = new ChatModel({msg:data.msg,sender: data.sender, reciever: data.reciever,nickname:socket.nickname});
-		//	console.log(data.msg)
-			newMsg.save(function(err){
-			if(err){
-			throw err;
-			}else{
-			io.emit('new message',{msg:data.msg,sender: data.sender, reciever: data.reciever,nickname:socket.nickname});
-			}
-			});			
-		});
+io.on('connection', function (socket) {
+  console.log('new connection done');
 
-		socket.on('new user',function(data, callback){
-			console.log('new user added: '+data);
-			if(data in users123){
-			callback(false);
-			}
-			else{
-			callback(true);
-			socket.nickname = data;
-			users123[socket.nickname]=socket;
-			updateNicknames();//calling the update nickname function from below
-			}
-		});
-		
-		
-		socket.on('disconnect', function(data){
-			if(!socket.nickname) return;
-			delete users123[socket.nickname];
-			updateNicknames();
-		});
-		
-		function updateNicknames(){
-		io.emit('usernames',Object.keys(users123));
-		}
-  })
-app.use(function(req, res, next) {
-  if(req.accepts('html') && res.status(404)) {
-    Bank.findOne({username:req.user.username}, function(err, bank){
-      res.render('errors', {wallet:bank});
+  ChatModel.find({}, function (err, docs) {
+    if (err) throw err;
+    console.log('sending old msgs');
+    io.emit('load old msgs', docs);
+  });//if the schema is found then console log this msg, emit the docs
+
+  socket.on('send message', function (data) {
+    //saved in mongodb like this
+    var newMsg = new ChatModel({ msg: data.msg, sender: data.sender, reciever: data.reciever, nickname: socket.nickname });
+    //	console.log(data.msg)
+    newMsg.save(function (err) {
+      if (err) {
+        throw err;
+      } else {
+        io.emit('new message', { msg: data.msg, sender: data.sender, reciever: data.reciever, nickname: socket.nickname });
+      }
+    });
+  });
+
+  socket.on('new user', function (data, callback) {
+    console.log('new user added: ' + data);
+    if (data in users123) {
+      callback(false);
+    }
+    else {
+      callback(true);
+      socket.nickname = data;
+      users123[socket.nickname] = socket;
+      updateNicknames();//calling the update nickname function from below
+    }
+  });
+
+
+  socket.on('disconnect', function (data) {
+    if (!socket.nickname) return;
+    delete users123[socket.nickname];
+    updateNicknames();
+  });
+
+  function updateNicknames() {
+    io.emit('usernames', Object.keys(users123));
+  }
+})
+app.use(function (req, res, next) {
+  if (req.accepts('html') && res.status(404)) {
+    Bank.findOne({ username: req.user.username }, function (err, bank) {
+      res.render('errors', { wallet: bank });
       return;
     });
   }
 });
 // Start Server
-server.listen(3000, function(){
+server.listen(3000, function () {
   console.log('Server started on port 3000...');
 });
