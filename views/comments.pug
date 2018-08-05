@@ -29,6 +29,9 @@ block content
                         a#contact-tab.nav-link(href='/profile/'+current+ '/wishlist') Wishlist   
                     li.nav-item
                         a#contact-tab.nav-link.active(href='#') Comments    
+                    if current == user.username   
+                        li.nav-item
+                            a#contact-tab.nav-link(href='/profile/'+current+ '/address') Address 
                 #myTabContent.tab-content
                     #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')   
                         br      

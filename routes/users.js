@@ -804,6 +804,29 @@ router.get('/profile/:username/comments', ensureAuthenticated, (req, res) => {
 
 })
 
+router.get('/profile/:username/address', ensureAuthenticated, (req, res) => {
+  User.findOne({ username: req.params.username }, function (err, current) {
+    User.findOne({ username: req.user.username }, function (err, user) {
+      Bank.findOne({ username: user.username }, function (err, bank) {
+        Comment1.find({ username: user.username }, function (err, comments) {
+          Address.find({username:user.username}, function(err,address){
+
+          res.render('currentadd', {
+            current: current.username,
+            bio: user.bio,
+            pic: user.dp,
+            wallet: bank,
+            comments: comments,
+            address:address
+          })
+        })
+        })
+      })
+    })
+  })
+
+})
+
 router.post('/profile/:username/comments', ensureAuthenticated, (req, res) => {
   User.findOne({ username: req.params.username }, function (err, current) {
     User.findOne({ username: req.user.username }, function (err, user) {

@@ -1,0 +1,47 @@
+extends layout
+
+block content
+    if user
+        .row
+            .col-md-4
+                .profilecenter
+                    if pic!=null
+                        img(style='border-radius: 50%', width='100', height='100', src="/profilepic/" + pic)
+                    else  
+                        img(style='border-radius: 50%', width='100', height='100', src="/profilepic/download.jpg")
+                    .details
+                        h5.name  #{current}
+                        ul
+                            li
+            .col-md-8
+                .card
+                    .card-header Bio           
+                    .card-body #{bio}         
+                br
+                br         
+                ul#myTab.nav.nav-tabs(role='tablist')
+                    li.nav-item
+                        a#home-tab.nav-link(href='/profile/'+current) Listing                    
+                    li.nav-item
+                        if user.username == current
+                        a#contact-tab.nav-link(href='#') Wallet  
+                    li.nav-item
+                        a#contact-tab.nav-link(href='/profile/'+current+ '/wishlist') Wishlist   
+                    li.nav-item
+                        a#contact-tab.nav-link(href='/profile/'+current+ '/comments') Comments    
+                    if current == user.username      
+                        li.nav-item
+                            a#contact-tab.nav-link.active(href='#') Address     
+                #myTabContent.tab-content
+                    #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')   
+                        br      
+                        div.addCommentForm
+                         div(style='width: 70%;')
+                            if user.username == current
+                                div
+                                    p Name: #{address.name}
+                                    p Address: #{address.addr1}
+                                    if address.addr2 != ''
+                                        p Address Line 2: #{address.addr2}
+                                    p Unit/Apartment Number: #{address.unit}    
+                                    p Zipcode : #{address.code}

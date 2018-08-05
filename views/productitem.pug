@@ -64,9 +64,10 @@ block content
                 input(name='pricemoneyreq' type='number'  value=data.itemprice) 
                 p(style="margin-top:20px; text-align:center;") How would you like to receive the product?
                 input#delivery(type='radio', name='delivery' style="margin-left:25%;")
-                label(for='delivery' style="margin-right: 50px;") Delivery
+                label(for='delivery' style="margin-right: 50px;") Delivery 
                 input#meetup(type='radio', name='meetup')
                 label(for='delivery') Meet-Up
+                p(style="color: red; font-size:9.5px; margin-top:-5px; margin-left: 81px;") (A Charge of $3 will be added.)
                 input.btn.btn-primary(href='#', data-id=data._id, type='submit', name='offer', value='Send new offer', onclick='offer()', style='margin-left:34%;margin-top:20px;')
               .modal-footer
                 button.btn.btn-default(type="button" data-dismiss="modal") Close 
