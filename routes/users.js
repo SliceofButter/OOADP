@@ -809,7 +809,7 @@ router.get('/profile/:username/address', ensureAuthenticated, (req, res) => {
     User.findOne({ username: req.user.username }, function (err, user) {
       Bank.findOne({ username: user.username }, function (err, bank) {
         Comment1.find({ username: user.username }, function (err, comments) {
-          Address.find({username:user.username}, function(err,address){
+          Address.findOne({username:req.user.username}, function(err,address){
 
           res.render('currentadd', {
             current: current.username,
