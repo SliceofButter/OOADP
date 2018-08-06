@@ -192,12 +192,11 @@ router.post('/payment/:id', function (req, res) {
                                 transporter.sendMail(mailOptions, function (err) {
                                     if (err) { console.log(err) }
                                     res.send();
-                                });
-                                alert('Item has been bought!');
-                                res.redirect('/');
-                            }
-                        )}
-                        )}
+                                });                    
+                            })
+                        })
+                        res.redirect('/');
+                    }
                 })
             })
         })
