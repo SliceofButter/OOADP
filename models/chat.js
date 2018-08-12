@@ -10,3 +10,4 @@ const chatSchema = mongoose.Schema({
 
 // var ChatModel = mongoose.model('Message',chatSchema);
 const ChatModel = module.exports = mongoose.model('Message',chatSchema);
+// 

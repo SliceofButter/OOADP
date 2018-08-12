@@ -836,7 +836,7 @@ router.post('/profile/:username/comments', ensureAuthenticated, (req, res) => {
         //Comments.created = Date.now()
         Comments.save(function (err, comment, count) {
           //res.redirect('/profile/' + req.user.username);
-          res.redirect('/');
+          res.redirect('/product');
         })
     })
   })

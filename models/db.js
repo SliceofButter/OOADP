@@ -4,6 +4,9 @@ const Commentst = mongoose.Schema({
     username : String,
     content  : String,
     created  : Date
+    //to
+    //from 
+    // try to redirect to the same page 
 })
 
    
