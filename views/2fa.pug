@@ -4,7 +4,7 @@ block content
     p.strong Login with your code 
         p Enter the 6-digit verification code generated                          
         .row 
-            .col-md-8
+            .col-md-2
             form(action='/authentication/'+id+'/'+lol, method='POST')                            
                 .form-group                              
                     input.form-control.number(type='text', name='number', maxlength='6')                                 

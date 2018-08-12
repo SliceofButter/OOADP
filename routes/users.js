@@ -329,7 +329,7 @@ router.post('/profile/:username', function (req, res) {
       }
       else {
         res.redirect('/');
-        alert('lol')
+        
       }
     })
   }
@@ -355,7 +355,7 @@ router.get('/profile/:username', ensureAuthenticated, function (req, res, next) 
             res.render('profile', {
               current: current.username,
               bio: user.bio,
-              pic: user.dp,
+              pic: current.dp,
               data: data,
               // follow : follow.following,
               wallet: bank,

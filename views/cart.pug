@@ -12,7 +12,7 @@ block content
                   th.column-1
                   th.column-2 Product
                   th.column-3 Price                  
-                  th.column-5 
+                  th.column-5 Payment status
                 tr.table-row
                   td.column-1
                     .cart-img-product.b-rad-4.o-f-hidden                      
@@ -23,7 +23,9 @@ block content
                     td.column-5
                         p(style="margin-top:5px; padding-bottom:24px;")
                           a(href='/payment/'+ datas.uniqueID ,class="btn btn-primary" type='button' name='paynow') Pay Now!
-        
+                  else if datas.status == 'Requested' 
+                    td.column-5 
+                      p Pending
                   //- form(method ='POST' action='/cart')        
                   //-   button.btn.btn-primary(type="button" data-toggle="modal" data-target="#myModalx") Pay for all items!    
                   //-   #myModalx.modal.fade(role="dialog" style="background: rgba(0, 0, 0, 0.3); position: fixed; top: 0; right: 0; bottom: 0; left: 0;")
