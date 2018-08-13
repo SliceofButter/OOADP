@@ -11,8 +11,6 @@ block content
                 p Customer: #{datas.buyer}
                 p Seller: #{datas.username}
                 p Status: #{datas.status}
-                form(method='POST', action='/transaction' style="margin-left:2%;margin-top:20px;")
-                    input.btn.btn-primary(type='submit' value='Delete item' style="margin-left:43%;margin-top:1px;") 
                 br 
     h5 Offers(Buyer)
         each datas, i in data
